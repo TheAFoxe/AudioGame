@@ -1,0 +1,35 @@
+[gd_scene load_steps=7 format=3 uid="uid://cyuvbun204jb8"]
+
+[ext_resource type="PackedScene" uid="uid://ckudr8chj1kgo" path="res://source/player/player_3d.tscn" id="1_twmc5"]
+[ext_resource type="PackedScene" uid="uid://bn7yn1dsic15a" path="res://source/objects/audio_caster/audio_caster.tscn" id="2_ekru5"]
+[ext_resource type="PackedScene" uid="uid://c51p6istrw0ec" path="res://source/objects/audio_reflector/audio_reflector.tscn" id="3_kksmv"]
+[ext_resource type="Texture2D" uid="uid://b0jtb2e8uqeb4" path="res://addons/kenney_prototype_textures/orange/texture_12.png" id="4_ekru5"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kksmv"]
+albedo_texture = ExtResource("4_ekru5")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_26u8l"]
+size = Vector2(10, 10)
+
+[node name="LevelTesting" type="Node3D"]
+
+[node name="Player" parent="." instance=ExtResource("1_twmc5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0009253025, 0, -0.27616143)
+
+[node name="AudioCaster" parent="." instance=ExtResource("2_ekru5")]
+transform = Transform3D(0.54978114, 0, 0.83530873, 0, 1, 0, -0.83530873, 0, 0.54978114, 1.9814181, 0, -3.6002765)
+
+[node name="Cube3D" parent="." instance=ExtResource("3_kksmv")]
+transform = Transform3D(0.54978114, 0, 0.83530873, 0, 1, 0, -0.83530873, 0, 0.54978114, -0.043497145, 0, -4.9221582)
+script = null
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.7071068, 0.7071068, 0, -0.7071068, 0.7071068, 0, 7, 7)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+visible = false
+material_override = SubResource("StandardMaterial3D_kksmv")
+mesh = SubResource("PlaneMesh_26u8l")
+
+[node name="Cube3D2" parent="." instance=ExtResource("3_kksmv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.324666, 0, 0.47887516)
