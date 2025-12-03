@@ -7,15 +7,15 @@ enum character_states {
 	ROTATING,
 }
 var current_character_state := character_states.IDLE
-var collider
+var collider: Node3D
 var speed = 5.0
 var jump_velocity = 4.5
 
 @export var sens = 0.001
 
-@onready var raycast = $"Node3D/Camera3D/RayCast3D"
-@onready var origin = $Node3D/Camera3D/RayCast3D/Node3D
-@onready var camera = $Node3D/Camera3D
+@onready var raycast: RayCast3D = $"Node3D/Camera3D/RayCast3D"
+@onready var origin: Node3D = $Node3D/Camera3D/RayCast3D/Node3D
+@onready var camera: Camera3D = $Node3D/Camera3D
 
 
 func _ready() -> void:
@@ -28,17 +28,17 @@ func _unhandled_input(event: InputEvent):
 			character_states.IDLE:
 				rotate_y(-event.relative.x * sens)
 				$"Node3D".rotate_x(-event.relative.y * sens)
+				object_move()
 			character_states.ROTATING:
 				object_rotate(event)
 	
-	if event.is_action("grab") and raycast.is_colliding():
+	if event.is_action("grab"):
 		if event.is_pressed():
 			object_grab()
-		if event.is_released() and collider:
+		if event.is_released():
 			object_release()
-
-
-	if event.is_action("rotate"):
+	
+	elif event.is_action("rotate"):
 		if event.is_pressed() and collider:
 			current_character_state = character_states.ROTATING
 		if event.is_released():
@@ -60,12 +60,14 @@ func _physics_process(delta: float) -> void:
 	else:
 		velocity.x = move_toward(velocity.x, 0, speed)
 		velocity.z = move_toward(velocity.z, 0, speed)
-	move_and_slide()
 	
+	move_and_slide()
 	object_move()
 
 
 func object_grab():
+	if not raycast.is_colliding():
+		return
 	collider = raycast.get_collider().get_parent().get_parent()
 	origin.global_position = collider.global_position
 	origin.global_rotation = collider.global_rotation
@@ -73,15 +75,17 @@ func object_grab():
 
 
 func object_release():
-	collider.remove_from_group("Active")
+	if collider:
+		collider.remove_from_group("Active")
 	collider = null
 
 
-func object_move():
+func object_move() -> void:
 	if not collider:
 		return
-	collider.global_position = Vector3(origin.global_position.x, 0, origin.global_position.z)
 	collider.global_rotation.y = origin.global_rotation.y
+	collider.global_position = Vector3(origin.global_position.x, 0, origin.global_position.z)
+
 
 
 func object_rotate(event):
