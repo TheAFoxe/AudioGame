@@ -23,7 +23,7 @@ func _ready():
 	
 	player.camera.make_current()
 	
-	Engine.max_fps = 90
+	Engine.max_fps = 240
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	
 	get_tree().paused = false
