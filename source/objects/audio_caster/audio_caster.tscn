@@ -33,6 +33,7 @@ shape = SubResource("ConcavePolygonShape3D_05k0i")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3000001, 0)
 script = ExtResource("1_05k0i")
 ray_length = 20.0
+max_bounces = 3
 collision_mask = 512
 
 [node name="DebugSphere" type="MeshInstance3D" parent="."]

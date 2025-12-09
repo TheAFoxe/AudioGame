@@ -23,14 +23,14 @@ visible = false
 material_override = SubResource("StandardMaterial3D_kksmv")
 mesh = SubResource("PlaneMesh_26u8l")
 
-[node name="Cube3D3" parent="." instance=ExtResource("3_kksmv")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5674167, 0, -6.550091)
-
-[node name="AudioCaster2" parent="." instance=ExtResource("2_ekru5")]
-transform = Transform3D(0.54978114, 0, 0.83530873, 0, 1, 0, -0.83530873, 0, 0.54978114, 4.659337, 0, -2.0068696)
-
 [node name="Cube3D4" parent="." instance=ExtResource("3_kksmv")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5839133, 0, -3.2326765)
 
-[node name="Cube3D5" parent="." instance=ExtResource("3_kksmv")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.23794413, 0, -3.9672782)
+[node name="Cube3D" parent="." instance=ExtResource("3_kksmv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.3787413, 9.536743e-07, 2.4001236)
+
+[node name="Cube3D2" parent="." instance=ExtResource("3_kksmv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.698781, 0, -3.290451)
+
+[node name="Cube3D3" parent="." instance=ExtResource("3_kksmv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.680188, 0, 2.3112078)

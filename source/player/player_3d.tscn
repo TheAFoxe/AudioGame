@@ -6,7 +6,7 @@
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_cnuiu"]
 height = 3.0
-radius = 3.0
+radius = 3.5
 
 [node name="Player" type="CharacterBody3D"]
 collision_layer = 0
