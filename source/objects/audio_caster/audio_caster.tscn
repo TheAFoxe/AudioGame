@@ -13,11 +13,16 @@ radius = 0.1
 height = 0.2
 
 [node name="AudioCaster" type="Node3D"]
+process_mode = 1
 script = ExtResource("1_05k0i")
+debug = true
 audio = ExtResource("2_dyft4")
 audio_max_distance = 3.5
 audio_volume = 10.0
 audio_max_volume = 20.0
+audio_attenuation_model = 1
+ray_length = 20.0
+max_bounces = 7
 collision_mask = 512
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]

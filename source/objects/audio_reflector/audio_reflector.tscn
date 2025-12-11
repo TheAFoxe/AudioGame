@@ -9,6 +9,7 @@ data = PackedVector3Array(-1, 1, 0.049999997, 1, 1, 0.049999997, -1, -1, 0.04999
 [sub_resource type="HeightMapShape3D" id="HeightMapShape3D_24ya2"]
 
 [node name="Cube3D" type="Node3D"]
+process_mode = 1
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)

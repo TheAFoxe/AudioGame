@@ -1,12 +1,5 @@
-extends Node3D
-
+extends PickableObject
 class_name AudioCast
-
-
-var audio_debug_array := []
-var audio_debug: MeshInstance3D
-var audio_streamer_array := []
-
 
 @export var debug: bool
 
@@ -18,20 +11,23 @@ var audio_streamer_array := []
 @export var audio_attenuation_model: AudioStreamPlayer3D.AttenuationModel
 
 @export_category("RayQuery")
-@export var ray_length := 20.0
-@export var max_bounces := 5
+@export var ray_length: float
+@export var max_bounces: int
 @export_flags_3d_physics var collision_mask: int
 
 var debug_line: ImmediateMesh
 var instance: MeshInstance3D
 var _active_audio_players: Array[int]
+var audio_debug_array := []
+var audio_debug: MeshInstance3D
+var audio_streamer_array := []
 
 @onready var query: PhysicsRayQueryParameters3D = PhysicsRayQueryParameters3D.create(Vector3.ZERO, Vector3.ZERO, collision_mask)
 @onready var root := $".."
 
 
 func _ready() -> void:
-	max_bounces += 1
+	max_bounces = max_bounces + 1
 	
 	for i in max_bounces:
 		audio_debug = MeshInstance3D.new()
@@ -71,8 +67,10 @@ func _physics_process(delta: float) -> void:
 	for i in audio_debug_array:
 		i.hide()
 	cast()
-	for i in _active_audio_players:
+	for i in audio_streamer_array.size():
+		if i in _active_audio_players: continue
 		audio_streamer_array.get(i).stream_paused = true
+
 
 
 func cast() -> void:
@@ -90,8 +88,9 @@ func cast() -> void:
 	
 	debug_line.surface_begin(Mesh.PRIMITIVE_LINES)
 	var result: Dictionary
+	var current_bounce: int = 0
 	
-	for i in max_bounces:
+	while current_bounce < max_bounces:
 		query.from = current_start
 		query.to = query.from + direction * ray_length
 		
@@ -120,6 +119,7 @@ func cast() -> void:
 		query.exclude = []
 		direction = direction.bounce(result.normal)
 		current_start = result.position + (result.normal * 0.005)
+		current_bounce += 1
 	
 	debug_line.surface_end()
 

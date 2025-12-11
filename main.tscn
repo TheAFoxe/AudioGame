@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://b74aq41vgfphe" path="res://main.gd" id="1_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://c201kqm66rjry" path="res://source/ui/pause_menu.tscn" id="2_0xm2m"]
 [ext_resource type="PackedScene" uid="uid://cyuvbun204jb8" path="res://source/levels/testing/level_testing.tscn" id="2_h2yge"]
-[ext_resource type="PackedScene" uid="uid://ckudr8chj1kgo" path="res://source/player/player_3d.tscn" id="3_7mycd"]
+[ext_resource type="PackedScene" uid="uid://ckudr8chj1kgo" path="res://source/player/player.tscn" id="3_7mycd"]
 [ext_resource type="Script" uid="uid://b1fayhcx4kdi4" path="res://fps.gd" id="5_lquwl"]
 
 [node name="Main" type="Node3D"]
@@ -16,6 +16,7 @@ player_scene = ExtResource("3_7mycd")
 process_mode = 2
 
 [node name="FPS" type="Label" parent="."]
+process_mode = 3
 offset_right = 40.0
 offset_bottom = 23.0
 script = ExtResource("5_lquwl")

@@ -24,23 +24,23 @@ func _ready():
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
-		if get_tree().paused:
-			pause()
-		else:
-			unpause()
+		toggle_pause()
 
+func toggle_pause() -> void:
+	if get_tree().paused:
+		unpause()
+	else:
+		pause()
 
-func _on_pause_menu_exit() -> void:
-	get_tree().quit()
-
-
-func pause():
-	get_tree().paused = false
-	pause_menu.hide()
-	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-
-
-func unpause():
+func pause() -> void:
 	pause_menu.show()
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	get_tree().paused = true
+
+func unpause() -> void:
+	pause_menu.hide()
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	get_tree().paused = false
+
+func _on_pause_menu_exit() -> void:
+	get_tree().quit()
