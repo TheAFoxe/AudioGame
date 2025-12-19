@@ -1,4 +1,4 @@
-extends PickableObject
+extends PickableObject.RotatableObject
 class_name AudioCast
 
 @export var debug: bool
@@ -21,6 +21,8 @@ var _active_audio_players: Array[int]
 var audio_debug_array := []
 var audio_debug: MeshInstance3D
 var audio_streamer_array := []
+var current_hit: Node3D
+var last_hit: Node3D
 
 @onready var query: PhysicsRayQueryParameters3D = PhysicsRayQueryParameters3D.create(Vector3.ZERO, Vector3.ZERO, collision_mask)
 @onready var root := $".."
@@ -72,11 +74,16 @@ func _physics_process(delta: float) -> void:
 		audio_streamer_array.get(i).stream_paused = true
 
 
-
 func cast() -> void:
 	var player_hit_count: int = 0
-	var player_hit: bool = false
+	var player_hitted: bool = false
 	var player_position: Vector3
+	var current_bounce: int = 0
+	var result: Dictionary
+	
+	var from: Vector3
+	var to: Vector3
+	var break_after: bool = false
 	
 	var space_state := get_world_3d().direct_space_state
 	var direction := -global_transform.basis.z
@@ -87,8 +94,6 @@ func cast() -> void:
 	query.hit_from_inside = true
 	
 	debug_line.surface_begin(Mesh.PRIMITIVE_LINES)
-	var result: Dictionary
-	var current_bounce: int = 0
 	
 	while current_bounce < max_bounces:
 		query.from = current_start
@@ -96,25 +101,40 @@ func cast() -> void:
 		
 		result = space_state.intersect_ray(query)
 		
-		if player_hit:
-			if not result:
-				sound(query.from, query.to, player_position, player_hit_count, direction)
-			else:
-				sound(query.from, result.position, player_position, player_hit_count, direction)
-			player_hit_count += 1
-			player_hit = false
-		
 		if not result:
-			draw_debug(query.from, query.to)
+			break_after = true
+			from = query.from
+			to = query.to
+			current_hit = null
+		else:
+			from = query.from
+			to = result.position
+			current_hit = result.collider.owner
+		draw_debug(from, to)
+		
+		if player_hitted:
+			sound(from, to, player_position, player_hit_count, direction)
+			player_hit_count += 1
+			player_hitted = false
+		
+		if not current_hit == last_hit:
+			if current_hit is AudioCatcher:
+				current_hit.activate()
+			if last_hit is AudioCatcher:
+				last_hit.deactivate()
+			last_hit = current_hit
+		
+		if current_hit is AudioCatcher:
+			break_after = true 
+		
+		if break_after: 
 			break
 		
-		if result.collider is Area3D:
-			player_hit = true
+		if current_hit is Player:
+			player_hitted = true
 			player_position = result.collider.global_position
 			query.exclude = [result.rid]
 			continue
-		
-		draw_debug(query.from, result.position)
 		
 		query.exclude = []
 		direction = direction.bounce(result.normal)
@@ -130,7 +150,7 @@ func draw_debug(from, to) -> void:
 	debug_line.surface_add_vertex(to_local(to))
 
 
-func sound(line_start : Vector3, line_end : Vector3, point_position : Vector3, id : int, direction : Vector3):
+func sound(line_start: Vector3, line_end: Vector3, point_position: Vector3, id: int, direction: Vector3):
 	var audio_stream: AudioStreamPlayer3D = audio_streamer_array.get(id)
 	
 	var closest_position := Geometry3D.get_closest_point_to_segment(point_position - direction, line_start, line_end)

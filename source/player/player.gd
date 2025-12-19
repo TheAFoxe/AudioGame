@@ -2,14 +2,10 @@ extends CharacterBody3D
 
 class_name Player
 
-enum character_states {
-	IDLE,
-	ROTATING,
-}
-var current_character_state := character_states.IDLE
 var collider: Node3D
 var speed = 5.0
 var jump_velocity = 4.5
+var is_picking: bool = false
 
 @export var sens = 0.001
 
@@ -27,17 +23,16 @@ func _unhandled_input(event: InputEvent):
 		rotate_y(-event.relative.x * sens)
 		$"Node3D".rotate_x(-event.relative.y * sens)
 	
-	if event.is_action("grab"):
-		if event.is_pressed():
-			object_grab()
-		if event.is_released():
+	if event.is_action_pressed("grab"):
+		if is_picking:
 			object_release()
+		else:
+			object_grab()
 	
-	elif event.is_action("rotate"):
-		if event.is_pressed() and collider:
-			current_character_state = character_states.ROTATING
-		if event.is_released():
-			current_character_state = character_states.IDLE
+	if event.is_action("rotate_left"):
+		origin.global_rotation.y += deg_to_rad(2)
+	if event.is_action("rotate_right"):
+		origin.global_rotation.y -= deg_to_rad(2)
 
 
 func _physics_process(delta: float) -> void:
@@ -59,8 +54,10 @@ func object_grab():
 	collider = raycast.get_collider().owner
 	if collider is PickableObject:
 		collider.pick(origin)
+	is_picking = true
 
 
 func object_release():
 	collider.place()
 	collider = null
+	is_picking = false

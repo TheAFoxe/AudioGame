@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://coesjdeuspnqt"]
+
+[ext_resource type="Script" uid="uid://bn1yffmklidmw" path="res://source/objects/audio_catcher/audio_catcher.gd" id="1_s2xgv"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_qlq3c"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_1x50r"]
+
+[node name="Node3D" type="Node3D"]
+script = ExtResource("1_s2xgv")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("SphereMesh_qlq3c")
+
+[node name="Area3D" type="Area3D" parent="MeshInstance3D"]
+process_mode = 1
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/Area3D"]
+shape = SubResource("SphereShape3D_1x50r")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
+collision_layer = 513
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
+shape = SubResource("SphereShape3D_1x50r")

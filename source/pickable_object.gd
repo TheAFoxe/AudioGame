@@ -1,8 +1,9 @@
 extends Node3D
-class_name PickableObject
+class_name InteractableObject
 
 var is_picked: bool
 var origin: Node3D
+var _duplicated: PickableObject
 
 
 func _ready() -> void:
@@ -23,12 +24,11 @@ func can_place() -> bool:
 	return true
 
 
-func pick(player_origin: Node3D) -> Node3D:
+func pick(player_origin: Node3D):
 	origin = player_origin
 	origin.global_position  = self.global_position
 	origin.global_rotation.y = self.global_rotation.y
 	is_picked = true
-	return origin
 
 
 func place() -> void:

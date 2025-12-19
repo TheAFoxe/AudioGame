@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://cyuvbun204jb8"]
+[gd_scene load_steps=7 format=3 uid="uid://cyuvbun204jb8"]
 
 [ext_resource type="PackedScene" uid="uid://bn7yn1dsic15a" path="res://source/objects/audio_caster/audio_caster.tscn" id="2_ekru5"]
 [ext_resource type="PackedScene" uid="uid://c51p6istrw0ec" path="res://source/objects/audio_reflector/audio_reflector.tscn" id="3_kksmv"]
 [ext_resource type="Texture2D" uid="uid://b0jtb2e8uqeb4" path="res://addons/kenney_prototype_textures/orange/texture_12.png" id="4_ekru5"]
+[ext_resource type="PackedScene" uid="uid://coesjdeuspnqt" path="res://source/objects/audio_catcher/audio_catcher.tscn" id="4_kksmv"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kksmv"]
 albedo_texture = ExtResource("4_ekru5")
@@ -15,6 +16,7 @@ process_mode = 1
 
 [node name="AudioCaster" parent="." instance=ExtResource("2_ekru5")]
 transform = Transform3D(0.54978114, 0, 0.83530873, 0, 1, 0, -0.83530873, 0, 0.54978114, 3.503029, 0, -0.09015989)
+max_bounces = 1
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.7071068, 0.7071068, 0, -0.7071068, 0.7071068, 0, 7, 7)
@@ -34,3 +36,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.698781, 0, -3.290451)
 
 [node name="Cube3D3" parent="." instance=ExtResource("3_kksmv")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.680188, 0, 2.3112078)
+
+[node name="Node3D" parent="." instance=ExtResource("4_kksmv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.9613128, 0, -2.092182)
