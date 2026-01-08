@@ -1,4 +1,4 @@
-extends PickableObject.RotatableObject
+extends PickableObject
 class_name AudioCast
 
 @export var debug: bool
@@ -26,10 +26,16 @@ var last_hit: Node3D
 
 @onready var query: PhysicsRayQueryParameters3D = PhysicsRayQueryParameters3D.create(Vector3.ZERO, Vector3.ZERO, collision_mask)
 @onready var root := $".."
+@onready var sound_timer: Timer = $Timer
+@onready var audio_caster: Marker3D = $AudioCast
 
 
 func _ready() -> void:
 	max_bounces = max_bounces + 1
+	
+	sound_timer.wait_time = audio.get_length()
+	sound_timer.one_shot = false
+	sound_timer.start()
 	
 	for i in max_bounces:
 		audio_debug = MeshInstance3D.new()
@@ -48,7 +54,7 @@ func _ready() -> void:
 		audio_stream.max_distance = audio_max_distance
 		audio_stream.playing = true
 		audio_stream.stream.loop = true
-		audio_stream.stream_paused = true
+		audio_stream.stream_paused = false
 		audio_stream.max_db = audio_max_volume
 		audio_stream.volume_db = audio_volume
 		audio_streamer_array.append(audio_stream)
@@ -87,7 +93,7 @@ func cast() -> void:
 	
 	var space_state := get_world_3d().direct_space_state
 	var direction := -global_transform.basis.z
-	var current_start := global_position + Vector3(0, 1.25, 0)
+	var current_start := global_position# + Vector3(0, audio_caster.global_position.y, 0)
 	
 	query.exclude = []
 	query.collide_with_areas = true
@@ -155,6 +161,12 @@ func sound(line_start: Vector3, line_end: Vector3, point_position: Vector3, id: 
 	
 	var closest_position := Geometry3D.get_closest_point_to_segment(point_position - direction, line_start, line_end)
 	audio_stream.global_position = closest_position
+	
+	var sync_time = sound_timer.wait_time - sound_timer.time_left
+	if abs(audio_stream.get_playback_position() - sync_time) > 0.1:
+		audio_stream.seek(sync_time)
+	
+	audio_stream.stream_paused = false
 	_active_audio_players.append(id)
 	
 	if debug:

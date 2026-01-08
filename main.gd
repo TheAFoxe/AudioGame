@@ -18,7 +18,7 @@ func _ready():
 	
 	pause_menu.hide()
 	
-	Engine.max_fps = 24
+	Engine.max_fps = 60
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 

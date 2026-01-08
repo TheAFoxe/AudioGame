@@ -31,9 +31,6 @@ collision_mask = 2
 collide_with_areas = true
 collide_with_bodies = false
 
-[node name="Node3D" type="Node3D" parent="Node3D/Camera3D/RayCast3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
-
 [node name="AudioListener3D" type="AudioListener3D" parent="Node3D/Camera3D"]
 current = true
 
@@ -44,3 +41,6 @@ collision_mask = 512
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="AudioArea"]
 shape = SubResource("CylinderShape3D_cnuiu")
+
+[node name="Origin" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -1)

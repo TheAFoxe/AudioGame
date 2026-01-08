@@ -2,15 +2,14 @@
 
 [ext_resource type="Script" uid="uid://ctbfuxgcioqm4" path="res://source/objects/audio_caster/audio_cast.gd" id="1_05k0i"]
 [ext_resource type="AudioStream" uid="uid://b5ycxh5a7ge8p" path="res://source/objects/audio_caster/ambient-pads-loop-296968.mp3" id="2_dyft4"]
-
-[sub_resource type="BoxMesh" id="BoxMesh_78q8v"]
-
-[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_05k0i"]
-data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
+[ext_resource type="PackedScene" uid="uid://xfr2qedv6flg" path="res://meshes/SpeakerBlock.blend" id="3_gwbc7"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_05k0i"]
 radius = 0.1
 height = 0.2
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_gwbc7"]
+size = Vector3(1.2, 1.2, 1)
 
 [node name="AudioCaster" type="Node3D"]
 process_mode = 1
@@ -25,24 +24,8 @@ ray_length = 20.0
 max_bounces = 7
 collision_mask = 512
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
-mesh = SubResource("BoxMesh_78q8v")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
-shape = SubResource("ConcavePolygonShape3D_05k0i")
-
-[node name="Area3D" type="Area3D" parent="MeshInstance3D"]
-collision_layer = 2
-collision_mask = 2
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/Area3D"]
-shape = SubResource("ConcavePolygonShape3D_05k0i")
-
-[node name="AudioCast" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3000001, 0)
+[node name="AudioCast" type="Marker3D" parent="."]
+gizmo_extents = 1.15
 
 [node name="DebugSphere" type="MeshInstance3D" parent="."]
 mesh = SubResource("SphereMesh_05k0i")
@@ -51,3 +34,16 @@ mesh = SubResource("SphereMesh_05k0i")
 visible = false
 stream = ExtResource("2_dyft4")
 max_distance = 10.0
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="Mesh" parent="." instance=ExtResource("3_gwbc7")]
+
+[node name="Area3D" type="Area3D" parent="Mesh"]
+transform = Transform3D(1.9106855e-15, -1, 4.371139e-08, -4.371139e-08, -4.371139e-08, -1, 1, 0, -4.371139e-08, 1.1920929e-07, 0.39999998, 1.7484554e-08)
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Mesh/Area3D"]
+transform = Transform3D(4.3711392e-08, -4.3711392e-08, 1, -1, -8.742278e-08, 4.3711392e-08, 8.742278e-08, -1, -4.3711395e-08, 1.7393312e-08, 1.7393305e-08, 0.3979125)
+shape = SubResource("BoxShape3D_gwbc7")

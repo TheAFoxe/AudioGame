@@ -1,10 +1,16 @@
-[gd_scene load_steps=6 format=3 uid="uid://mgp02mkor0at"]
+[gd_scene load_steps=7 format=3 uid="uid://mgp02mkor0at"]
 
 [ext_resource type="Script" uid="uid://b74aq41vgfphe" path="res://main.gd" id="1_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://c201kqm66rjry" path="res://source/ui/pause_menu.tscn" id="2_0xm2m"]
 [ext_resource type="PackedScene" uid="uid://cyuvbun204jb8" path="res://source/levels/testing/level_testing.tscn" id="2_h2yge"]
 [ext_resource type="PackedScene" uid="uid://ckudr8chj1kgo" path="res://source/player/player.tscn" id="3_7mycd"]
 [ext_resource type="Script" uid="uid://b1fayhcx4kdi4" path="res://fps.gd" id="5_lquwl"]
+
+[sub_resource type="Environment" id="Environment_lquwl"]
+background_mode = 1
+background_color = Color(0.21230483, 0.21230483, 0.21230483, 1)
+ssao_enabled = true
+sdfgi_enabled = true
 
 [node name="Main" type="Node3D"]
 process_mode = 3
@@ -20,5 +26,8 @@ process_mode = 3
 offset_right = 40.0
 offset_bottom = 23.0
 script = ExtResource("5_lquwl")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_lquwl")
 
 [connection signal="exit" from="PauseMenu" to="." method="_on_pause_menu_exit"]

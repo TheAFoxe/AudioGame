@@ -10,9 +10,8 @@ var is_picking: bool = false
 @export var sens = 0.001
 
 @onready var raycast: RayCast3D = $Node3D/Camera3D/RayCast3D
-@onready var origin: Node3D = $Node3D/Camera3D/RayCast3D/Node3D
+@onready var origin: Node3D = $Origin
 @onready var camera: Camera3D = $Node3D/Camera3D
-
 
 func _ready() -> void:
 	pass
@@ -29,10 +28,10 @@ func _unhandled_input(event: InputEvent):
 		else:
 			object_grab()
 	
-	if event.is_action("rotate_left"):
-		origin.global_rotation.y += deg_to_rad(2)
-	if event.is_action("rotate_right"):
-		origin.global_rotation.y -= deg_to_rad(2)
+	#if event.is_action("rotate_left"):
+		#origin.global_rotation.y += deg_to_rad(2)
+	#if event.is_action("rotate_right"):
+		#origin.global_rotation.y -= deg_to_rad(2)
 
 
 func _physics_process(delta: float) -> void:
