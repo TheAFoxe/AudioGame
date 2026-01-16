@@ -47,7 +47,7 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 
-func object_grab():
+func object_grab() -> void:
 	if not raycast.is_colliding():
 		return
 	collider = raycast.get_collider().owner
@@ -56,7 +56,8 @@ func object_grab():
 	is_picking = true
 
 
-func object_release():
+func object_release() -> void:
+	if not collider.can_place: return
 	collider.place()
 	collider = null
 	is_picking = false

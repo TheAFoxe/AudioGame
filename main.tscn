@@ -9,8 +9,6 @@
 [sub_resource type="Environment" id="Environment_lquwl"]
 background_mode = 1
 background_color = Color(0.21230483, 0.21230483, 0.21230483, 1)
-ssao_enabled = true
-sdfgi_enabled = true
 
 [node name="Main" type="Node3D"]
 process_mode = 3

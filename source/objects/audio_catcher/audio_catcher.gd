@@ -10,6 +10,7 @@ var mat = StandardMaterial3D.new()
 @onready var mesh: MeshInstance3D = $MeshInstance3D
 
 func _ready() -> void:
+	super()
 	mesh.material_override = mat
 
 func activate() -> void:

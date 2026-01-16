@@ -31,6 +31,7 @@ var last_hit: Node3D
 
 
 func _ready() -> void:
+	super()
 	max_bounces = max_bounces + 1
 	
 	sound_timer.wait_time = audio.get_length()

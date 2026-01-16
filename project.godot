@@ -71,10 +71,13 @@ rotate_right={
 
 3d_physics/layer_1="Player"
 3d_physics/layer_2="Interact"
+3d_physics/layer_3="Place"
 3d_physics/layer_10="SoundWave"
 
 [rendering]
 
 lights_and_shadows/directional_shadow/soft_shadow_filter_quality=0
 lights_and_shadows/positional_shadow/soft_shadow_filter_quality=5
-anti_aliasing/quality/msaa_3d=2
+global_illumination/gi/use_half_resolution=true
+global_illumination/sdfgi/probe_ray_count=0
+global_illumination/sdfgi/frames_to_update_lights=3
