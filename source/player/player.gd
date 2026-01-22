@@ -11,9 +11,10 @@ var can_move: bool = true
 
 @export var sens = 0.001
 
-@onready var raycast: RayCast3D = $Node3D/Camera3D/RayCast3D
+@onready var raycast: RayCast3D = $CameraNode/Camera3D/RayCast3D
 @onready var origin: Node3D = $Origin
-@onready var camera: Camera3D = $Node3D/Camera3D
+@onready var camera: Camera3D = $CameraNode/Camera3D
+@onready var camera_node: Node3D = $CameraNode
 
 func _ready() -> void:
 	emit_signal("player", self)
@@ -23,7 +24,7 @@ func _ready() -> void:
 func _unhandled_input(event: InputEvent):
 	if event is InputEventMouseMotion:
 		rotate_y(-event.relative.x * sens)
-		$"Node3D".rotate_x(-event.relative.y * sens)
+		camera_node.rotate_x(-event.relative.y * sens)
 	
 	if event.is_action_pressed("grab"):
 		if is_picking:
@@ -70,4 +71,4 @@ func object_release() -> void:
 	can_move = true
 	collider = null
 	is_picking = false
-	camera.global_position = $Node3D.global_position
+	camera.global_position = camera_node.global_position
