@@ -15,7 +15,7 @@ size = Vector2(10, 10)
 process_mode = 1
 
 [node name="AudioCaster" parent="." instance=ExtResource("2_ekru5")]
-transform = Transform3D(0.54978114, 0, 0.83530873, 0, 1, 0, -0.83530873, 0, 0.54978114, 3.503029, 0.6, -0.09015989)
+transform = Transform3D(0.54978114, 0, 0.83530873, 0, 1, 0, -0.83530873, 0, 0.54978114, 6.503029, 0.6, -0.09015989)
 max_bounces = 1
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
@@ -38,4 +38,4 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.43052673, 2.3841858e-07, 1.
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.064397335, 0, -1.2442778)
 
 [node name="AudioCaster2" parent="." instance=ExtResource("2_ekru5")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.6666515, -2.3841858e-07, 1.1136522)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.3333483, -2.3841858e-07, 1.1136522)

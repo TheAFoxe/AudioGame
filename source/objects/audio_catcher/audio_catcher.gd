@@ -11,6 +11,7 @@ var mat = StandardMaterial3D.new()
 
 func _ready() -> void:
 	super()
+	global_position.y = 1
 	mesh.material_override = mat
 
 func activate() -> void:

@@ -7,6 +7,8 @@ var speed = 5.0
 var jump_velocity = 4.5
 var is_picking: bool = false
 
+var can_move: bool = true
+
 @export var sens = 0.001
 
 @onready var raycast: RayCast3D = $Node3D/Camera3D/RayCast3D
@@ -14,7 +16,8 @@ var is_picking: bool = false
 @onready var camera: Camera3D = $Node3D/Camera3D
 
 func _ready() -> void:
-	pass
+	emit_signal("player", self)
+	connect("lock_movement", lock_movement)
 
 
 func _unhandled_input(event: InputEvent):
@@ -35,6 +38,7 @@ func _unhandled_input(event: InputEvent):
 
 
 func _physics_process(delta: float) -> void:
+	if not can_move: return
 	var input_dir := Input.get_vector("left", "right", "forward", "back")
 	var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	if direction:
@@ -47,17 +51,23 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 
+func lock_movement():
+	can_move = false
+
+
 func object_grab() -> void:
 	if not raycast.is_colliding():
 		return
 	collider = raycast.get_collider().owner
 	if collider is PickableObject:
-		collider.pick(origin)
+		collider.pick(self)
 	is_picking = true
 
 
 func object_release() -> void:
 	if not collider.can_place: return
 	collider.place()
+	can_move = true
 	collider = null
 	is_picking = false
+	camera.global_position = $Node3D.global_position

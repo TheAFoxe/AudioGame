@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" uid="uid://b74aq41vgfphe" path="res://main.gd" id="1_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://c201kqm66rjry" path="res://source/ui/pause_menu.tscn" id="2_0xm2m"]
-[ext_resource type="PackedScene" uid="uid://cyuvbun204jb8" path="res://source/levels/testing/level_testing.tscn" id="2_h2yge"]
 [ext_resource type="PackedScene" uid="uid://ckudr8chj1kgo" path="res://source/player/player.tscn" id="3_7mycd"]
+[ext_resource type="PackedScene" uid="uid://i1686kge5k3e" path="res://source/ui/main_menu.tscn" id="5_7mycd"]
 [ext_resource type="Script" uid="uid://b1fayhcx4kdi4" path="res://fps.gd" id="5_lquwl"]
 
 [sub_resource type="Environment" id="Environment_lquwl"]
@@ -13,8 +13,6 @@ background_color = Color(0.21230483, 0.21230483, 0.21230483, 1)
 [node name="Main" type="Node3D"]
 process_mode = 3
 script = ExtResource("1_1bvp3")
-testing_scene = ExtResource("2_h2yge")
-player_scene = ExtResource("3_7mycd")
 
 [node name="PauseMenu" parent="." instance=ExtResource("2_0xm2m")]
 process_mode = 2
@@ -28,4 +26,10 @@ script = ExtResource("5_lquwl")
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_lquwl")
 
+[node name="MainMenu" parent="." instance=ExtResource("5_7mycd")]
+
+[node name="Player" parent="." instance=ExtResource("3_7mycd")]
+
 [connection signal="exit" from="PauseMenu" to="." method="_on_pause_menu_exit"]
+[connection signal="main_menu" from="PauseMenu" to="." method="_on_pause_menu_main_menu"]
+[connection signal="level_pick" from="MainMenu" to="." method="_on_main_menu_level_pick"]

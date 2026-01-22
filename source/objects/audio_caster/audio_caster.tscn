@@ -56,3 +56,6 @@ collision_mask = 4
 [node name="CollisionShape3D" type="CollisionShape3D" parent="AreaPlace"]
 transform = Transform3D(4.3711392e-08, -4.3711392e-08, 1, -1, -8.742278e-08, 4.3711392e-08, 8.742278e-08, -1, -4.3711395e-08, 1.7393312e-08, 1.7393305e-08, 0.3979125)
 shape = SubResource("BoxShape3D_gwbc7")
+
+[node name="PlayerCameraMarker" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.6)

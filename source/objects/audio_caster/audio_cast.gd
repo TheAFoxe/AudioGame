@@ -32,6 +32,10 @@ var last_hit: Node3D
 
 func _ready() -> void:
 	super()
+	can_move = false
+	global_position.y = 1
+	player_camera_marker = $PlayerCameraMarker
+	
 	max_bounces = max_bounces + 1
 	
 	sound_timer.wait_time = audio.get_length()
@@ -68,14 +72,18 @@ func _ready() -> void:
 	instance.material_override = mat
 	instance.mesh = debug_line
 	add_child(instance)
+	print(audio_streamer_array)
 
 
 func _physics_process(delta: float) -> void:
 	debug_line.clear_surfaces()
 	_active_audio_players.clear()
+	
 	for i in audio_debug_array:
 		i.hide()
+	
 	cast()
+	
 	for i in audio_streamer_array.size():
 		if i in _active_audio_players: continue
 		audio_streamer_array.get(i).stream_paused = true
@@ -120,7 +128,7 @@ func cast() -> void:
 		draw_debug(from, to)
 		
 		if player_hitted:
-			sound(from, to, player_position, player_hit_count, direction)
+			#sound(from, to, player_position, player_hit_count, direction)
 			player_hit_count += 1
 			player_hitted = false
 		
@@ -158,19 +166,20 @@ func draw_debug(from, to) -> void:
 
 
 func sound(line_start: Vector3, line_end: Vector3, point_position: Vector3, id: int, direction: Vector3):
-	var audio_stream: AudioStreamPlayer3D = audio_streamer_array.get(id)
+	pass
+	#var audio_stream: AudioStreamPlayer3D = audio_streamer_array.get(id)
 	
-	var closest_position := Geometry3D.get_closest_point_to_segment(point_position - direction, line_start, line_end)
-	audio_stream.global_position = closest_position
-	
-	var sync_time = sound_timer.wait_time - sound_timer.time_left
-	if abs(audio_stream.get_playback_position() - sync_time) > 0.1:
-		audio_stream.seek(sync_time)
-	
-	audio_stream.stream_paused = false
-	_active_audio_players.append(id)
-	
-	if debug:
-		audio_debug = audio_debug_array.get(id)
-		audio_debug.global_position = audio_stream.global_position
-		audio_debug.show()
+	#var closest_position := Geometry3D.get_closest_point_to_segment(point_position - direction, line_start, line_end)
+	#audio_stream.global_position = closest_position
+	#
+	#var sync_time = sound_timer.wait_time - sound_timer.time_left
+	#if abs(audio_stream.get_playback_position() - sync_time) > 0.1:
+		#audio_stream.seek(sync_time)
+	#
+	#audio_stream.stream_paused = false
+	#_active_audio_players.append(id)
+	#
+	#if debug:
+		#audio_debug = audio_debug_array.get(id)
+		#audio_debug.global_position = audio_stream.global_position
+		#audio_debug.show()

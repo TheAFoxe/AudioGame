@@ -3,16 +3,22 @@ class_name PickableObject
 
 var is_picked: bool
 var origin: Node3D
-var _duplicated: PickableObject
 var collision: StaticBody3D
 
 var area_place: Area3D
 var can_move: bool
+var can_rotate: bool
 var can_place: bool
+
+var player: CharacterBody3D
+
+var player_camera: Camera3D
+var player_camera_marker: Marker3D
 
 
 func _ready() -> void:
 	can_move = true
+	can_rotate = true
 	can_place = true
 	area_place = $AreaPlace
 	area_place.area_entered.connect(_on_area_entered)
@@ -20,15 +26,18 @@ func _ready() -> void:
 	print(self)
 	if $Mesh:
 		collision = $Mesh.get_child(1)
-		print(collision.collision_layer)
-
+	
 
 func _process(delta: float) -> void:
-	if is_picked:
-		#if can_move:
+	if not is_picked: return
+	if can_move:
+		var global_y =  global_position.y
 		global_position = global_position.lerp(origin.global_position, .7)
+		global_position.y = global_y
+	else: 
+		player_camera.global_position = player_camera.global_position.lerp(player_camera_marker.global_position, 0.7)
+	if can_rotate:
 		global_rotation.y = lerp_angle(global_rotation.y, origin.global_rotation.y, 0.5)
-		print(area_place.get_overlapping_areas())
 
 
 func _on_area_exited(area):
@@ -38,16 +47,17 @@ func _on_area_exited(area):
 
 
 func _on_area_entered(area):
-	print(can_place)
 	can_place = false
 
 
-func pick(player_origin: Node3D):
-	origin = player_origin
+func pick(player: Node3D):
+	origin = player.origin
+	player_camera = player.camera
 	if $Mesh:
 		collision = $Mesh.get_child(1)
 		collision.collision_layer = 0
-		
+	if not can_move: 
+		player.can_move = false
 	is_picked = true
 
 
