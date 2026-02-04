@@ -3,8 +3,25 @@ class_name AudioCast
 
 @export var debug: bool
 
+enum Fret {OPEN, FIRST, SECOND, THIRD, FOURTH, NONE}
+
+@export_category("Chord")
+@export var s6: Fret
+@export var s5: Fret
+@export var s4: Fret
+@export var s3: Fret
+@export var s2: Fret
+@export var s1: Fret
+var chord: Dictionary = {
+	"6": null,
+	"5": null,
+	"4": null,
+	"3": null,
+	"2": null,
+	"1": null
+}
+
 @export_category("AudioStream")
-@export var audio: AudioStream
 @export var audio_max_distance: float
 @export var audio_volume: float
 @export var audio_max_volume: float
@@ -38,7 +55,6 @@ func _ready() -> void:
 	
 	max_bounces = max_bounces + 1
 	
-	sound_timer.wait_time = audio.get_length()
 	sound_timer.one_shot = false
 	sound_timer.start()
 	
@@ -51,18 +67,19 @@ func _ready() -> void:
 		audio_debug.position.y = i + 0.2
 		audio_debug_array.append(audio_debug)
 	
+	#var audio: AudioStreamMP3
+	set_chord()
+	#
 	for i in max_bounces:
 		var audio_stream = AudioStreamPlayer3D.new()
 		add_child(audio_stream)
-		audio_stream.stream = audio
-		audio_stream.attenuation_model = audio_attenuation_model
-		audio_stream.max_distance = audio_max_distance
-		audio_stream.playing = true
-		audio_stream.stream.loop = true
-		audio_stream.stream_paused = false
-		audio_stream.max_db = audio_max_volume
-		audio_stream.volume_db = audio_volume
-		audio_streamer_array.append(audio_stream)
+		audio_stream.stream = AudioStreamPolyphonic.new()
+		audio_stream.max_polyphony = 6
+		var sfx = "my_path"
+		#var playback = (AudioStreamPlaybackPolyphonic)audio_stream.GetStreamPlayback();
+		var playback = audio_stream.get_stream_playback()
+		#playback.PlayStream(sfx, 0, volume, 1, 0, "SFX");
+		playback.
 	
 	var mat = StandardMaterial3D.new()
 	mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
@@ -89,6 +106,27 @@ func _physics_process(delta: float) -> void:
 		audio_streamer_array.get(i).stream_paused = true
 
 
+func set_chord() -> void:
+	chord['6'] = s6
+	chord['5'] = s5
+	chord['4'] = s4
+	chord['3'] = s3
+	chord['2'] = s2
+	chord['1'] = s1
+	
+	for c in chord:
+		var fret_value = chord[c]
+		if fret_value == Fret.NONE: continue
+		var fret_name = Fret.keys()[fret_value].to_lower()
+		var path = "res://source/sounds/" + c + "_" + fret_name + "_" + str(randi_range(0, 3)) + ".wav"
+		chord[c] = load(path)
+		print(chord[c])
+
+
+func play_strum() -> void:
+	pass
+
+
 func cast() -> void:
 	var player_hit_count: int = 0
 	var player_hitted: bool = false
@@ -108,14 +146,13 @@ func cast() -> void:
 	query.collide_with_areas = true
 	query.hit_from_inside = true
 	
-	debug_line.surface_begin(Mesh.PRIMITIVE_LINES)
+	if debug:
+		debug_line.surface_begin(Mesh.PRIMITIVE_LINES)
 	
 	while current_bounce < max_bounces:
 		query.from = current_start
 		query.to = query.from + direction * ray_length
-		
 		result = space_state.intersect_ray(query)
-		
 		if not result:
 			break_after = true
 			from = query.from
@@ -126,37 +163,32 @@ func cast() -> void:
 			to = result.position
 			current_hit = result.collider.owner
 		draw_debug(from, to)
-		
 		if player_hitted:
-			sound(from, to, player_position, player_hit_count, direction)
+			#sound(from, to, player_position, player_hit_count, direction)
 			player_hit_count += 1
 			player_hitted = false
-		
 		if not current_hit == last_hit:
 			if current_hit is AudioCatcher:
 				current_hit.activate()
 			if last_hit is AudioCatcher:
 				last_hit.deactivate()
 			last_hit = current_hit
-		
 		if current_hit is AudioCatcher:
 			break_after = true 
-		
 		if break_after: 
 			break
-		
 		if current_hit is Player:
 			player_hitted = true
 			player_position = result.collider.global_position
 			query.exclude = [result.rid]
 			continue
-		
 		query.exclude = []
 		direction = direction.bounce(result.normal)
 		current_start = result.position + (result.normal * 0.005)
 		current_bounce += 1
 	
-	debug_line.surface_end()
+	if debug:
+		debug_line.surface_end()
 
 
 func draw_debug(from, to) -> void:

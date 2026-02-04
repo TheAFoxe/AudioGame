@@ -23,7 +23,6 @@ func _ready() -> void:
 	area_place = $AreaPlace
 	area_place.area_entered.connect(_on_area_entered)
 	area_place.area_exited.connect(_on_area_exited)
-	print(self)
 	if $Mesh:
 		collision = $Mesh.get_child(1)
 	
