@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://dki0bt14ijkli"]
+
+[ext_resource type="Script" uid="uid://bhgrbo0io4o1y" path="res://source/objects/audio_player/audio_player.gd" id="1_gdjx8"]
+[ext_resource type="Script" uid="uid://c1fbx2o5kwwbv" path="res://source/sounds/chord.gd" id="2_gssan"]
+[ext_resource type="Script" uid="uid://ba2r0fu1y6g0b" path="res://source/sounds/note.gd" id="2_osbty"]
+[ext_resource type="Script" uid="uid://be7rkgkia3rma" path="res://source/sounds/lib_note.gd" id="3_pdcn6"]
+
+[sub_resource type="Resource" id="Resource_osbty"]
+script = ExtResource("3_pdcn6")
+metadata/_custom_type_script = "uid://be7rkgkia3rma"
+
+[sub_resource type="Resource" id="Resource_pdcn6"]
+script = ExtResource("2_gssan")
+lib_note = SubResource("Resource_osbty")
+metadata/_custom_type_script = "uid://c1fbx2o5kwwbv"
+
+[node name="AudioPlayer" type="AudioStreamPlayer3D" unique_id=1146787152]
+script = ExtResource("1_gdjx8")
+chord = SubResource("Resource_pdcn6")

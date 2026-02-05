@@ -3,23 +3,8 @@ class_name AudioCast
 
 @export var debug: bool
 
-enum Fret {OPEN, FIRST, SECOND, THIRD, FOURTH, NONE}
-
 @export_category("Chord")
-@export var s6: Fret
-@export var s5: Fret
-@export var s4: Fret
-@export var s3: Fret
-@export var s2: Fret
-@export var s1: Fret
-var chord: Dictionary = {
-	"6": null,
-	"5": null,
-	"4": null,
-	"3": null,
-	"2": null,
-	"1": null
-}
+@export var chord_resource: Chord
 
 @export_category("AudioStream")
 @export var audio_max_distance: float
@@ -40,6 +25,7 @@ var audio_debug: MeshInstance3D
 var audio_streamer_array := []
 var current_hit: Node3D
 var last_hit: Node3D
+var polyphonic_stream: AudioStreamPolyphonic
 
 @onready var query: PhysicsRayQueryParameters3D = PhysicsRayQueryParameters3D.create(Vector3.ZERO, Vector3.ZERO, collision_mask)
 @onready var root := $".."
@@ -67,19 +53,14 @@ func _ready() -> void:
 		audio_debug.position.y = i + 0.2
 		audio_debug_array.append(audio_debug)
 	
-	#var audio: AudioStreamMP3
-	set_chord()
-	#
-	for i in max_bounces:
-		var audio_stream = AudioStreamPlayer3D.new()
-		add_child(audio_stream)
-		audio_stream.stream = AudioStreamPolyphonic.new()
-		audio_stream.max_polyphony = 6
-		var sfx = "my_path"
-		#var playback = (AudioStreamPlaybackPolyphonic)audio_stream.GetStreamPlayback();
-		var playback = audio_stream.get_stream_playback()
-		#playback.PlayStream(sfx, 0, volume, 1, 0, "SFX");
-		playback.
+	
+	var audio_stream = AudioPlayer.new()
+	polyphonic_stream = AudioStreamPolyphonic.new()
+	audio_stream.stream = polyphonic_stream
+	audio_stream.chord = chord_resource
+	audio_stream.max_distance = audio_max_distance
+	add_child(audio_stream)
+	
 	
 	var mat = StandardMaterial3D.new()
 	mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
@@ -89,7 +70,6 @@ func _ready() -> void:
 	instance.material_override = mat
 	instance.mesh = debug_line
 	add_child(instance)
-	print(audio_streamer_array)
 
 
 func _physics_process(delta: float) -> void:
@@ -104,23 +84,6 @@ func _physics_process(delta: float) -> void:
 	for i in audio_streamer_array.size():
 		if i in _active_audio_players: continue
 		audio_streamer_array.get(i).stream_paused = true
-
-
-func set_chord() -> void:
-	chord['6'] = s6
-	chord['5'] = s5
-	chord['4'] = s4
-	chord['3'] = s3
-	chord['2'] = s2
-	chord['1'] = s1
-	
-	for c in chord:
-		var fret_value = chord[c]
-		if fret_value == Fret.NONE: continue
-		var fret_name = Fret.keys()[fret_value].to_lower()
-		var path = "res://source/sounds/" + c + "_" + fret_name + "_" + str(randi_range(0, 3)) + ".wav"
-		chord[c] = load(path)
-		print(chord[c])
 
 
 func play_strum() -> void:

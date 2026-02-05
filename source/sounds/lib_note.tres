@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="LibNote" format=3 uid="uid://c0kdvojx5t8gh"]
+
+[ext_resource type="Script" uid="uid://ba2r0fu1y6g0b" path="res://source/sounds/note.gd" id="1_w7qij"]
+[ext_resource type="Script" uid="uid://be7rkgkia3rma" path="res://source/sounds/lib_note.gd" id="2_1hq4x"]
+
+[resource]
+script = ExtResource("2_1hq4x")
+metadata/_custom_type_script = "uid://be7rkgkia3rma"
