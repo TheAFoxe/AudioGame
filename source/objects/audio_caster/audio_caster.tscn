@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://bn7yn1dsic15a"]
 
 [ext_resource type="Script" uid="uid://ctbfuxgcioqm4" path="res://source/objects/audio_caster/audio_cast.gd" id="1_05k0i"]
-[ext_resource type="AudioStream" uid="uid://b5ycxh5a7ge8p" path="res://source/objects/audio_caster/ambient-pads-loop-296968.mp3" id="2_dyft4"]
 [ext_resource type="Script" uid="uid://c1fbx2o5kwwbv" path="res://source/sounds/chord.gd" id="2_qx0g4"]
 [ext_resource type="PackedScene" uid="uid://xfr2qedv6flg" path="res://meshes/SpeakerBlock.blend" id="3_gwbc7"]
 
@@ -22,8 +21,8 @@ script = ExtResource("1_05k0i")
 debug = true
 chord_resource = SubResource("Resource_qx0g4")
 audio_max_distance = 3.5
-audio_volume = 20.0
-audio_max_volume = 30.0
+audio_volume = 1.0
+audio_max_volume = 3.0
 ray_length = 40.0
 max_bounces = 7
 collision_mask = 512
@@ -33,11 +32,6 @@ gizmo_extents = 1.15
 
 [node name="DebugSphere" type="MeshInstance3D" parent="." unique_id=303619989]
 mesh = SubResource("SphereMesh_05k0i")
-
-[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=1550155052]
-visible = false
-stream = ExtResource("2_dyft4")
-max_distance = 10.0
 
 [node name="Timer" type="Timer" parent="." unique_id=1177555534]
 

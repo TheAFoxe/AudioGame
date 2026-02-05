@@ -1,6 +1,8 @@
 extends PickableObject
 class_name AudioCast
 
+signal send_chord_to_hitted(receiver, chord)
+
 @export var debug: bool
 
 @export_category("Chord")
@@ -26,6 +28,7 @@ var audio_streamer_array := []
 var current_hit: Node3D
 var last_hit: Node3D
 var polyphonic_stream: AudioStreamPolyphonic
+var chord: Array
 
 @onready var query: PhysicsRayQueryParameters3D = PhysicsRayQueryParameters3D.create(Vector3.ZERO, Vector3.ZERO, collision_mask)
 @onready var root := $".."
@@ -41,6 +44,8 @@ func _ready() -> void:
 	
 	max_bounces = max_bounces + 1
 	
+	chord = [chord_resource.s6, chord_resource.s5, chord_resource.s4, chord_resource.s3, chord_resource.s2, chord_resource.s1]
+	
 	sound_timer.one_shot = false
 	sound_timer.start()
 	
@@ -53,15 +58,18 @@ func _ready() -> void:
 		audio_debug.position.y = i + 0.2
 		audio_debug_array.append(audio_debug)
 	
+	# AUDIO
+	for i in max_bounces:
+		var audio_stream = AudioPlayer.new()
+		audio_stream.stream = polyphonic_stream
+		audio_stream.chord = chord_resource
+		audio_stream.max_distance = audio_max_distance
+		audio_stream.max_db = audio_max_volume
+		audio_stream.volume_db = audio_volume
+		add_child(audio_stream)
+		audio_streamer_array.append(audio_stream)
 	
-	var audio_stream = AudioPlayer.new()
-	polyphonic_stream = AudioStreamPolyphonic.new()
-	audio_stream.stream = polyphonic_stream
-	audio_stream.chord = chord_resource
-	audio_stream.max_distance = audio_max_distance
-	add_child(audio_stream)
-	
-	
+	# MATERIAL
 	var mat = StandardMaterial3D.new()
 	mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
 	mat.albedo_color = Color.RED
@@ -83,11 +91,7 @@ func _physics_process(delta: float) -> void:
 	
 	for i in audio_streamer_array.size():
 		if i in _active_audio_players: continue
-		audio_streamer_array.get(i).stream_paused = true
-
-
-func play_strum() -> void:
-	pass
+		audio_streamer_array.get(i).global_position = Vector3(0, 50, 0)
 
 
 func cast() -> void:
@@ -96,14 +100,9 @@ func cast() -> void:
 	var player_position: Vector3
 	var current_bounce: int = 0
 	var result: Dictionary
-	
-	var from: Vector3
-	var to: Vector3
-	var break_after: bool = false
-	
 	var space_state := get_world_3d().direct_space_state
 	var direction := -global_transform.basis.z
-	var current_start := global_position# + Vector3(0, audio_caster.global_position.y, 0)
+	var current_start := global_position
 	
 	query.exclude = []
 	query.collide_with_areas = true
@@ -116,42 +115,52 @@ func cast() -> void:
 		query.from = current_start
 		query.to = query.from + direction * ray_length
 		result = space_state.intersect_ray(query)
+		
 		if not result:
-			break_after = true
-			from = query.from
-			to = query.to
+			if player_hitted:
+				sound(query.from, query.to, player_position, player_hit_count, direction)
+			draw_debug(query.from, query.to)
 			current_hit = null
-		else:
-			from = query.from
-			to = result.position
-			current_hit = result.collider.owner
-		draw_debug(from, to)
+			break
+		
+		var collider = result.collider
+		current_hit = collider.owner if collider.owner else collider
+		if current_hit == null:
+			push_error("Current hit is null, returning")
+			return
+		
+		if current_hit is Player:
+			player_hitted = true
+			player_position = result.collider.global_position
+			player_hit_count += 1
+			query.exclude = [result.rid]
+			continue
 		if player_hitted:
-			#sound(from, to, player_position, player_hit_count, direction)
+			sound(query.from, result.position, player_position, player_hit_count, direction)
 			player_hit_count += 1
 			player_hitted = false
-		if not current_hit == last_hit:
+		
+		if current_hit != last_hit:
 			if current_hit is AudioCatcher:
 				current_hit.activate()
 			if last_hit is AudioCatcher:
 				last_hit.deactivate()
+			if current_hit.has_method("receive_chord"):
+				current_hit.receive_chord(chord)
 			last_hit = current_hit
+		
 		if current_hit is AudioCatcher:
-			break_after = true 
-		if break_after: 
+			draw_debug(query.from, result.position)
 			break
-		if current_hit is Player:
-			player_hitted = true
-			player_position = result.collider.global_position
-			query.exclude = [result.rid]
-			continue
+		
+		
+		draw_debug(query.from, result.position)
 		query.exclude = []
 		direction = direction.bounce(result.normal)
 		current_start = result.position + (result.normal * 0.005)
 		current_bounce += 1
 	
-	if debug:
-		debug_line.surface_end()
+	if debug: debug_line.surface_end()
 
 
 func draw_debug(from, to) -> void:
@@ -166,11 +175,6 @@ func sound(line_start: Vector3, line_end: Vector3, point_position: Vector3, id: 
 	var closest_position := Geometry3D.get_closest_point_to_segment(point_position - direction, line_start, line_end)
 	audio_stream.global_position = closest_position
 	
-	var sync_time = sound_timer.wait_time - sound_timer.time_left
-	if abs(audio_stream.get_playback_position() - sync_time) > 0.1:
-		audio_stream.seek(sync_time)
-	
-	audio_stream.stream_paused = false
 	_active_audio_players.append(id)
 	
 	if debug:

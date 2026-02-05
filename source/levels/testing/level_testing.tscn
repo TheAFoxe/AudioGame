@@ -45,9 +45,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5791068, 0, 2.8024552)
 [node name="AudioCaster2" parent="." unique_id=1613947105 instance=ExtResource("5_rkgcr")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.0506494, 0, 3.3350449)
 chord_resource = SubResource("Resource_2xmcw")
-audio_max_distance = 5.0
-audio_volume = 0.0
-audio_max_volume = 0.0
+audio_volume = 1.0
+audio_max_volume = 3.0
 
 [node name="Kamerton2" parent="." unique_id=436026294 instance=ExtResource("6_26u8l")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.7971087, 0.4810531, 1.0490721)
