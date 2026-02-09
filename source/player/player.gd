@@ -1,5 +1,4 @@
 extends CharacterBody3D
-
 class_name Player
 
 var collider: Node3D
@@ -18,7 +17,6 @@ var can_move: bool = true
 
 func _ready() -> void:
 	emit_signal("player", self)
-	connect("lock_movement", lock_movement)
 
 
 func _unhandled_input(event: InputEvent):
@@ -66,7 +64,7 @@ func object_grab() -> void:
 
 
 func object_release() -> void:
-	if not collider.can_place: return
+	if not collider or not collider.can_place: return
 	collider.place()
 	can_move = true
 	collider = null

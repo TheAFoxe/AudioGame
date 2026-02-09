@@ -25,6 +25,7 @@ const AUDIO_PLAYER_OFFSET: float = 1.0
 
 # Public variables
 var current_hit: Node3D
+var previous_hit: Node3D
 var chord: Array
 
 # Private variables
@@ -48,12 +49,13 @@ var _last_ray_hit_path: Array[Node3D] = []
 		collision_mask
 	)
 )
-@onready var _sound_timer: Timer = $Timer
-@onready var _audio_caster: Marker3D = $AudioCast
 
 
 func _ready() -> void:
 	super()
+	
+	_polyphonic_stream = AudioStreamPolyphonic.new()
+	_polyphonic_stream.polyphony = 6
 	
 	can_move = false
 	global_position.y = 1
@@ -72,15 +74,6 @@ func _ready() -> void:
 		chord_resource.s2,
 		chord_resource.s1
 	]
-	
-	_sound_timer.one_shot = false
-	_sound_timer.start()
-	
-	for i in max_bounces:
-		_current_ray_hit_path.append(null)
-		_last_ray_hit_path.append(null)
-	
-	chord = [chord_resource.s6, chord_resource.s5, chord_resource.s4, chord_resource.s3, chord_resource.s2, chord_resource.s1]
 	
 	_create_debug_visualization()
 	_create_audio_players()
@@ -134,6 +127,8 @@ func cast() -> void:
 				)
 			player_hitted = false
 		
+
+
 		if not result:
 			_draw_debug_line(_ray_query.from, _ray_query.to)
 			current_hit = null
@@ -194,7 +189,6 @@ func _create_debug_visualization() -> void:
 func _create_audio_players() -> void:
 	for i in max_bounces:
 		var audio_stream = AudioPlayer.new()
-		audio_stream.stream = _polyphonic_stream
 		audio_stream.chord = chord_resource
 		audio_stream.max_distance = audio_max_distance
 		audio_stream.max_db = audio_max_volume
@@ -204,10 +198,10 @@ func _create_audio_players() -> void:
 
 
 func _update_audio_catcher_state(new_hit: Node3D, previous_hit: Node3D) -> void:
-		if new_hit is AudioCatcher:
-			new_hit.activate()
-		if previous_hit is AudioCatcher:
-			previous_hit.deactivate()
+	if new_hit is AudioCatcher:
+		new_hit.activate()
+	if previous_hit is AudioCatcher:
+		previous_hit.deactivate()
 
 
 func _place_audio_at_player(line_start: Vector3, line_end: Vector3, player_position: Vector3, audio_id: int, ray_direction: Vector3) -> void:
