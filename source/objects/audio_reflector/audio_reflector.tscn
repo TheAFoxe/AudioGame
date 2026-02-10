@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://c51p6istrw0ec"]
+[gd_scene format=3 uid="uid://c51p6istrw0ec"]
 
 [ext_resource type="Script" uid="uid://dlfwfvers8mgy" path="res://source/objects/audio_reflector/audio_reflector.gd" id="1_2herq"]
 
@@ -12,43 +12,46 @@ data = PackedVector3Array(-1, 1, 0.049999997, 1, 1, 0.049999997, -1, -1, 0.04999
 [sub_resource type="BoxShape3D" id="BoxShape3D_2herq"]
 size = Vector3(2, 2, 0.1)
 
+[sub_resource type="HeightMapShape3D" id="HeightMapShape3D_2herq"]
+
 [sub_resource type="HeightMapShape3D" id="HeightMapShape3D_24ya2"]
 
-[node name="AudioReflector" type="Node3D"]
+[node name="AudioReflector" type="Node3D" unique_id=1189587396]
 process_mode = 1
 script = ExtResource("1_2herq")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=532998981]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 mesh = SubResource("BoxMesh_2t2el")
 
-[node name="AreaPick" type="Area3D" parent="."]
+[node name="AreaPick" type="Area3D" parent="." unique_id=454085466]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 collision_layer = 2
 collision_mask = 2
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="AreaPick"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="AreaPick" unique_id=1065754188]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 shape = SubResource("ConcavePolygonShape3D_cvuvx")
 
-[node name="AreaPlace" type="Area3D" parent="."]
+[node name="AreaPlace" type="Area3D" parent="." unique_id=905824360]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 collision_layer = 4
 collision_mask = 4
 input_ray_pickable = false
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="AreaPlace"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="AreaPlace" unique_id=344069513]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 shape = SubResource("BoxShape3D_2herq")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="."]
+[node name="StaticBody3D" type="Area3D" parent="." unique_id=334138472]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-collision_layer = 513
+collision_layer = 512
+collision_mask = 0
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=1010889580]
 transform = Transform3D(2, 0, 0, 0, -8.742278e-08, 2, 0, -2, -8.742278e-08, 0, 0, -0.04899025)
-shape = SubResource("HeightMapShape3D_24ya2")
+shape = SubResource("HeightMapShape3D_2herq")
 
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="StaticBody3D"]
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="StaticBody3D" unique_id=1504728840]
 transform = Transform3D(-2, 3.019916e-07, 1.3200472e-14, 0, -8.742278e-08, 2, 3.019916e-07, 2, 8.742278e-08, 0, 0, 0.05100975)
 shape = SubResource("HeightMapShape3D_24ya2")

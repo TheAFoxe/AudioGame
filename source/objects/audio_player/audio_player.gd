@@ -13,7 +13,7 @@ func _ready() -> void:
 	self.stream = AudioStreamPolyphonic.new()
 	self.stream.polyphony = 6
 	#chord_in = [chord.s6, chord.s5, chord.s4, chord.s3, chord.s2, chord.s1]
-	play_chord()
+	#play_chord()
 
 
 func play_chord():
