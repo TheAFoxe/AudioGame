@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://b74aq41vgfphe" path="res://main.gd" id="1_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://c201kqm66rjry" path="res://source/ui/pause_menu.tscn" id="2_0xm2m"]
 [ext_resource type="PackedScene" uid="uid://i1686kge5k3e" path="res://source/ui/main_menu.tscn" id="5_7mycd"]
+[ext_resource type="PackedScene" uid="uid://ckudr8chj1kgo" path="res://source/player/player.tscn" id="5_272bh"]
 [ext_resource type="Script" uid="uid://b1fayhcx4kdi4" path="res://fps.gd" id="5_lquwl"]
 
 [sub_resource type="Environment" id="Environment_lquwl"]
@@ -27,6 +28,8 @@ process_mode = 1
 environment = SubResource("Environment_lquwl")
 
 [node name="MainMenu" parent="." unique_id=1406229279 instance=ExtResource("5_7mycd")]
+
+[node name="Player" parent="." unique_id=1225566035 instance=ExtResource("5_272bh")]
 
 [connection signal="exit" from="PauseMenu" to="." method="_on_pause_menu_exit"]
 [connection signal="main_menu" from="PauseMenu" to="." method="_on_pause_menu_main_menu"]

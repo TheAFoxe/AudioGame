@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://ckudr8chj1kgo"]
 
-[ext_resource type="Script" uid="uid://b0gd8hrqpvtbb" path="res://source/player/player.gd" id="1_4flbx"]
+[ext_resource type="Script" uid="uid://djfq1m02x6tqp" path="res://source/player/_player.gd" id="1_jct2x"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_sh265"]
 radius = 0.3
@@ -9,11 +9,11 @@ radius = 0.3
 height = 3.0
 radius = 3.5
 
-[node name="Player" type="CharacterBody3D" unique_id=1225566035]
+[node name="Player" type="CharacterBody3D" unique_id=1225566035 groups=["player"]]
 process_mode = 1
 collision_layer = 0
 floor_max_angle = 1.0471976
-script = ExtResource("1_4flbx")
+script = ExtResource("1_jct2x")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=204069106]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -44,4 +44,4 @@ collision_mask = 0
 shape = SubResource("CylinderShape3D_cnuiu")
 
 [node name="Origin" type="Node3D" parent="." unique_id=240127353]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -1)

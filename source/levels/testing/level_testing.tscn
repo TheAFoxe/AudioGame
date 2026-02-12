@@ -28,7 +28,7 @@ mesh = SubResource("PlaneMesh_26u8l")
 [node name="SpawnPoint" type="Marker3D" parent="." unique_id=1443279969]
 
 [node name="AudioReflector" parent="." unique_id=1189587396 instance=ExtResource("3_kksmv")]
-transform = Transform3D(0.9708547, 0, -0.2396689, 0, 1, 0, 0.2396689, 0, 0.9708547, 0, 0, -4)
+transform = Transform3D(0.9708547, 0, -0.2396689, 0, 1, 0, 0.2396689, 0, 0.9708547, 0, 1, -4)
 
 [node name="Node3D" parent="." unique_id=1790659427 instance=ExtResource("4_26u8l")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.03618765, 0, -3.010862)

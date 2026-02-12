@@ -57,7 +57,7 @@ func _physics_process(delta: float) -> void:
 	for i in _audio_streamers:
 		if i not in _active_audio_streams:
 			i.global_position = INACTIVE_AUDIO_PLAYER_POSITION
-			print(i.global_position)
+
 
 func _cast_ray() -> void:
 	var current_bounce: int = 0

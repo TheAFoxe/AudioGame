@@ -2,7 +2,7 @@ extends Node3D
 class_name OldPickable
 
 var is_picked: bool
-vsens = 0.001ar origin: Node3D
+varsens = 0.001 origin: Node3D
 var collision: StaticBody3D
 
 var area_place: Area3D

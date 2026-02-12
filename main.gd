@@ -1,86 +1,81 @@
 extends Node3D
 
-enum GAME_STATUS {main_menu, pause_menu, running}
+enum GameStatus {MAIN_MENU, PAUSE_MENU, RUNNING}
 
-var game_status
+@export var max_fps: int = 60
 
-var player_scene: PackedScene
+var game_status: GameStatus
 
-var player: Player
-var pause_menu: Control
-var main_menu: Control
-var current_level: Node3D
+var _current_level: Level
+
+@onready var _player: Player = $Player
+@onready var _main_menu: MainMenu = $MainMenu
+@onready var _pause_menu: PauseMenu = $PauseMenu
 
 
 func _ready():
-	pause_menu = $PauseMenu
-	main_menu = $MainMenu
+	_pause_menu = $PauseMenu
+	_main_menu = $MainMenu
 	
-	player_scene = load("res://source/player/player.tscn")
-	player = player_scene.instantiate()
+	_pause_menu.hide()
+	_main_menu.show()
 	
-	pause_menu.hide()
-	main_menu.show()
+	_pause_menu.hide()
+	_player.can_move = false
 	
-	pause_menu.hide()
-	add_child(player)
-	player.can_move = false
-	
-	Engine.max_fps = 60
-	#Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	Engine.max_fps = max_fps
 
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
 		match game_status:
-			GAME_STATUS.running:
-				pause_menu.show()
-				pause()
-			GAME_STATUS.main_menu:
-				pass
-			GAME_STATUS.pause_menu:
-				pause_menu.hide()
-				unpause()
+			GameStatus.RUNNING:
+				_pause_menu.show()
+				_pause()
+			GameStatus.PAUSE_MENU:
+				_pause_menu.hide()
+				_unpause()
 
 
-func pause() -> void:
-	game_status = GAME_STATUS.pause_menu
+func _pause() -> void:
+	game_status = GameStatus.PAUSE_MENU
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	get_tree().paused = true
 
-func unpause() -> void:
-	game_status = GAME_STATUS.running
+
+func _unpause() -> void:
+	game_status = GameStatus.RUNNING
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	get_tree().paused = false
 
+
 func _on_pause_menu_exit() -> void:
-	game_status = GAME_STATUS.pause_menu
 	get_tree().quit()
 
 
 func _on_pause_menu_main_menu() -> void:
-	game_status = GAME_STATUS.main_menu
-	player.can_move = false
-	pause_menu.hide()
-	main_menu.show()
-	remove_child(current_level)
+	game_status = GameStatus.MAIN_MENU
+	_player.can_move = false
+	_pause_menu.hide()
+	_main_menu.show()
+	remove_child(_current_level)
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 
 
 func _on_main_menu_level_pick(level: Variant) -> void:
-	game_status = GAME_STATUS.running
-	main_menu.hide()
+	game_status = GameStatus.RUNNING
+	_main_menu.hide()
 	
-	current_level = level.instantiate()
+	_current_level = level.instantiate()
 	
-	add_child(current_level)
+	add_child(_current_level)
 	
-	reset_player()
-	player.can_move = true
-	unpause()
+	_reset_player()
+	_unpause()
 
 
-func reset_player() -> void:
-	player.global_position = current_level.spawn_point.global_position
-	player.rotation = Vector3.ZERO
-	player.camera_node.rotation = Vector3.ZERO
+func _reset_player() -> void:
+	_player.global_position = _current_level.spawn_point.global_position
+	_player.rotation = Vector3.ZERO
+	_player.camera_node.rotation = Vector3.ZERO
+	_player.can_move = true
