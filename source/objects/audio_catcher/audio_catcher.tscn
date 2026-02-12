@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://coesjdeuspnqt"]
+[gd_scene format=3 uid="uid://coesjdeuspnqt"]
 
 [ext_resource type="Script" uid="uid://bn1yffmklidmw" path="res://source/objects/audio_catcher/audio_catcher.gd" id="1_s2xgv"]
 
@@ -6,30 +6,34 @@
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_1x50r"]
 
-[node name="Node3D" type="Node3D"]
+[sub_resource type="SphereShape3D" id="SphereShape3D_s2xgv"]
+
+[node name="Node3D" type="Node3D" unique_id=1790659427]
+process_mode = 1
 script = ExtResource("1_s2xgv")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=478972662]
 mesh = SubResource("SphereMesh_qlq3c")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
-collision_layer = 513
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
-shape = SubResource("SphereShape3D_1x50r")
-
-[node name="AreaPick" type="Area3D" parent="."]
+[node name="AreaPick" type="Area3D" parent="." unique_id=720603982]
 process_mode = 1
 collision_layer = 2
 collision_mask = 2
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="AreaPick"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="AreaPick" unique_id=112130794]
 shape = SubResource("SphereShape3D_1x50r")
 
-[node name="AreaPlace" type="Area3D" parent="."]
+[node name="AreaPlace" type="Area3D" parent="." unique_id=1369781563]
 process_mode = 1
 collision_layer = 4
 collision_mask = 4
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="AreaPlace"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="AreaPlace" unique_id=826263511]
 shape = SubResource("SphereShape3D_1x50r")
+
+[node name="StaticBody3D" type="Area3D" parent="." unique_id=2144488261]
+collision_layer = 512
+collision_mask = 512
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=357046536]
+shape = SubResource("SphereShape3D_s2xgv")

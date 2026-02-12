@@ -1,11 +1,10 @@
 [gd_scene format=3 uid="uid://cyuvbun204jb8"]
 
 [ext_resource type="Script" uid="uid://bfe086qntud3w" path="res://source/levels/testing/level_testing.gd" id="1_mtqjs"]
-[ext_resource type="PackedScene" uid="uid://c51p6istrw0ec" path="res://source/objects/audio_reflector/audio_reflector.tscn" id="3_kksmv"]
+[ext_resource type="PackedScene" uid="uid://c51p6istrw0ec" path="res://source/objects/reflector/audio_reflector.tscn" id="3_kksmv"]
 [ext_resource type="PackedScene" uid="uid://coesjdeuspnqt" path="res://source/objects/audio_catcher/audio_catcher.tscn" id="4_26u8l"]
 [ext_resource type="Texture2D" uid="uid://b0jtb2e8uqeb4" path="res://addons/kenney_prototype_textures/orange/texture_12.png" id="4_ekru5"]
-[ext_resource type="PackedScene" uid="uid://bbcfc3x5d6u2n" path="res://meshes/Kamerton.blend" id="6_26u8l"]
-[ext_resource type="Script" uid="uid://bv838lp8l7g7q" path="res://source/objects/audio_caster/ray_cast.gd" id="10_f00rj"]
+[ext_resource type="PackedScene" uid="uid://c5uipvqpwnnmc" path="res://source/ray_cast.tscn" id="5_kksmv"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kksmv"]
 albedo_texture = ExtResource("4_ekru5")
@@ -28,23 +27,11 @@ mesh = SubResource("PlaneMesh_26u8l")
 
 [node name="SpawnPoint" type="Marker3D" parent="." unique_id=1443279969]
 
-[node name="AudioReflector" parent="." unique_id=1563055885 instance=ExtResource("3_kksmv")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.15319347, 0, -3.0169735)
+[node name="AudioReflector" parent="." unique_id=1189587396 instance=ExtResource("3_kksmv")]
+transform = Transform3D(0.9708547, 0, -0.2396689, 0, 1, 0, 0.2396689, 0, 0.9708547, 0, 0, -4)
 
-[node name="AudioReflector2" parent="." unique_id=200253397 instance=ExtResource("3_kksmv")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.7376466, 0, 0.8125778)
+[node name="Node3D" parent="." unique_id=1790659427 instance=ExtResource("4_26u8l")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.03618765, 0, -3.010862)
 
-[node name="Node3D" parent="." unique_id=1569976003 instance=ExtResource("4_26u8l")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5791068, 0, 2.8024552)
-
-[node name="Kamerton2" parent="." unique_id=436026294 instance=ExtResource("6_26u8l")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.7971087, 0.4810531, 1.0490721)
-
-[node name="RayCast" type="Node3D" parent="." unique_id=1153779450]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2000002, 0)
-script = ExtResource("10_f00rj")
-debug = true
-ray_length = 50.0
-max_bounces = 10
-collision_mask = 512
-metadata/_custom_type_script = "uid://bv838lp8l7g7q"
+[node name="RayCast" parent="." unique_id=1539254708 instance=ExtResource("5_kksmv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8152828, 1, 0.97799087)

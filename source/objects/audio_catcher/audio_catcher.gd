@@ -1,9 +1,6 @@
 extends PickableObject
 class_name AudioCatcher
 
-signal on_activating
-signal on_deactivating
-
 var mat = StandardMaterial3D.new()
 
 

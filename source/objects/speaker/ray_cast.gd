@@ -5,6 +5,7 @@ enum RaycastStatus { BREAK, SKIP }
 
 const RAY_OFFSET_FROM_SURFACE: float = 0.005
 const AUDIO_PLAYER_OFFST_FROM_PLAYER: float = 1.0
+const INACTIVE_AUDIO_PLAYER_POSITION: Vector3 = Vector3(0, 50, 0)
 
 # Exported values
 @export var debug: bool
@@ -33,6 +34,7 @@ var _debug_mesh_instance: MeshInstance3D
 var _audio_debug_spheres: Array[MeshInstance3D] = []
 var _audio_streamers: Array[AudioStreamPlayer3D] = []
 var _polyphonic_stream: AudioStreamPolyphonic
+var _active_audio_streams: Array[AudioStreamPlayer3D] = []
 
 var _ray_query: PhysicsRayQueryParameters3D
 var _current_ray_hit_path: Array[Node3D]
@@ -46,26 +48,33 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	_debug_line_mesh.clear_surfaces()
+	_active_audio_streams.fill(null)
+
+	for i in _audio_debug_spheres:
+		i.hide()
 
 	_cast_ray()
+	for i in _audio_streamers:
+		if i not in _active_audio_streams:
+			i.global_position = INACTIVE_AUDIO_PLAYER_POSITION
+			print(i.global_position)
 
 func _cast_ray() -> void:
 	var current_bounce: int = 0
 	var space_state: PhysicsDirectSpaceState3D = get_world_3d().direct_space_state
 	var direction: Vector3 = -global_transform.basis.z
-	var current_start: Vector3 = Vector3.ZERO
+	var current_start: Vector3 = global_position
 	var current_hit: Node3D = null
 	var previous_hit: Node3D = null
 	
 	_current_ray_hit_path.fill(null)
 	
-	_ray_query.exclude.clear()
+	_ray_query.exclude = []
 	 
 	if debug: _debug_line_mesh.surface_begin(Mesh.PRIMITIVE_LINES)
 
 	while current_bounce < max_bounces:
 		var result: Dictionary = _raycast_ignoring_player(current_start, direction, current_bounce, space_state)
-		print(result)
 		if not result:
 			_draw_debug_line(_ray_query.from, _ray_query.to)
 			_clean_remaining_path(current_bounce)
@@ -74,11 +83,13 @@ func _cast_ray() -> void:
 		previous_hit = _previous_ray_hit_path[current_bounce]
 		_current_ray_hit_path[current_bounce] = current_hit
 		_draw_debug_line(_ray_query.from, result.position)
-		if  current_hit != previous_hit:
-			if _handle_path_change(current_hit, previous_hit):
+		match _handle_ray_hit(current_hit, previous_hit):
+			RaycastStatus.BREAK:
 				_clean_remaining_path(current_bounce)
 				break
-		_ray_query.exclude.clear()
+			RaycastStatus.SKIP:
+				pass
+		_ray_query.exclude = []
 		direction = direction.bounce(result.normal)
 		current_start = result.position + result.normal * RAY_OFFSET_FROM_SURFACE
 		current_bounce += 1
@@ -86,33 +97,30 @@ func _cast_ray() -> void:
 	if debug: _debug_line_mesh.surface_end()
 
 
+func _handle_ray_hit(current_hit: Node3D, previous_hit: Node3D) -> RaycastStatus:
+	if  current_hit != previous_hit:
+		_handle_path_change(current_hit, previous_hit)
+	match current_hit:
+		AudioCatcher:
+			return RaycastStatus.BREAK
+		AudioCast:
+			return RaycastStatus.BREAK
+	return RaycastStatus.SKIP
 
-func _clean_remaining_path(id: int) -> void:
-	for i in range(id, max_bounces):
-		var previous_hit = _previous_ray_hit_path[i]
-		if previous_hit == null: continue
-		if previous_hit is AudioCatcher: previous_hit.deactivate()
-		if previous_hit is AudioCast: previous_hit.deactivate()
 
-
-func _handle_path_change(current_hit, previous_hit) -> bool:
+func _handle_path_change(current_hit, previous_hit) -> void:
 	if previous_hit is AudioCatcher:
 		previous_hit.deactivate()
 	elif previous_hit is AudioCast:
 		previous_hit.deactivate()
-	if current_hit is AudioCatcher:
-		current_hit.activate()
-		return true
-	elif current_hit is AudioCast:
-		current_hit.activate()
-		return true
-	return false
 
 
-func _draw_debug_line(from: Vector3, to: Vector3) -> void:
-	if not debug: return
-	_debug_line_mesh.surface_add_vertex(from)
-	_debug_line_mesh.surface_add_vertex(to)
+func _clean_remaining_path(id: int) -> void:
+	for i in range(id, max_bounces):
+		var previous_hit = _previous_ray_hit_path[id]
+		if previous_hit == null: continue
+		if previous_hit is AudioCatcher: previous_hit.deactivate()
+		if previous_hit is AudioCast: previous_hit.deactivate()
 
 
 func _raycast_ignoring_player(from: Vector3, dir: Vector3, current_bounce: int,space_state: PhysicsDirectSpaceState3D) -> Dictionary:
@@ -120,7 +128,6 @@ func _raycast_ignoring_player(from: Vector3, dir: Vector3, current_bounce: int,s
 	_ray_query.to = from + dir * ray_length
 	var result = space_state.intersect_ray(_ray_query)
 	if result and _get_hit_owner(result) is Player:
-		print('Hitted player')
 		_on_player_hit(from, result.position, _get_hit_owner(result).global_position, current_bounce)
 		_ray_query.exclude = [result.rid]
 		result = space_state.intersect_ray(_ray_query)
@@ -142,6 +149,17 @@ func _on_player_hit(from, to, player_position, id) -> void:
 		to
 		)
 	audio_stream.global_position = closest_position
+	
+	_active_audio_streams[id] = audio_stream
+	if debug:
+		_audio_debug_spheres[id].global_position = closest_position
+		_audio_debug_spheres[id].show()
+
+
+func _draw_debug_line(from: Vector3, to: Vector3) -> void:
+	if not debug: return
+	_debug_line_mesh.surface_add_vertex(to_local(from))
+	_debug_line_mesh.surface_add_vertex(to_local(to))
 
 
 func _create_debug_visualisation() -> void:
@@ -176,6 +194,7 @@ func _create_audio_players() -> void:
 		audio_stream.volume_db = audio_volume
 		add_child(audio_stream)
 		_audio_streamers.append(audio_stream)
+		_active_audio_streams.append(null)
 
 
 func _create_ray_query() -> void:

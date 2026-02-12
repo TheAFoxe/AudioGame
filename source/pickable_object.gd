@@ -1,8 +1,8 @@
 extends Node3D
-class_name PickableObject
+class_name OldPickable
 
 var is_picked: bool
-var origin: Node3D
+vsens = 0.001ar origin: Node3D
 var collision: StaticBody3D
 
 var area_place: Area3D
@@ -43,6 +43,7 @@ func _on_area_exited(area):
 	if area_place.get_overlapping_areas():
 		return
 	can_place = true
+
 
 
 func _on_area_entered(area):

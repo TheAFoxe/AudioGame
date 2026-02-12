@@ -57,9 +57,7 @@ func _ready() -> void:
 	_polyphonic_stream = AudioStreamPolyphonic.new()
 	_polyphonic_stream.polyphony = 6
 	
-	can_move = false
 	global_position.y = 1
-	player_camera_marker = $PlayerCameraMarker
 	
 	_current_ray_hit_path.resize(max_bounces)
 	_last_ray_hit_path.resize(max_bounces)

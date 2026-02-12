@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://c5uipvqpwnnmc"]
+
+[ext_resource type="Script" uid="uid://bv838lp8l7g7q" path="res://source/objects/speaker/ray_cast.gd" id="1_evgdn"]
+
+[node name="RayCast" type="Node3D" unique_id=1539254708]
+script = ExtResource("1_evgdn")
+debug = true
+ray_length = 20.0
+max_bounces = 10
+collision_mask = 512

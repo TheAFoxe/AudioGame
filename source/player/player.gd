@@ -29,11 +29,6 @@ func _unhandled_input(event: InputEvent):
 			object_release()
 		else:
 			object_grab()
-	
-	#if event.is_action("rotate_left"):
-		#origin.global_rotation.y += deg_to_rad(2)
-	#if event.is_action("rotate_right"):
-		#origin.global_rotation.y -= deg_to_rad(2)
 
 
 func _physics_process(delta: float) -> void:

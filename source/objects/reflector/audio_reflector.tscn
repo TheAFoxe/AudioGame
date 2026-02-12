@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://c51p6istrw0ec"]
 
-[ext_resource type="Script" uid="uid://dlfwfvers8mgy" path="res://source/objects/audio_reflector/audio_reflector.gd" id="1_2herq"]
+[ext_resource type="Script" uid="uid://dlfwfvers8mgy" path="res://source/objects/reflector/audio_reflector.gd" id="1_2herq"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_2t2el"]
 size = Vector3(2, 2, 0.1)
@@ -12,9 +12,8 @@ data = PackedVector3Array(-1, 1, 0.049999997, 1, 1, 0.049999997, -1, -1, 0.04999
 [sub_resource type="BoxShape3D" id="BoxShape3D_2herq"]
 size = Vector3(2, 2, 0.1)
 
-[sub_resource type="HeightMapShape3D" id="HeightMapShape3D_2herq"]
-
-[sub_resource type="HeightMapShape3D" id="HeightMapShape3D_24ya2"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_pcfeg"]
+size = Vector3(1, 1, 0.1)
 
 [node name="AudioReflector" type="Node3D" unique_id=1189587396]
 process_mode = 1
@@ -48,10 +47,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 collision_layer = 512
 collision_mask = 0
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=1010889580]
-transform = Transform3D(2, 0, 0, 0, -8.742278e-08, 2, 0, -2, -8.742278e-08, 0, 0, -0.04899025)
-shape = SubResource("HeightMapShape3D_2herq")
-
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="StaticBody3D" unique_id=1504728840]
-transform = Transform3D(-2, 3.019916e-07, 1.3200472e-14, 0, -8.742278e-08, 2, 3.019916e-07, 2, 8.742278e-08, 0, 0, 0.05100975)
-shape = SubResource("HeightMapShape3D_24ya2")
+transform = Transform3D(-2, 0, -1.7484555e-07, 0, 2, 0, 1.7484555e-07, 0, -2, -8.742276e-09, 0, 0)
+shape = SubResource("BoxShape3D_pcfeg")
