@@ -10,9 +10,6 @@ const INACTIVE_AUDIO_PLAYER_POSITION: Vector3 = Vector3(0, 50, 0)
 # Exported values
 @export var debug: bool
 
-@export_category("Chord")
-@export var chord_resource: Chord
-
 @export_category("AudioStream")
 @export var audio_max_distance: float
 @export var audio_volume: float
@@ -25,9 +22,11 @@ const INACTIVE_AUDIO_PLAYER_POSITION: Vector3 = Vector3(0, 50, 0)
 @export_flags_3d_physics var collision_mask: int
 
 # Public variables
-var chord: Array
+
 
 # Private variables
+var _is_active: bool = false
+
 var _debug_line_mesh: ImmediateMesh
 var _debug_mesh_instance: MeshInstance3D
 
@@ -100,19 +99,19 @@ func _cast_ray() -> void:
 func _handle_ray_hit(current_hit: Node3D, previous_hit: Node3D) -> RaycastStatus:
 	if  current_hit != previous_hit:
 		_handle_path_change(current_hit, previous_hit)
-	match current_hit:
-		AudioCatcher:
-			return RaycastStatus.BREAK
-		AudioCast:
-			return RaycastStatus.BREAK
+	#match current_hit:
+		#AudioCatcher:
+			#return RaycastStatus.BREAK
+		#Raycast:
+			#return RaycastStatus.BREAK
 	return RaycastStatus.SKIP
 
 
 func _handle_path_change(current_hit, previous_hit) -> void:
 	if previous_hit is AudioCatcher:
 		previous_hit.deactivate()
-	elif previous_hit is AudioCast:
-		previous_hit.deactivate()
+	#elif previous_hit is AudioCast:
+		#previous_hit.deactivate()
 
 
 func _clean_remaining_path(id: int) -> void:
@@ -120,7 +119,7 @@ func _clean_remaining_path(id: int) -> void:
 		var previous_hit = _previous_ray_hit_path[id]
 		if previous_hit == null: continue
 		if previous_hit is AudioCatcher: previous_hit.deactivate()
-		if previous_hit is AudioCast: previous_hit.deactivate()
+		#if previous_hit is AudioCast: previous_hit.deactivate()
 
 
 func _raycast_ignoring_player(from: Vector3, dir: Vector3, current_bounce: int,space_state: PhysicsDirectSpaceState3D) -> Dictionary:
@@ -188,7 +187,6 @@ func _create_audio_players() -> void:
 	for i in max_bounces:
 		var audio_stream = AudioPlayer.new()
 		audio_stream.stream = _polyphonic_stream
-		audio_stream.chord = chord_resource
 		audio_stream.max_distance = audio_max_distance
 		audio_stream.max_db = audio_max_volume
 		audio_stream.volume_db = audio_volume
@@ -210,3 +208,15 @@ func _create_ray_query() -> void:
 	
 	_current_ray_hit_path.resize(max_bounces)
 	_previous_ray_hit_path = _current_ray_hit_path.duplicate()
+
+
+func deactivate() -> void:
+	for i in _audio_streamers:
+		_audio_streamers[i].global_position = INACTIVE_AUDIO_PLAYER_POSITION
+	_is_active = false
+
+
+func activate(chord_resource: Chord) -> void:
+	for i in _audio_streamers:
+		_audio_streamers[i].chord = chord_resource
+	_is_active = true

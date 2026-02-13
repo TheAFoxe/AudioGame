@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://rglr3dgbjw1i"]
+
+[ext_resource type="Script" uid="uid://dt80ei1sum1yr" path="res://source/objects/manipulator/manipulator.gd" id="1_vgks1"]
+
+[node name="Node3D" type="Node3D" unique_id=1013173689]
+script = ExtResource("1_vgks1")

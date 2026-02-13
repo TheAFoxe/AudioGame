@@ -1,14 +1,27 @@
 [gd_scene format=3 uid="uid://bn7yn1dsic15a"]
 
-[ext_resource type="Script" uid="uid://bv838lp8l7g7q" path="res://source/objects/speaker/ray_cast.gd" id="1_d64gj"]
+[ext_resource type="Script" uid="uid://cd24y73ibwc47" path="res://source/objects/raycast/speaker.gd" id="1_lx1a8"]
 [ext_resource type="PackedScene" uid="uid://xfr2qedv6flg" path="res://meshes/SpeakerBlock.blend" id="2_01hlo"]
+[ext_resource type="Script" uid="uid://ba2r0fu1y6g0b" path="res://source/sounds/note.gd" id="2_n4emb"]
+[ext_resource type="Script" uid="uid://be7rkgkia3rma" path="res://source/sounds/lib_note.gd" id="3_w02a0"]
+[ext_resource type="Script" uid="uid://c1fbx2o5kwwbv" path="res://source/sounds/chord.gd" id="4_ndqgb"]
+
+[sub_resource type="Resource" id="Resource_reuvm"]
+script = ExtResource("3_w02a0")
+metadata/_custom_type_script = "uid://be7rkgkia3rma"
+
+[sub_resource type="Resource" id="Resource_5dv8g"]
+script = ExtResource("4_ndqgb")
+lib_note = SubResource("Resource_reuvm")
+metadata/_custom_type_script = "uid://c1fbx2o5kwwbv"
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_gwbc7"]
 size = Vector3(1.2, 1.2, 1)
 
 [node name="Speaker" type="Node3D" unique_id=150968234]
 process_mode = 1
-script = ExtResource("1_d64gj")
+script = ExtResource("1_lx1a8")
+_chord_resource = SubResource("Resource_5dv8g")
 
 [node name="Mesh" parent="." unique_id=2055909578 instance=ExtResource("2_01hlo")]
 
