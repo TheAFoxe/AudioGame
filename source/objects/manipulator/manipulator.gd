@@ -1,9 +1,16 @@
-extends RayCast
+extends PickableObject
 class_name Manipulator
 
+@onready var _ray_cast: RayCast = $RayCast
 
 func _ready() -> void:
-	pass # Replace with function body.
+	deactivate(null)
+	super()
 
 
-func activate:
+func activate(chord_resource: Chord) -> void:
+	_ray_cast.activate(chord_resource)
+
+
+func deactivate(emitter: Node3D) -> void:
+	_ray_cast.deactivate(emitter)
