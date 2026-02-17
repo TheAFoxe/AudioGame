@@ -22,7 +22,7 @@ const INACTIVE_AUDIO_PLAYER_POSITION: Vector3 = Vector3(0, 50, 0)
 @export_flags_3d_physics var collision_mask: int
 
 # Public variables
-var chord: Chord
+
 
 # Private variables
 var _is_active: bool = false
@@ -32,8 +32,10 @@ var _debug_mesh_instance: MeshInstance3D
 
 var _audio_debug_spheres: Array[MeshInstance3D] = []
 var _audio_streamers: Array[AudioStreamPlayer3D] = []
-var _polyphonic_stream: AudioStreamPolyphonic
+var _audio_stream: AudioPlayer
 var _active_audio_streams: Array[AudioStreamPlayer3D] = []
+var _polyphonic_stream: AudioStreamPolyphonic
+var _chord: Chord
 
 var _ray_query: PhysicsRayQueryParameters3D
 var _current_ray_hit_path: Array[Node3D]
@@ -107,7 +109,7 @@ func _handle_path_change(current_hit: Node3D, previous_hit: Node3D) -> void:
 	if current_hit is AudioCatcher:
 		current_hit.activate()
 	elif current_hit is Manipulator:
-		current_hit.activate(chord)
+		current_hit.activate(_chord)
 
 
 func _handle_ray_hit(current_hit: Node3D, previous_hit: Node3D) -> RaycastStatus:
@@ -193,15 +195,14 @@ func _create_debug_visualisation() -> void:
 
 func _create_audio_players() -> void:
 	_polyphonic_stream = AudioStreamPolyphonic.new()
-	_polyphonic_stream.polyphony = 6
 	for i in max_bounces:
-		var audio_stream = AudioPlayer.new()
-		audio_stream.stream = _polyphonic_stream
-		audio_stream.max_distance = audio_max_distance
-		audio_stream.max_db = audio_max_volume
-		audio_stream.volume_db = audio_volume
-		add_child(audio_stream)
-		_audio_streamers.append(audio_stream)
+		_audio_stream = AudioPlayer.new()
+		_audio_stream.max_distance = audio_max_distance
+		_audio_stream.max_db = audio_max_volume
+		_audio_stream.volume_db = audio_volume
+		_audio_stream.stream = _polyphonic_stream
+		add_child(_audio_stream)
+		_audio_streamers.append(_audio_stream)
 		_active_audio_streams.append(null)
 
 
@@ -226,8 +227,7 @@ func deactivate(emitter: Node3D) -> void:
 	_is_active = false
 
 
-func activate(chord_resource: Chord) -> void:
-	for i in _audio_streamers:
-		i.chord = chord_resource
-	chord = chord_resource
+func activate(chord: Chord) -> void:
+	_audio_stream.play_chord(chord)
+	_chord = chord
 	_is_active = true

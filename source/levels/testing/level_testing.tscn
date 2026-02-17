@@ -5,7 +5,9 @@
 [ext_resource type="PackedScene" uid="uid://coesjdeuspnqt" path="res://source/objects/audio_catcher/audio_catcher.tscn" id="4_26u8l"]
 [ext_resource type="Texture2D" uid="uid://b0jtb2e8uqeb4" path="res://addons/kenney_prototype_textures/orange/texture_12.png" id="4_ekru5"]
 [ext_resource type="PackedScene" uid="uid://bn7yn1dsic15a" path="res://source/objects/raycast/speaker.tscn" id="5_kksmv"]
+[ext_resource type="Script" uid="uid://be7rkgkia3rma" path="res://source/sounds/lib_note.gd" id="6_2xmcw"]
 [ext_resource type="PackedScene" uid="uid://rglr3dgbjw1i" path="res://source/objects/manipulator/manipulator.tscn" id="6_26u8l"]
+[ext_resource type="Script" uid="uid://c1fbx2o5kwwbv" path="res://source/sounds/chord.gd" id="7_d8lce"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kksmv"]
 albedo_texture = ExtResource("4_ekru5")
@@ -13,6 +15,15 @@ uv1_scale = Vector3(10, 10, 10)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_26u8l"]
 size = Vector2(100, 100)
+
+[sub_resource type="Resource" id="Resource_2xmcw"]
+script = ExtResource("6_2xmcw")
+metadata/_custom_type_script = "uid://be7rkgkia3rma"
+
+[sub_resource type="Resource" id="Resource_f00rj"]
+script = ExtResource("7_d8lce")
+lib_note = SubResource("Resource_2xmcw")
+metadata/_custom_type_script = "uid://c1fbx2o5kwwbv"
 
 [node name="LevelTesting" type="Node3D" unique_id=221977538]
 process_mode = 1
@@ -36,6 +47,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.03618765, 0, -3.010862)
 
 [node name="Speaker" parent="." unique_id=150968234 instance=ExtResource("5_kksmv")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.26033974, 1, 3.2511768)
+chord = SubResource("Resource_f00rj")
 debug = true
 ray_length = 20.0
 max_bounces = 10
