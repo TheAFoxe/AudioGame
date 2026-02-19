@@ -1,30 +1,37 @@
-extends PickableObject
-class_name Mixer
-
-var _chord: Chord
-
-@onready var _raycast: RayCast
-
+class_name AudioMixer
+extends AudioManipulator
 
 func _ready() -> void:
-	_chord.make_chord()
+	super()
+
+
+func _append_notes_to_chord(chord: Chord) -> void:
+	var string := -1
+	while string < 5:
+		string += 1
+		if chord.notes[string] == null:
+			continue
+		_chord.notes[string] = chord.notes[string]
+
+
+func _check_chord_collision(chord: Chord) -> bool:
+	var string := -1
+	while string < 5:
+		string += 1
+		if chord.notes[string] == null:
+			continue
+		elif chord.notes[string] and _chord.notes[string]:
+			return false
+	return true
 
 
 func activate(chord: Chord) -> void:
 	if not _check_chord_collision(chord):
 		push_error("Collision in chord detected")
 		return
-	_raycast.activate(chord)
+	_append_notes_to_chord(chord)
+	super.activate(chord)
 
 
 func deactivate(emitter: Node3D) -> void:
-	_raycast.deactivate(emitter)
-
-
-func _check_chord_collision(chord: Chord) -> bool:
-	var string = 0
-	while string < 0:
-		if chord.notes[string] and _chord.notes[string]:
-			return false
-		_chord.notes[string] = chord.notes[string]
-	return true
+	super.deactivate(emitter)

@@ -1,14 +1,17 @@
-class_name Manipulator
+@abstract
+class_name AudioManipulator
 extends PickableObject
 
-@onready var _ray_cast: RayCast = $RayCast
+var _ray_cast: RayCast
+var _chord: Chord
 
 func _ready() -> void:
+	_ray_cast = $RayCast
 	deactivate(null)
 	super()
 
-func activate(chord_resource: Chord) -> void:
-	_ray_cast.activate(chord_resource)
+func activate(chord: Chord) -> void:
+	_ray_cast.activate(chord)
 
 
 func deactivate(emitter: Node3D) -> void:

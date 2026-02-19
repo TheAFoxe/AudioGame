@@ -20,6 +20,7 @@ func play_chord(chord: Chord):
 	if !self.playing: self.play()
 	chord.make_chord()
 	var polyphonic_stream_playback := self.get_stream_playback()
+	return
 	for n in chord.notes:
 		polyphonic_stream_playback.play_stream(n)
 		await get_tree().create_timer(0.2).timeout

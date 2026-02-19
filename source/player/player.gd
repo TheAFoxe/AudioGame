@@ -1,12 +1,14 @@
 extends CharacterBody3D
 #class_name Player
 
+enum PlayerState {FREE, PAUSE, INTERACT}
+
+var _player_state: PlayerState
+
 var collider: Node3D
 var speed = 5.0
 var jump_velocity = 4.5
 var is_picking: bool = false
-
-var can_move: bool = true
 
 @export var sens = 0.001
 
@@ -29,10 +31,14 @@ func _unhandled_input(event: InputEvent):
 			object_release()
 		else:
 			object_grab()
+	
+	if event.is_action_pressed("interact"):
+		if raycast.collider is InteractionObject:
+			_interact()
 
 
 func _physics_process(delta: float) -> void:
-	if not can_move: return
+	if not _player_state == PlayerState.FREE: return
 	var input_dir := Input.get_vector("left", "right", "forward", "back")
 	var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	if direction:

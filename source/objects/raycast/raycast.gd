@@ -104,11 +104,11 @@ func _cast_ray() -> void:
 func _handle_path_change(current_hit: Node3D, previous_hit: Node3D) -> void:
 	if previous_hit is AudioCatcher:
 		previous_hit.deactivate()
-	elif previous_hit is Manipulator:
+	elif previous_hit is AudioManipulator:
 		previous_hit.deactivate(self)
 	if current_hit is AudioCatcher:
 		current_hit.activate()
-	elif current_hit is Manipulator:
+	elif current_hit is AudioManipulator:
 		current_hit.activate(_chord)
 
 
@@ -117,10 +117,6 @@ func _handle_ray_hit(current_hit: Node3D, previous_hit: Node3D) -> RaycastStatus
 		_handle_path_change(current_hit, previous_hit)
 	if current_hit is AudioReflector:
 		return RaycastStatus.SKIP
-#	if current_hit is AudioCatcher:
-#		return RaycastStatus.BREAK
-#	elif current_hit is Manipulator:
-#		return RaycastStatus.BREAK
 	return RaycastStatus.BREAK
 
 
@@ -129,9 +125,9 @@ func _clean_remaining_path(id: int, current_hit: Node3D) -> void:
 		var previous_hit = _previous_ray_hit_path[i]
 		if previous_hit == null: continue
 		elif current_hit is AudioCatcher: continue
-		elif current_hit is Manipulator: continue
+		elif current_hit is AudioManipulator: continue
 		elif previous_hit is AudioCatcher: previous_hit.deactivate()
-		elif previous_hit is Manipulator: previous_hit.deactivate(self)
+		elif previous_hit is AudioManipulator: previous_hit.deactivate(self)
 
 
 func _raycast_ignoring_player(from: Vector3, dir: Vector3, current_bounce: int,space_state: PhysicsDirectSpaceState3D) -> Dictionary:
@@ -228,6 +224,7 @@ func deactivate(emitter: Node3D) -> void:
 
 
 func activate(chord: Chord) -> void:
-	_audio_stream.play_chord(chord)
+	for i in _audio_streamers:
+		i.play_chord(chord)
 	_chord = chord
 	_is_active = true

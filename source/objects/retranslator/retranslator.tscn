@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://dd80pnicl00d2"]
+
+[ext_resource type="Script" uid="uid://hia0jnb4dtvp" path="res://source/objects/retranslator/retranslator.gd" id="1_opbb2"]
+
+[node name="Retranslator" type="Node3D" unique_id=1009846341]
+script = ExtResource("1_opbb2")

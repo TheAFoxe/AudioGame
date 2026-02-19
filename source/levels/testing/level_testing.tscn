@@ -6,8 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://b0jtb2e8uqeb4" path="res://addons/kenney_prototype_textures/orange/texture_12.png" id="4_ekru5"]
 [ext_resource type="PackedScene" uid="uid://bn7yn1dsic15a" path="res://source/objects/raycast/speaker.tscn" id="5_kksmv"]
 [ext_resource type="Script" uid="uid://be7rkgkia3rma" path="res://source/sounds/lib_note.gd" id="6_2xmcw"]
-[ext_resource type="PackedScene" uid="uid://rglr3dgbjw1i" path="res://source/objects/manipulator/manipulator.tscn" id="6_26u8l"]
 [ext_resource type="Script" uid="uid://c1fbx2o5kwwbv" path="res://source/sounds/chord.gd" id="7_d8lce"]
+[ext_resource type="PackedScene" uid="uid://rglr3dgbjw1i" path="res://source/objects/mixer/mixer.tscn" id="8_2xmcw"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kksmv"]
 albedo_texture = ExtResource("4_ekru5")
@@ -23,6 +23,7 @@ metadata/_custom_type_script = "uid://be7rkgkia3rma"
 [sub_resource type="Resource" id="Resource_f00rj"]
 script = ExtResource("7_d8lce")
 lib_note = SubResource("Resource_2xmcw")
+s5 = 2
 metadata/_custom_type_script = "uid://c1fbx2o5kwwbv"
 
 [node name="LevelTesting" type="Node3D" unique_id=221977538]
@@ -53,5 +54,11 @@ ray_length = 20.0
 max_bounces = 10
 collision_mask = 512
 
-[node name="Node3D2" parent="." unique_id=1013173689 instance=ExtResource("6_26u8l")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.0102959, 1, -0.21107101)
+[node name="Mixer" parent="." unique_id=584171169 instance=ExtResource("8_2xmcw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.8723574, 1, -0.007857323)
+
+[node name="Mixer2" parent="." unique_id=1318817702 instance=ExtResource("8_2xmcw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.8029466, 1, 3.7255225)
+
+[node name="Mixer3" parent="." unique_id=412123716 instance=ExtResource("8_2xmcw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.548397, 1, 0.1942234)
