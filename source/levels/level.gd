@@ -1,5 +1,6 @@
-extends Node
+@abstract
 class_name Level
+extends Node
 
 var spawn_point: Marker3D
 

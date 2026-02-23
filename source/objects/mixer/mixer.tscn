@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://rglr3dgbjw1i"]
 
 [ext_resource type="Script" uid="uid://b07jbfsjwf8ad" path="res://source/objects/mixer/mixer.gd" id="1_7e8dg"]
-[ext_resource type="Script" uid="uid://bv838lp8l7g7q" path="res://source/objects/raycast/raycast.gd" id="2_h7tn6"]
+[ext_resource type="Script" uid="uid://bv838lp8l7g7q" path="res://source/objects/tools/raycast.gd" id="2_h7tn6"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_rrjso"]
 

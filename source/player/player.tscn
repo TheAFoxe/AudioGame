@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://ckudr8chj1kgo"]
 
-[ext_resource type="Script" uid="uid://djfq1m02x6tqp" path="res://source/player/_player.gd" id="1_jct2x"]
+[ext_resource type="Script" uid="uid://djfq1m02x6tqp" path="res://source/player/player.gd" id="1_jct2x"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_sh265"]
 radius = 0.3
@@ -28,7 +28,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 
 [node name="RayCast3D" type="RayCast3D" parent="CameraNode/Camera3D" unique_id=1510481392]
 target_position = Vector3(0, 0, -3)
-collision_mask = 2
+collision_mask = 10
 collide_with_areas = true
 collide_with_bodies = false
 

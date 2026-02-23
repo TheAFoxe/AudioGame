@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://ds8bfht8yrdjf"]
+
+[ext_resource type="Script" uid="uid://dww1cabukf3qi" path="res://source/objects/tools/interaction_object/interaction_oject.gd" id="1_i2adi"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_eauuk"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_620j6"]
+
+[node name="InteractionObject" type="Node3D" unique_id=1235640479 groups=["menu"]]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+script = ExtResource("1_i2adi")
+
+[node name="InteractionArea" type="Area3D" parent="." unique_id=740510477]
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractionArea" unique_id=125975183]
+shape = SubResource("BoxShape3D_eauuk")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=177668907]
+mesh = SubResource("BoxMesh_620j6")

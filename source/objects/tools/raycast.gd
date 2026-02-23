@@ -1,5 +1,5 @@
-extends Node3D
 class_name RayCast
+extends Node3D
 
 enum RaycastStatus { BREAK, SKIP }
 
@@ -8,7 +8,7 @@ const AUDIO_PLAYER_OFFST_FROM_PLAYER: float = 1.0
 const INACTIVE_AUDIO_PLAYER_POSITION: Vector3 = Vector3(0, 50, 0)
 
 # Exported values
-@export var debug: bool
+@export var debug: bool = true
 
 @export_category("AudioStream")
 @export var audio_max_distance: float
@@ -17,12 +17,9 @@ const INACTIVE_AUDIO_PLAYER_POSITION: Vector3 = Vector3(0, 50, 0)
 @export var audio_attenuation_model: AudioStreamPlayer3D.AttenuationModel
 
 @export_category("RayQuery")
-@export var ray_length: float
-@export var max_bounces: int
-@export_flags_3d_physics var collision_mask: int
-
-# Public variables
-
+@export var ray_length: float = 50
+@export var max_bounces: int = 10
+@export_flags_3d_physics var collision_mask: int = 512
 
 # Private variables
 var _is_active: bool = false
@@ -108,8 +105,6 @@ func _handle_path_change(current_hit: Node3D, previous_hit: Node3D) -> void:
 		previous_hit.deactivate(self)
 	if current_hit is AudioCatcher:
 		current_hit.activate()
-	elif current_hit is AudioManipulator:
-		current_hit.activate(_chord)
 
 
 func _handle_ray_hit(current_hit: Node3D, previous_hit: Node3D) -> RaycastStatus:
@@ -117,6 +112,9 @@ func _handle_ray_hit(current_hit: Node3D, previous_hit: Node3D) -> RaycastStatus
 		_handle_path_change(current_hit, previous_hit)
 	if current_hit is AudioReflector:
 		return RaycastStatus.SKIP
+	elif current_hit is AudioManipulator:
+		if not current_hit.is_active:
+			current_hit.activate(_chord)
 	return RaycastStatus.BREAK
 
 

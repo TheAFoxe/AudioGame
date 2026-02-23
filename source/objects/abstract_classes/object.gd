@@ -1,7 +1,6 @@
-extends Node3D
+@abstract
 class_name PickableObject
-
-signal player(player: Player)
+extends Node3D
 
 const LERP_SPEED: float = 0.7
 const LERP_ANGLE_SPEED: float = 0.5
@@ -13,9 +12,12 @@ var _player: Player
 var _origin: Node3D
 var _collision: StaticBody3D
 
+
 func _ready() -> void:
 	_player = get_tree().get_first_node_in_group("player")
 	_origin = _player.origin
+	if not _player:
+		push_error("No Player detected")
 	if $AreaPlace:
 		_area_place = $AreaPlace
 	else: push_warning("No AreaPlace on object")

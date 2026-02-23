@@ -1,19 +1,19 @@
-extends PickableObject
 class_name AudioCatcher
+extends PickableObject
 
-var mat = StandardMaterial3D.new()
-
+var _mat = StandardMaterial3D.new()
 
 @onready var mesh: MeshInstance3D = $MeshInstance3D
 
 func _ready() -> void:
 	super()
 	global_position.y = 1
-	mesh.material_override = mat
+	mesh.material_override = _mat
+
 
 func activate() -> void:
-	mat.albedo_color = Color.RED
+	_mat.albedo_color = Color.RED
 
 
 func deactivate() -> void:
-	mat.albedo_color = Color.WHITE
+	_mat.albedo_color = Color.WHITE

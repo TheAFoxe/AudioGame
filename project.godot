@@ -31,6 +31,7 @@ version_control/autoload_on_startup=true
 [global_group]
 
 player="Player node"
+menu=""
 
 [input]
 
@@ -83,8 +84,9 @@ interact={
 [layer_names]
 
 3d_physics/layer_1="Player"
-3d_physics/layer_2="Interact"
+3d_physics/layer_2="Pick"
 3d_physics/layer_3="Place"
+3d_physics/layer_4="Interact"
 3d_physics/layer_10="SoundWave"
 
 [rendering]

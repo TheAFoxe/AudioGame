@@ -35,16 +35,20 @@ func _input(event: InputEvent) -> void:
 			GameStatus.PAUSE_MENU:
 				_pause_menu.hide()
 				_unpause()
+		for i in get_tree().get_nodes_in_group("menu"):
+			i.leave()
 
 
 func _pause() -> void:
 	game_status = GameStatus.PAUSE_MENU
+	_player._leave()
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	get_tree().paused = true
 
 
 func _unpause() -> void:
 	game_status = GameStatus.RUNNING
+	_player._player_state = Player.PlayerState.FREE
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	get_tree().paused = false
 

@@ -1,73 +1,84 @@
 extends CharacterBody3D
-#class_name Player
+class_name Player
 
 enum PlayerState {FREE, PAUSE, INTERACT}
-
 var _player_state: PlayerState
+var _current_interaction: InteractionObject
 
-var collider: Node3D
-var speed = 5.0
-var jump_velocity = 4.5
-var is_picking: bool = false
 
-@export var sens = 0.001
+const SPEED: float = 5.0
+const JUMP_VELOCITY: float = 4.5
+
+@export var mouse_sens: float = 0.001
 
 @onready var raycast: RayCast3D = $CameraNode/Camera3D/RayCast3D
 @onready var origin: Node3D = $Origin
 @onready var camera: Camera3D = $CameraNode/Camera3D
 @onready var camera_node: Node3D = $CameraNode
 
+var can_move: bool = true
+
+var _collider: Node3D
+var _is_picking: bool
+
+
 func _ready() -> void:
-	emit_signal("player", self)
+	pass
 
 
-func _unhandled_input(event: InputEvent):
-	if event is InputEventMouseMotion:
-		rotate_y(-event.relative.x * sens)
-		camera_node.rotate_x(-event.relative.y * sens)
-	
+func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventMouseMotion: _rotate_camera(event.relative)
 	if event.is_action_pressed("grab"):
-		if is_picking:
-			object_release()
-		else:
-			object_grab()
-	
+		if _is_picking: _object_release()
+		else: _object_pick()
 	if event.is_action_pressed("interact"):
-		if raycast.collider is InteractionObject:
-			_interact()
+		_interact()
 
 
 func _physics_process(delta: float) -> void:
 	if not _player_state == PlayerState.FREE: return
-	var input_dir := Input.get_vector("left", "right", "forward", "back")
-	var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+	var input_dir: Vector2 = Input.get_vector("left", "right", "forward", "back")
+	var direction: Vector3 = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	if direction:
-		velocity.x = direction.x * speed
-		velocity.z = direction.z * speed
+		velocity.x = direction.x * SPEED
+		velocity.z = direction.z * SPEED
 	else:
-		velocity.x = move_toward(velocity.x, 0, speed)
-		velocity.z = move_toward(velocity.z, 0, speed)
-	
+		velocity.x = move_toward(velocity.x, 0, SPEED)
+		velocity.z = move_toward(velocity.z, 0, SPEED)
 	move_and_slide()
 
 
-func lock_movement():
-	can_move = false
+func _object_pick() -> void:
+	if not raycast.is_colliding(): return
+	_collider = raycast.get_collider().owner
+	if _collider is PickableObject:
+		_is_picking = _collider.pick()
 
 
-func object_grab() -> void:
-	if not raycast.is_colliding():
-		return
-	collider = raycast.get_collider().owner
-	if collider is PickableObject:
-		collider.pick(self)
-	is_picking = true
+func _object_release() -> void:
+	if not _collider: return
+	_is_picking = not(_collider.place()) # Return not(true) if can place
 
 
-func object_release() -> void:
-	if not collider or not collider.can_place: return
-	collider.place()
-	can_move = true
-	collider = null
-	is_picking = false
-	camera.global_position = camera_node.global_position
+func _rotate_camera(event: Vector2) -> void:
+	rotate_y(-event.x * mouse_sens)
+	camera_node.rotate_x(-event.y * mouse_sens)
+	camera_node.rotation.x = clamp(camera_node.rotation.x, -PI/2, PI/2)
+
+
+func _interact() -> void:
+	if _current_interaction: _leave(); return
+	if not raycast.get_collider(): return
+	if not raycast.get_collider().owner is InteractionObject: return
+	_current_interaction = raycast.get_collider().owner
+	_current_interaction.enter()
+	_player_state = PlayerState.INTERACT
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+
+
+func _leave() -> void:
+	if not _current_interaction: return
+	_current_interaction.leave()
+	_current_interaction = null
+	_player_state = PlayerState.FREE
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED

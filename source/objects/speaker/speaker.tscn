@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bn7yn1dsic15a"]
 
-[ext_resource type="Script" uid="uid://cd24y73ibwc47" path="res://source/objects/raycast/speaker.gd" id="1_lx1a8"]
+[ext_resource type="Script" uid="uid://cd24y73ibwc47" path="res://source/objects/speaker/speaker.gd" id="1_lx1a8"]
 [ext_resource type="PackedScene" uid="uid://xfr2qedv6flg" path="res://meshes/SpeakerBlock.blend" id="2_01hlo"]
 [ext_resource type="Script" uid="uid://be7rkgkia3rma" path="res://source/sounds/lib_note.gd" id="2_yghru"]
 [ext_resource type="Script" uid="uid://c1fbx2o5kwwbv" path="res://source/sounds/chord.gd" id="3_n4emb"]
