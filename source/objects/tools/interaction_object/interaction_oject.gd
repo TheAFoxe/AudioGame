@@ -1,6 +1,8 @@
 class_name InteractionObject
 extends Node3D
 
+#signal send_chord_mask(chord_mask: Array[bool])
+
 @export var interaction_menu_scene: PackedScene
 var interaction_menu: Control
 

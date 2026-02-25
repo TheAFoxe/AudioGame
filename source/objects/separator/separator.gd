@@ -1,16 +1,29 @@
 class_name AudioSeparator
 extends AudioManipulator
 
+
+var _chord_mask: Array[bool]
+
+
 func _ready() -> void:
 	super()
-	connect("send_chord_mask", _set_chord_mask)
+	var interaction_menu = get_node("InteractionObject").interaction_menu
+	interaction_menu.send_chord_mask.connect(_set_chord_mask)
+
+	for i in 6:
+		_chord_mask.append(null)
 
 
 func _set_chord_mask(chord_mask) -> void:
-	print(chord_mask)
+	for i in _chord.notes.size():
+		if chord_mask[i]: continue
+		_chord.notes[i] = null
+	print(_chord.notes)
 
 
 func activate(chord: Chord) -> void:
+	_chord = chord
+	#_set_chord_mask(_chord_mask)
 	super.activate(chord)
 
 
