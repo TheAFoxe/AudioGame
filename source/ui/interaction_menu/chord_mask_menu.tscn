@@ -142,3 +142,6 @@ size_flags_horizontal = 3
 [connection signal="toggled" from="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer6/Button" to="." method="_on_s6_toggled"]
 [connection signal="toggled" from="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer5/Button" to="." method="_on_s5_toggled"]
 [connection signal="toggled" from="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer4/Button" to="." method="_on_s4_toggled"]
+[connection signal="toggled" from="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer3/Button" to="." method="_on_s3_toggled"]
+[connection signal="toggled" from="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer2/Button" to="." method="_on_s2_toggled"]
+[connection signal="toggled" from="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer1/Button" to="." method="_on_s1_toggled"]

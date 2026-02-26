@@ -16,11 +16,10 @@ func _ready() -> void:
 	self.stream.polyphony = 6
 
 
-func play_chord(chord: Chord):
+func play_chord(chord: Chord) -> void:
 	if !self.playing: self.play()
-	chord.make_chord()
 	var polyphonic_stream_playback := self.get_stream_playback()
 	for n in chord.notes:
-		if not n: return
+		if not n: continue
 		polyphonic_stream_playback.play_stream(n)
 		await get_tree().create_timer(0.2).timeout

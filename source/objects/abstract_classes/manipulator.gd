@@ -2,22 +2,21 @@
 class_name AudioManipulator
 extends PickableObject
 
-var is_active: bool
-
 var _ray_cast: RayCast
-var _chord: Chord
 
 func _ready() -> void:
-	_ray_cast = $RayCast
-	deactivate(null)
 	super()
+	_ray_cast = get_node("RayCast")
+	deactivate(null)
 
 
-func activate(chord: Chord) -> void:
-	is_active = true
-	_ray_cast.activate(chord)
+func activate() -> void:
+	_ray_cast.activate()
 
 
 func deactivate(emitter: Node3D) -> void:
-	is_active = false
 	_ray_cast.deactivate(emitter)
+
+
+func set_chord(new_chord: Chord) -> void:
+	_ray_cast.set_chord(new_chord)

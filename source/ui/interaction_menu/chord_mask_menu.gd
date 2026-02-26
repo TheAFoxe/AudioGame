@@ -14,7 +14,8 @@ var _chord_mask: Array[bool] = []
 
 func _ready() -> void:
 	leave()
-	for i in 6: _chord_mask.append(false)
+	for i in 6: 
+		_chord_mask.append(false)
 
 
 func enter() -> void:
@@ -23,10 +24,6 @@ func enter() -> void:
 
 func leave() -> void:
 	self.hide()
-
-
-func _on_clear_pressed() -> void:
-	pass
 
 
 func _send_chord_mask() -> void:

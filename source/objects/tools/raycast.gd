@@ -22,7 +22,7 @@ const INACTIVE_AUDIO_PLAYER_POSITION: Vector3 = Vector3(0, 50, 0)
 @export_flags_3d_physics var collision_mask: int = 512
 
 # Private variables
-var _is_active: bool = false
+var is_active: bool = false
 
 var _debug_line_mesh: ImmediateMesh
 var _debug_mesh_instance: MeshInstance3D
@@ -38,6 +38,7 @@ var _ray_query: PhysicsRayQueryParameters3D
 var _current_ray_hit_path: Array[Node3D]
 var _previous_ray_hit_path: Array[Node3D]
 
+
 func _ready() -> void:
 	_create_ray_query()
 	_create_audio_players()
@@ -45,9 +46,6 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
-	if not _is_active:
-		_debug_line_mesh.clear_surfaces()
-		return
 	_debug_line_mesh.clear_surfaces()
 	_active_audio_streams.fill(null)
 
@@ -104,7 +102,7 @@ func _handle_path_change(current_hit: Node3D, previous_hit: Node3D) -> void:
 	elif previous_hit is AudioManipulator:
 		previous_hit.deactivate(self)
 	if current_hit is AudioCatcher:
-		current_hit.activate()
+		_activate_current_hit(current_hit)
 
 
 func _handle_ray_hit(current_hit: Node3D, previous_hit: Node3D) -> RaycastStatus:
@@ -113,9 +111,14 @@ func _handle_ray_hit(current_hit: Node3D, previous_hit: Node3D) -> RaycastStatus
 	if current_hit is AudioReflector:
 		return RaycastStatus.SKIP
 	elif current_hit is AudioManipulator:
-		if not current_hit.is_active:
-			current_hit.activate(_chord)
+		if not current_hit._ray_cast.is_active:
+			_activate_current_hit(current_hit)
 	return RaycastStatus.BREAK
+
+
+func _activate_current_hit(current_hit: Node3D) -> void:
+	current_hit.set_chord(_chord)
+	current_hit.activate()
 
 
 func _clean_remaining_path(id: int, current_hit: Node3D) -> void:
@@ -128,7 +131,7 @@ func _clean_remaining_path(id: int, current_hit: Node3D) -> void:
 		elif previous_hit is AudioManipulator: previous_hit.deactivate(self)
 
 
-func _raycast_ignoring_player(from: Vector3, dir: Vector3, current_bounce: int,space_state: PhysicsDirectSpaceState3D) -> Dictionary:
+func _raycast_ignoring_player(from: Vector3, dir: Vector3, current_bounce: int, space_state: PhysicsDirectSpaceState3D) -> Dictionary:
 	_ray_query.from = from
 	_ray_query.to = from + dir * ray_length
 	var result = space_state.intersect_ray(_ray_query)
@@ -218,11 +221,15 @@ func deactivate(emitter: Node3D) -> void:
 	if emitter == self: return
 	for i in _audio_streamers:
 		i.global_position = INACTIVE_AUDIO_PLAYER_POSITION
-	_is_active = false
+	is_active = false
 
 
-func activate(chord: Chord) -> void:
+func activate() -> void:
 	for i in _audio_streamers:
-		i.play_chord(chord)
-	_chord = chord
-	_is_active = true
+		i.play_chord(_chord)
+	is_active = true
+
+
+func set_chord(new_chord: Chord) -> void:
+	_chord = new_chord
+	if is_active: activate()
