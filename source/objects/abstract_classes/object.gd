@@ -2,10 +2,10 @@
 class_name PickableObject
 extends Node3D
 
-const LERP_SPEED: float = 0.7
-const LERP_ANGLE_SPEED: float = 0.5
+const FOLLOW_WEIGHT: float = 0.7
+const ROTATION_WEIGHT: float = 0.5
 
-var _is_picked: bool
+var _is_held: bool
 var _area_place: Area3D
 
 var _player: Player
@@ -27,19 +27,19 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	if not _is_picked: return
-	self.global_position = self.global_position.lerp(_origin.global_position, LERP_SPEED)
-	self.global_rotation.y = lerp_angle(self.global_rotation.y, _origin.global_rotation.y, LERP_ANGLE_SPEED)
+	if not _is_held: return
+	self.global_position = self.global_position.lerp(_origin.global_position, FOLLOW_WEIGHT)
+	self.global_rotation.y = lerp_angle(self.global_rotation.y, _origin.global_rotation.y, ROTATION_WEIGHT)
 
 
 func pick() -> bool:
 	if _collision: _collision.collision_layer = 0
-	_is_picked = true
+	_is_held = true
 	return true
 
 
 func place() -> bool:
 	if _area_place.get_overlapping_areas(): return false
 	if _collision: _collision.collision_layer = 1
-	_is_picked = false
+	_is_held = false
 	return true

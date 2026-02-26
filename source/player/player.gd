@@ -1,5 +1,5 @@
-extends CharacterBody3D
 class_name Player
+extends CharacterBody3D
 
 enum PlayerState {FREE, PAUSE, INTERACT}
 var _player_state: PlayerState
@@ -18,7 +18,7 @@ const JUMP_VELOCITY: float = 4.5
 
 var can_move: bool = true
 
-var _collider: Node3D
+var _held_object: Node3D
 var _is_picking: bool
 
 
@@ -50,14 +50,14 @@ func _physics_process(delta: float) -> void:
 
 func _object_pick() -> void:
 	if not raycast.is_colliding(): return
-	_collider = raycast.get_collider().owner
-	if _collider is PickableObject:
-		_is_picking = _collider.pick()
+	_held_object = raycast.get_collider().owner
+	if _held_object is PickableObject:
+		_is_picking = _held_object.pick()
 
 
 func _object_release() -> void:
-	if not _collider: return
-	_is_picking = not(_collider.place()) # Return not(true) if can place
+	if not _held_object: return
+	_is_picking = not(_held_object.place()) # Return not(true) if can place
 
 
 func _rotate_camera(event: Vector2) -> void:
@@ -68,9 +68,9 @@ func _rotate_camera(event: Vector2) -> void:
 
 func _interact() -> void:
 	if _current_interaction: _leave(); return
-	if not raycast.get_collider(): return
-	if not raycast.get_collider().owner is InteractionObject: return
-	_current_interaction = raycast.get_collider().owner
+	if not raycast.get_held_object(): return
+	if not raycast.get_held_object().owner is InteractionObject: return
+	_current_interaction = raycast.get_held_object().owner
 	_current_interaction.enter()
 	_player_state = PlayerState.INTERACT
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE

@@ -4,7 +4,7 @@ extends Node3D
 enum RaycastStatus { BREAK, SKIP }
 
 const RAY_OFFSET_FROM_SURFACE: float = 0.005
-const AUDIO_PLAYER_OFFST_FROM_PLAYER: float = 1.0
+const AUDIO_PLAYER_OFFSET_FROM_PLAYER: float = 1.0
 const INACTIVE_AUDIO_PLAYER_POSITION: Vector3 = Vector3(0, 50, 0)
 
 # Exported values
@@ -29,7 +29,6 @@ var _debug_mesh_instance: MeshInstance3D
 
 var _audio_debug_spheres: Array[MeshInstance3D] = []
 var _audio_streamers: Array[AudioStreamPlayer3D] = []
-var _audio_stream: AudioPlayer
 var _active_audio_streams: Array[AudioStreamPlayer3D] = []
 var _polyphonic_stream: AudioStreamPolyphonic
 var _chord: Chord
@@ -96,29 +95,27 @@ func _cast_ray() -> void:
 	if debug: _debug_line_mesh.surface_end()
 
 
-func _handle_path_change(current_hit: Node3D, previous_hit: Node3D) -> void:
+func _handle_ray_hit(current_hit: Node3D, previous_hit: Node3D) -> RaycastStatus:
+	if current_hit != previous_hit:
+		_handle_path_change(previous_hit)
+	if current_hit is AudioReflector:
+		return RaycastStatus.SKIP
+	_activate_current_hit(current_hit)
+	return RaycastStatus.BREAK
+
+
+func _handle_path_change(previous_hit: Node3D) -> void:
 	if previous_hit is AudioCatcher:
 		previous_hit.deactivate()
 	elif previous_hit is AudioManipulator:
 		previous_hit.deactivate(self)
-	if current_hit is AudioCatcher:
-		_activate_current_hit(current_hit)
-
-
-func _handle_ray_hit(current_hit: Node3D, previous_hit: Node3D) -> RaycastStatus:
-	if current_hit != previous_hit:
-		_handle_path_change(current_hit, previous_hit)
-	if current_hit is AudioReflector:
-		return RaycastStatus.SKIP
-	elif current_hit is AudioManipulator:
-		if not current_hit._ray_cast.is_active:
-			_activate_current_hit(current_hit)
-	return RaycastStatus.BREAK
 
 
 func _activate_current_hit(current_hit: Node3D) -> void:
-	current_hit.set_chord(_chord)
-	current_hit.activate()
+	if current_hit is AudioEmitter:
+		current_hit.receive_chord(_chord)
+	if current_hit is AudioEmitter or current_hit is AudioCatcher:
+		current_hit.activate()
 
 
 func _clean_remaining_path(id: int, current_hit: Node3D) -> void:
@@ -192,14 +189,15 @@ func _create_debug_visualisation() -> void:
 
 func _create_audio_players() -> void:
 	_polyphonic_stream = AudioStreamPolyphonic.new()
+	var audio_stream: AudioPlayer
 	for i in max_bounces:
-		_audio_stream = AudioPlayer.new()
-		_audio_stream.max_distance = audio_max_distance
-		_audio_stream.max_db = audio_max_volume
-		_audio_stream.volume_db = audio_volume
-		_audio_stream.stream = _polyphonic_stream
-		add_child(_audio_stream)
-		_audio_streamers.append(_audio_stream)
+		audio_stream = AudioPlayer.new()
+		audio_stream.max_distance = audio_max_distance
+		audio_stream.max_db = audio_max_volume
+		audio_stream.volume_db = audio_volume
+		audio_stream.stream = _polyphonic_stream
+		add_child(audio_stream)
+		_audio_streamers.append(audio_stream)
 		_active_audio_streams.append(null)
 
 
@@ -232,4 +230,3 @@ func activate() -> void:
 
 func set_chord(new_chord: Chord) -> void:
 	_chord = new_chord
-	if is_active: activate()

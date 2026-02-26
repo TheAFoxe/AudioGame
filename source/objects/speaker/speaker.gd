@@ -1,5 +1,5 @@
-extends RayCast
 class_name Speaker
+extends RayCast
 
 @export var speaker_chord: Chord = load("res://source/sounds/chord.tres").duplicate()
 

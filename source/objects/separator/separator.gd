@@ -16,8 +16,9 @@ func _ready() -> void:
 
 
 func _mask_chord() -> void:
+	if not _chord: return
 	_masked_chord = _chord.duplicate()
-	_masked_chord.make_notes()
+	_masked_chord.notes = _chord.notes.duplicate()
 	for i in _masked_chord.notes.size():
 		if _chord_mask[i]: continue
 		_masked_chord.notes[i] = null

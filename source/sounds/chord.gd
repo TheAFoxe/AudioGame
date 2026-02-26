@@ -1,5 +1,5 @@
-extends Resource
 class_name Chord
+extends Resource
 
 enum Fret {OPEN, FIRST, SECOND, THIRD, FOURTH, NONE}
 

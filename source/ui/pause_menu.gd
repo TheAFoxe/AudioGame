@@ -1,5 +1,5 @@
-extends Control
 class_name PauseMenu
+extends Control
 
 signal exit()
 signal main_menu()
