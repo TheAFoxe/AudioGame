@@ -1,11 +1,10 @@
 class_name Speaker
-extends RayCast
+extends AudioEmitter
 
-@export var speaker_chord: Chord = load("res://source/sounds/chord.tres").duplicate()
+@export var _chord_resource: Chord = load("res://source/sounds/chord.tres").duplicate()
 
 func _ready() -> void:
 	super()
-	speaker_chord.make_notes()
-	print(speaker_chord)
-	set_chord(speaker_chord)
-	activate()
+	_chord_resource.make_notes()
+	receive_chord(_chord_resource, null)
+	activate(null)

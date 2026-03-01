@@ -1,6 +1,9 @@
 class_name AudioCatcher
 extends PickableObject
 
+signal catched_chord
+signal lost_chord
+
 var _mat = StandardMaterial3D.new()
 
 @onready var mesh: MeshInstance3D = $MeshInstance3D

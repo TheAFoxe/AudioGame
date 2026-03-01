@@ -1,7 +1,7 @@
 class_name InteractionMenu
 extends Control
 
-signal send_note_filter(note_filter: Array[bool])
+signal receive_mask(note_filter: Array[bool])
 
 var _note_filter: Array[bool] = []
 
@@ -28,7 +28,7 @@ func leave() -> void:
 
 
 func _send_note_filter() -> void:
-	send_note_filter.emit(_note_filter)
+	receive_mask.emit(_note_filter)
 
 
 func _on_s6_toggled(toggled_on: bool) -> void:
