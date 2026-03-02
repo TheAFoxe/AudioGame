@@ -5,4 +5,4 @@ class_name Speaker
 
 func _ready() -> void:
 	super()
-	activate(chord)
+	activate(null)

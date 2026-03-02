@@ -16,7 +16,7 @@ var strings: Array[Fret] = [s6, s5, s4, s3, s2, s1]
 var notes: Array[AudioStream] = []
 
 
-func make_chord() -> void:
+func _init() -> void:
 	notes.clear()
 	var string_num = 0
 	while string_num < 6:

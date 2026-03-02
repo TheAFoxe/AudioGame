@@ -1,5 +1,5 @@
 class_name AudioMixer
-extends AudioManipulator
+extends AudioProcessor
 
 func _ready() -> void:
 	super()
@@ -25,12 +25,12 @@ func _check_chord_collision(chord: Chord) -> bool:
 	return true
 
 
-func activate(chord: Chord) -> void:
-	if not _check_chord_collision(chord):
-		push_error("Collision in chord detected")
-		return
-	_append_notes_to_chord(chord)
-	super.activate(chord)
+func activate(emitter: RayCast) -> void:
+	#if not _check_chord_collision(chord):
+		#push_error("Collision in chord detected")
+		#return
+	#_append_notes_to_chord(chord)
+	super.activate(emitter)
 
 
 func deactivate(emitter: Node3D) -> void:

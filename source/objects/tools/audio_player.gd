@@ -18,7 +18,6 @@ func _ready() -> void:
 
 func play_chord(chord: Chord):
 	if !self.playing: self.play()
-	chord.make_chord()
 	var polyphonic_stream_playback := self.get_stream_playback()
 	for n in chord.notes:
 		if not n: return

@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://b74aq41vgfphe" path="res://main.gd" id="1_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://c201kqm66rjry" path="res://source/ui/pause_menu.tscn" id="2_0xm2m"]
+[ext_resource type="PackedScene" uid="uid://cusq3k5okqllb" path="res://source/objects/conductor/conductor.tscn" id="2_7mycd"]
 [ext_resource type="PackedScene" uid="uid://i1686kge5k3e" path="res://source/ui/main_menu.tscn" id="5_7mycd"]
 [ext_resource type="PackedScene" uid="uid://ckudr8chj1kgo" path="res://source/player/player.tscn" id="5_272bh"]
 [ext_resource type="Script" uid="uid://b1fayhcx4kdi4" path="res://fps.gd" id="5_lquwl"]
@@ -14,8 +15,12 @@ background_color = Color(0.21230483, 0.21230483, 0.21230483, 1)
 process_mode = 3
 script = ExtResource("1_1bvp3")
 
+[node name="Conductor" parent="." unique_id=1264688582 instance=ExtResource("2_7mycd")]
+
 [node name="PauseMenu" parent="." unique_id=1385119730 instance=ExtResource("2_0xm2m")]
 process_mode = 2
+
+[node name="MainMenu" parent="." unique_id=1406229279 instance=ExtResource("5_7mycd")]
 
 [node name="FPS" type="Label" parent="." unique_id=337238559]
 process_mode = 3
@@ -26,8 +31,6 @@ script = ExtResource("5_lquwl")
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1477084236]
 process_mode = 1
 environment = SubResource("Environment_lquwl")
-
-[node name="MainMenu" parent="." unique_id=1406229279 instance=ExtResource("5_7mycd")]
 
 [node name="Player" parent="." unique_id=1225566035 instance=ExtResource("5_272bh")]
 

@@ -29,16 +29,16 @@ var _debug_mesh_instance: MeshInstance3D
 
 var _audio_debug_spheres: Array[MeshInstance3D] = []
 var _audio_streamers: Array[AudioStreamPlayer3D] = []
-var _audio_stream: AudioPlayer
 var _active_audio_streams: Array[AudioStreamPlayer3D] = []
 var _polyphonic_stream: AudioStreamPolyphonic
 var _chord: Chord
+var _pending_chord: Chord
 
 var _ray_query: PhysicsRayQueryParameters3D
-var _current_ray_hit_path: Array[Node3D]
-var _previous_ray_hit_path: Array[Node3D]
+var _previous_activation: Node3D
 
 func _ready() -> void:
+	ConductorLoopReset._loop_reset.connect(_on_conductor_loop_reset)
 	_create_ray_query()
 	_create_audio_players()
 	_create_debug_visualisation()
@@ -61,81 +61,59 @@ func _physics_process(delta: float) -> void:
 
 
 func _cast_ray() -> void:
-	var current_bounce: int = 0
 	var space_state: PhysicsDirectSpaceState3D = get_world_3d().direct_space_state
 	var direction: Vector3 = -global_transform.basis.z
 	var current_start: Vector3 = global_position
-	var current_hit: Node3D = null
-	var previous_hit: Node3D = null
-	
-	_current_ray_hit_path.fill(null)
+	var new_activation: Node3D = null
 	
 	_ray_query.exclude = []
 	 
 	if debug: _debug_line_mesh.surface_begin(Mesh.PRIMITIVE_LINES)
-
-	while current_bounce < max_bounces:
-		var result: Dictionary = _raycast_ignoring_player(current_start, direction, current_bounce, space_state)
+	
+	for bounce_id in max_bounces:
+		_ray_query.from = current_start
+		_ray_query.to = current_start + direction * ray_length
+		var result: Dictionary = _raycast_ignoring_player(bounce_id, space_state)
+		
 		if not result:
 			_draw_debug_line(_ray_query.from, _ray_query.to)
-			_clean_remaining_path(current_bounce, null)
 			break
-		current_hit = _get_hit_owner(result)
-		previous_hit = _previous_ray_hit_path[current_bounce]
-		_current_ray_hit_path[current_bounce] = current_hit
+		
 		_draw_debug_line(_ray_query.from, result.position)
-		match _handle_ray_hit(current_hit, previous_hit):
-			RaycastStatus.BREAK:
-				_clean_remaining_path(current_bounce, current_hit)
-				break
-			RaycastStatus.SKIP:
-				pass
+		var current_hit: Node3D = _get_hit_owner(result)
+		
+		if not current_hit is AudioReflector:
+			new_activation = current_hit
+			break
+		
 		_ray_query.exclude = []
 		direction = direction.bounce(result.normal)
-		current_start = result.position + result.normal * RAY_OFFSET_FROM_SURFACE
-		current_bounce += 1
-	_previous_ray_hit_path = _current_ray_hit_path.duplicate()
+		current_start = result.position + direction * RAY_OFFSET_FROM_SURFACE
+	
+	if new_activation != _previous_activation:
+		if _previous_activation:
+			_previous_activation.deactivate(self)
+		if new_activation:
+			_on_ray_hit(new_activation)
+		_previous_activation = new_activation
+	
 	if debug: _debug_line_mesh.surface_end()
 
 
-func _handle_path_change(current_hit: Node3D, previous_hit: Node3D) -> void:
-	if previous_hit is AudioCatcher:
-		previous_hit.deactivate()
-	elif previous_hit is AudioManipulator:
-		previous_hit.deactivate(self)
-	if current_hit is AudioCatcher:
-		current_hit.activate()
+func _on_ray_hit(current_hit: Node3D) -> void:
+	current_hit.activate(self)
+	#if current_hit is AudioProcessor:
+		#current_hit.receive_chord(chord, self)
+	return
 
 
-func _handle_ray_hit(current_hit: Node3D, previous_hit: Node3D) -> RaycastStatus:
-	if current_hit != previous_hit:
-		_handle_path_change(current_hit, previous_hit)
-	if current_hit is AudioReflector:
-		return RaycastStatus.SKIP
-	elif current_hit is AudioManipulator:
-		if not current_hit.is_active:
-			current_hit.activate(_chord)
-	return RaycastStatus.BREAK
-
-
-func _clean_remaining_path(id: int, current_hit: Node3D) -> void:
-	for i in range(id, max_bounces):
-		var previous_hit = _previous_ray_hit_path[i]
-		if previous_hit == null: continue
-		elif current_hit is AudioCatcher: continue
-		elif current_hit is AudioManipulator: continue
-		elif previous_hit is AudioCatcher: previous_hit.deactivate()
-		elif previous_hit is AudioManipulator: previous_hit.deactivate(self)
-
-
-func _raycast_ignoring_player(from: Vector3, dir: Vector3, current_bounce: int,space_state: PhysicsDirectSpaceState3D) -> Dictionary:
-	_ray_query.from = from
-	_ray_query.to = from + dir * ray_length
-	var result = space_state.intersect_ray(_ray_query)
+func _raycast_ignoring_player(bounce_id: int, space_state: PhysicsDirectSpaceState3D) -> Dictionary:
+	var result := space_state.intersect_ray(_ray_query)
 	if result and _get_hit_owner(result) is Player:
-		_on_player_hit(from, result.position, _get_hit_owner(result).global_position, current_bounce)
+		var player_pos = result.position
 		_ray_query.exclude = [result.rid]
 		result = space_state.intersect_ray(_ray_query)
+		_on_player_hit(player_pos, bounce_id, result)
 	return result
 
 
@@ -143,22 +121,22 @@ func _get_hit_owner(result: Dictionary) -> Node3D:
 	return result.collider.owner if result.collider.owner else result.collider
 
 
-func _on_player_hit(from, to, player_position, id) -> void:
-	if id >= _audio_streamers.size():
+func _on_player_hit(player_pos: Vector3, bounce_id: int, result: Dictionary) -> void:
+	if bounce_id >= _audio_streamers.size():
 		push_warning("Max_bounces is greater then available of _audio_streamers")
 		return
-	var audio_stream = _audio_streamers[id]
+	var audio_stream = _audio_streamers[bounce_id]
+	var from := _ray_query.from
+	var to: Vector3 = result.get("position", _ray_query.to)
 	var closest_position = Geometry3D.get_closest_point_to_segment(
-		player_position,
-		from,
-		to
+		player_pos, from, to
 		)
 	audio_stream.global_position = closest_position
 	
-	_active_audio_streams[id] = audio_stream
+	_active_audio_streams[bounce_id] = audio_stream
 	if debug:
-		_audio_debug_spheres[id].global_position = closest_position
-		_audio_debug_spheres[id].show()
+		_audio_debug_spheres[bounce_id].global_position = closest_position
+		_audio_debug_spheres[bounce_id].show()
 
 
 func _draw_debug_line(from: Vector3, to: Vector3) -> void:
@@ -190,14 +168,14 @@ func _create_debug_visualisation() -> void:
 func _create_audio_players() -> void:
 	_polyphonic_stream = AudioStreamPolyphonic.new()
 	for i in max_bounces:
-		_audio_stream = AudioPlayer.new()
-		_audio_stream.max_distance = audio_max_distance
-		_audio_stream.max_db = audio_max_volume
-		_audio_stream.volume_db = audio_volume
-		_audio_stream.stream = _polyphonic_stream
-		add_child(_audio_stream)
-		_audio_streamers.append(_audio_stream)
-		_active_audio_streams.append(null)
+		var audio_stream = AudioPlayer.new()
+		audio_stream.max_distance = audio_max_distance
+		audio_stream.max_db = audio_max_volume
+		audio_stream.volume_db = audio_volume
+		audio_stream.stream = _polyphonic_stream
+		add_child(audio_stream)
+		_audio_streamers.append(audio_stream)
+	_active_audio_streams.resize(max_bounces)
 
 
 func _create_ray_query() -> void:
@@ -209,20 +187,25 @@ func _create_ray_query() -> void:
 	
 	_ray_query.collide_with_bodies = true
 	_ray_query.collide_with_areas = true
-	
-	_current_ray_hit_path.resize(max_bounces)
-	_previous_ray_hit_path = _current_ray_hit_path.duplicate()
 
 
-func deactivate(emitter: Node3D) -> void:
+func _on_conductor_loop_reset() -> void:
+	if not _pending_chord:
+		return
+	for i in _audio_streamers:
+		i.play_chord(_pending_chord)
+
+
+func receive_chord(new_chord: Chord) -> void:
+	_pending_chord = new_chord
+
+
+func deactivate(emitter: RayCast) -> void:
 	if emitter == self: return
 	for i in _audio_streamers:
 		i.global_position = INACTIVE_AUDIO_PLAYER_POSITION
 	_is_active = false
 
 
-func activate(chord: Chord) -> void:
-	for i in _audio_streamers:
-		i.play_chord(chord)
-	_chord = chord
+func activate(emitter: RayCast) -> void:
 	_is_active = true

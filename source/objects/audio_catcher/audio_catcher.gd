@@ -11,7 +11,7 @@ func _ready() -> void:
 	mesh.material_override = _mat
 
 
-func activate() -> void:
+func activate(emitter: Node3D) -> void:
 	_mat.albedo_color = Color.RED
 
 

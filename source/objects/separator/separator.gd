@@ -1,5 +1,5 @@
 class_name AudioSeparator
-extends AudioManipulator
+extends AudioProcessor
 
 
 var _chord_mask: Array[bool]
@@ -21,10 +21,10 @@ func _set_chord_mask(chord_mask) -> void:
 	print(_chord.notes)
 
 
-func activate(chord: Chord) -> void:
-	_chord = chord
+func activate(emitter: RayCast) -> void:
+	#_chord = chord
 	#_set_chord_mask(_chord_mask)
-	super.activate(chord)
+	super.activate(emitter)
 
 
 func deactivate(emitter: Node3D) -> void:

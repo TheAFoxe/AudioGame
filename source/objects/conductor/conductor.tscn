@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://cusq3k5okqllb"]
+
+[ext_resource type="Script" uid="uid://dfcdirnqd15n" path="res://source/objects/conductor/conductor.gd" id="1_00p7f"]
+
+[node name="Conductor" type="Timer" unique_id=1715937138]
+autostart = true
+script = ExtResource("1_00p7f")
+
+[connection signal="timeout" from="." to="." method="_on_timeout"]
