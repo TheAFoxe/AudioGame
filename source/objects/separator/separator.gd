@@ -9,16 +9,23 @@ func _ready() -> void:
 	super()
 	var interaction_menu = get_node("InteractionObject").interaction_menu
 	interaction_menu.send_chord_mask.connect(_set_chord_mask)
-
-	for i in 6:
+	for i in Chord.MAX_NOTES:
 		_chord_mask.append(null)
 
 
-func _set_chord_mask(chord_mask) -> void:
-	for i in _chord.notes.size():
-		if chord_mask[i]: continue
-		_chord.notes[i] = null
-	print(_chord.notes)
+func _process_chord() -> Chord:
+	var output := _input_chord.duplicate()
+	return output
+	
+
+
+func _set_chord_mask(input_mask: Array[bool]) -> void:
+	for i in Chord.MAX_NOTES:
+		if input_mask[i]:
+			_chord_mask[i] = true
+			continue
+		_chord_mask[i]
+	_update_chord()
 
 
 func activate(emitter: RayCast) -> void:

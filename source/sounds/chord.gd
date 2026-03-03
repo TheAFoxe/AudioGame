@@ -1,8 +1,9 @@
-extends Resource
 class_name Chord
+extends Resource
 
 enum Fret {OPEN, FIRST, SECOND, THIRD, FOURTH, NONE}
-@export var lib_note: LibNote = load("res://source/sounds/lib_note.tres").duplicate()
+
+const MAX_NOTES: int = 6
 
 @export_category("Chord")
 @export var s6: Fret = Fret.NONE
@@ -17,10 +18,19 @@ var notes: Array[AudioStream] = []
 
 
 func _init() -> void:
-	notes.clear()
-	var string_num = 0
-	while string_num < 6:
+	for string_num in MAX_NOTES:
 		var fret_value = strings[string_num]
-		var note = lib_note.get_audio_stream(string_num, fret_value)
+		var note = get_audio_stream(string_num, fret_value)
 		notes.append(note)
 		string_num += 1
+
+
+func get_audio_stream(guitar_string: int, guitar_fret: int) -> AudioStream:
+	var format_path = "res://source/sounds/notes/S%d_F%d_r%d.mp3"
+	var path = format_path % [guitar_string, guitar_fret, 0]
+	if not ResourceLoader.exists(path): 
+		#push_error("No audio available on path: %s" % path)
+		return
+	var audio_stream: AudioStream = load(path)
+	audio_stream.loop = true
+	return audio_stream

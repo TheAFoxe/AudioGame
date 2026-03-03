@@ -16,10 +16,7 @@ script = ExtResource("1_7e8dg")
 
 [node name="RayCast" type="Node3D" parent="." unique_id=1168944672]
 script = ExtResource("2_h7tn6")
-debug = true
 ray_length = 20.0
-max_bounces = 10
-collision_mask = 512
 metadata/_custom_type_script = "uid://bv838lp8l7g7q"
 
 [node name="AreaPick" type="Area3D" parent="." unique_id=1254027617]

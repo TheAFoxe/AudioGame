@@ -102,8 +102,8 @@ func _cast_ray() -> void:
 
 func _on_ray_hit(current_hit: Node3D) -> void:
 	current_hit.activate(self)
-	#if current_hit is AudioProcessor:
-		#current_hit.receive_chord(chord, self)
+	if current_hit is AudioProcessor:
+		current_hit.receive_chord(_chord, self)
 	return
 
 
@@ -167,6 +167,7 @@ func _create_debug_visualisation() -> void:
 
 func _create_audio_players() -> void:
 	_polyphonic_stream = AudioStreamPolyphonic.new()
+	_polyphonic_stream.polyphony = Chord.MAX_NOTES
 	for i in max_bounces:
 		var audio_stream = AudioPlayer.new()
 		audio_stream.max_distance = audio_max_distance
@@ -184,7 +185,6 @@ func _create_ray_query() -> void:
 		Vector3.ZERO,
 		collision_mask
 		)
-	
 	_ray_query.collide_with_bodies = true
 	_ray_query.collide_with_areas = true
 
@@ -194,6 +194,8 @@ func _on_conductor_loop_reset() -> void:
 		return
 	for i in _audio_streamers:
 		i.play_chord(_pending_chord)
+	_chord = _pending_chord
+	_previous_activation = null
 
 
 func receive_chord(new_chord: Chord) -> void:
@@ -201,11 +203,12 @@ func receive_chord(new_chord: Chord) -> void:
 
 
 func deactivate(emitter: RayCast) -> void:
-	if emitter == self: return
+	#if emitter == self: return
 	for i in _audio_streamers:
 		i.global_position = INACTIVE_AUDIO_PLAYER_POSITION
 	_is_active = false
 
 
 func activate(emitter: RayCast) -> void:
+	#if emitter == self: return
 	_is_active = true
