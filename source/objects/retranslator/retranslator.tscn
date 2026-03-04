@@ -16,10 +16,7 @@ script = ExtResource("1_opbb2")
 
 [node name="RayCast" type="Node3D" parent="." unique_id=367283664]
 script = ExtResource("2_hvsqt")
-debug = true
 ray_length = 20.0
-max_bounces = 10
-collision_mask = 512
 metadata/_custom_type_script = "uid://bv838lp8l7g7q"
 
 [node name="AreaPick" type="Area3D" parent="." unique_id=1499335443]
@@ -38,11 +35,11 @@ collision_mask = 4
 [node name="CollisionShape3D" type="CollisionShape3D" parent="AreaPlace" unique_id=399235651]
 shape = SubResource("BoxShape3D_mavjk")
 
-[node name="StaticBody3D" type="Area3D" parent="." unique_id=1066260278]
+[node name="AreaRay" type="Area3D" parent="." unique_id=1066260278]
 collision_layer = 512
 collision_mask = 512
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=998734395]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="AreaRay" unique_id=998734395]
 shape = SubResource("BoxShape3D_n0ndt")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=559820501]

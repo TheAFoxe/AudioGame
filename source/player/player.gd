@@ -31,7 +31,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("grab"):
 		if _is_picking: _object_release()
 		else: _object_pick()
-	if event.is_action_pressed("interact"):
+	elif event.is_action_pressed("interact"):
 		_interact()
 
 

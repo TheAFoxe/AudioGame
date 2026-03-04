@@ -10,7 +10,7 @@ func _ready() -> void:
 	var interaction_menu = get_node("InteractionObject").interaction_menu
 	interaction_menu.send_chord_mask.connect(_set_chord_mask)
 	for i in Chord.MAX_NOTES:
-		_chord_mask.append(null)
+		_chord_mask.append(false)
 
 
 func _process_chord() -> Chord:
@@ -25,12 +25,11 @@ func _set_chord_mask(input_mask: Array[bool]) -> void:
 			_chord_mask[i] = true
 			continue
 		_chord_mask[i]
-	_update_chord()
+	if is_active: 
+		_update_chord()
 
 
 func activate(emitter: RayCast) -> void:
-	#_chord = chord
-	#_set_chord_mask(_chord_mask)
 	super.activate(emitter)
 
 

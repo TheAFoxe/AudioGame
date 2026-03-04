@@ -21,8 +21,12 @@ const INACTIVE_AUDIO_PLAYER_POSITION: Vector3 = Vector3(0, 50, 0)
 @export var max_bounces: int = 10
 @export_flags_3d_physics var collision_mask: int = 512
 
+# Public variables
+var self_area_ray: RID
+
 # Private variables
 var _is_active: bool = false
+var _is_active_last_frame: bool = false
 
 var _debug_line_mesh: ImmediateMesh
 var _debug_mesh_instance: MeshInstance3D
@@ -30,7 +34,6 @@ var _debug_mesh_instance: MeshInstance3D
 var _audio_debug_spheres: Array[MeshInstance3D] = []
 var _audio_streamers: Array[AudioStreamPlayer3D] = []
 var _active_audio_streams: Array[AudioStreamPlayer3D] = []
-var _polyphonic_stream: AudioStreamPolyphonic
 var _chord: Chord
 var _pending_chord: Chord
 
@@ -46,18 +49,30 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	if not _is_active:
-		_debug_line_mesh.clear_surfaces()
+		#if not _is_active_last_frame: return
+		_clear()
 		return
+	if not _is_active_last_frame:
+		_is_active_last_frame = true
+	
 	_debug_line_mesh.clear_surfaces()
 	_active_audio_streams.fill(null)
-
+	
 	for i in _audio_debug_spheres:
 		i.hide()
-
+	
 	_cast_ray()
 	for i in _audio_streamers:
 		if i not in _active_audio_streams:
 			i.global_position = INACTIVE_AUDIO_PLAYER_POSITION
+
+
+func _clear() -> void:
+	_is_active_last_frame = false
+	_debug_line_mesh.clear_surfaces()
+	if _previous_activation:
+		_previous_activation.deactivate(self)
+		_previous_activation = null
 
 
 func _cast_ray() -> void:
@@ -66,7 +81,7 @@ func _cast_ray() -> void:
 	var current_start: Vector3 = global_position
 	var new_activation: Node3D = null
 	
-	_ray_query.exclude = []
+	_ray_query.exclude = [self_area_ray]
 	 
 	if debug: _debug_line_mesh.surface_begin(Mesh.PRIMITIVE_LINES)
 	
@@ -86,7 +101,7 @@ func _cast_ray() -> void:
 			new_activation = current_hit
 			break
 		
-		_ray_query.exclude = []
+		_ray_query.exclude = [self_area_ray]
 		direction = direction.bounce(result.normal)
 		current_start = result.position + direction * RAY_OFFSET_FROM_SURFACE
 	
@@ -102,16 +117,19 @@ func _cast_ray() -> void:
 
 func _on_ray_hit(current_hit: Node3D) -> void:
 	current_hit.activate(self)
-	if current_hit is AudioProcessor:
-		current_hit.receive_chord(_chord, self)
+	if current_hit is AudioRetranslator:
+		if _chord:
+			current_hit.receive_chord(_chord, self)
+		else:
+			current_hit.receive_chord(_pending_chord, self)
 	return
 
 
 func _raycast_ignoring_player(bounce_id: int, space_state: PhysicsDirectSpaceState3D) -> Dictionary:
 	var result := space_state.intersect_ray(_ray_query)
 	if result and _get_hit_owner(result) is Player:
-		var player_pos = result.position
-		_ray_query.exclude = [result.rid]
+		var player_pos = _get_hit_owner(result).global_position
+		_ray_query.exclude = [self_area_ray, result.rid]
 		result = space_state.intersect_ray(_ray_query)
 		_on_player_hit(player_pos, bounce_id, result)
 	return result
@@ -166,14 +184,9 @@ func _create_debug_visualisation() -> void:
 
 
 func _create_audio_players() -> void:
-	_polyphonic_stream = AudioStreamPolyphonic.new()
-	_polyphonic_stream.polyphony = Chord.MAX_NOTES
 	for i in max_bounces:
+
 		var audio_stream = AudioPlayer.new()
-		audio_stream.max_distance = audio_max_distance
-		audio_stream.max_db = audio_max_volume
-		audio_stream.volume_db = audio_volume
-		audio_stream.stream = _polyphonic_stream
 		add_child(audio_stream)
 		_audio_streamers.append(audio_stream)
 	_active_audio_streams.resize(max_bounces)
@@ -185,30 +198,34 @@ func _create_ray_query() -> void:
 		Vector3.ZERO,
 		collision_mask
 		)
-	_ray_query.collide_with_bodies = true
 	_ray_query.collide_with_areas = true
+	_ray_query.hit_back_faces = true
+	_ray_query.hit_from_inside = true
 
 
 func _on_conductor_loop_reset() -> void:
 	if not _pending_chord:
 		return
 	for i in _audio_streamers:
-		i.play_chord(_pending_chord)
-	_chord = _pending_chord
+		i.play_chord(_pending_chord.duplicate())
+	_chord = _pending_chord.duplicate()
+	_pending_chord = null
 	_previous_activation = null
 
 
 func receive_chord(new_chord: Chord) -> void:
-	_pending_chord = new_chord
+	_pending_chord = new_chord.duplicate()
 
 
 func deactivate(emitter: RayCast) -> void:
 	#if emitter == self: return
 	for i in _audio_streamers:
 		i.global_position = INACTIVE_AUDIO_PLAYER_POSITION
+	print(_is_active)
 	_is_active = false
+	print("deactivate")
 
 
 func activate(emitter: RayCast) -> void:
-	#if emitter == self: return
 	_is_active = true
+	_is_active_last_frame = true

@@ -2,24 +2,37 @@ class_name AudioPlayer
 extends AudioStreamPlayer3D
 
 
-@export_category("AudioStream")
-@export var audio_max_distance: float
-@export var audio_volume: float
-@export var audio_max_volume: float
-@export var audio_attenuation_model: AudioStreamPlayer3D.AttenuationModel
+const audio_max_distance: float = 3.5
+const audio_volume: float = 0.0
+const audio_max_volume: float = 0.0
+const audio_attenuation_model := AudioStreamPlayer3D.ATTENUATION_INVERSE_SQUARE_DISTANCE
 
-var chord_resource: Chord
+
+var _chord: Chord
 
 
 func _ready() -> void:
-	self.stream = AudioStreamPolyphonic.new()
-	self.stream.polyphony = 6
+	ConductorLoopReset._loop_reset.connect(_play)
+	var polyphonic_stream := AudioStreamPolyphonic.new()
+	polyphonic_stream.polyphony = Chord.MAX_NOTES
+	self.max_distance = audio_max_distance
+	self.max_db = audio_max_volume
+	self.volume_db = audio_volume
+	self.stream = polyphonic_stream
 
 
-func play_chord(chord: Chord):
-	if !self.playing: self.play()
-	var polyphonic_stream_playback := self.get_stream_playback()
-	for n in chord.notes:
-		if not n: return
-		polyphonic_stream_playback.play_stream(n)
-		await get_tree().create_timer(0.2).timeout
+func play_chord(chord: Chord) -> void:
+	_chord = chord.duplicate()
+	return
+
+
+func _play() -> void:
+	if not _chord: return
+	self.stop()
+	self.play()
+	var playback := self.get_stream_playback() as AudioStreamPlaybackPolyphonic
+	if not playback:
+		return
+	for sound in _chord.notes:
+		if sound:
+			playback.play_stream(sound)

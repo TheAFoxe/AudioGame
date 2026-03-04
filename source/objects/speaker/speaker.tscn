@@ -2,17 +2,6 @@
 
 [ext_resource type="Script" uid="uid://cd24y73ibwc47" path="res://source/objects/speaker/speaker.gd" id="1_lx1a8"]
 [ext_resource type="PackedScene" uid="uid://xfr2qedv6flg" path="res://meshes/SpeakerBlock.blend" id="2_01hlo"]
-[ext_resource type="Script" uid="uid://be7rkgkia3rma" path="res://source/sounds/lib_note.gd" id="2_yghru"]
-[ext_resource type="Script" uid="uid://c1fbx2o5kwwbv" path="res://source/sounds/chord.gd" id="3_n4emb"]
-
-[sub_resource type="Resource" id="Resource_w02a0"]
-script = ExtResource("2_yghru")
-metadata/_custom_type_script = "uid://be7rkgkia3rma"
-
-[sub_resource type="Resource" id="Resource_ndqgb"]
-script = ExtResource("3_n4emb")
-lib_note = SubResource("Resource_w02a0")
-metadata/_custom_type_script = "uid://c1fbx2o5kwwbv"
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_gwbc7"]
 size = Vector3(1.2, 1.2, 1)
@@ -20,7 +9,6 @@ size = Vector3(1.2, 1.2, 1)
 [node name="Speaker" type="Node3D" unique_id=150968234]
 process_mode = 1
 script = ExtResource("1_lx1a8")
-chord = SubResource("Resource_ndqgb")
 
 [node name="Mesh" parent="." unique_id=2055909578 instance=ExtResource("2_01hlo")]
 

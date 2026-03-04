@@ -8,6 +8,7 @@ var activated_by: RayCast
 
 func _ready() -> void:
 	_ray_cast = get_node("RayCast")
+	_ray_cast.self_area_ray = get_node("AreaRay").get_rid()
 	super()
 
 
@@ -20,13 +21,13 @@ func activate(emitter: RayCast) -> void:
 
 
 func deactivate(emitter: RayCast) -> void:
-	if activated_by == emitter:
+	if activated_by != emitter:
 		return
 	activated_by = null
 	is_active = false
 	_ray_cast.deactivate(emitter)
 
 
-func receive_chord(chord: Chord, emitter: RayCast) -> void:
+func receive_chord(new_chord: Chord, emitter: RayCast) -> void:
 	if emitter == _ray_cast: return
-	_ray_cast.receive_chord(chord)
+	_ray_cast.receive_chord(new_chord)
