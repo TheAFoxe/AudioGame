@@ -2,8 +2,21 @@
 
 [ext_resource type="Script" uid="uid://dlfwfvers8mgy" path="res://source/objects/reflector/audio_reflector.gd" id="1_2herq"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_2t2el"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1irve"]
+shading_mode = 0
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_kady0"]
+material = SubResource("StandardMaterial3D_1irve")
 size = Vector3(2, 2, 0.1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_13cl5"]
+shading_mode = 0
+
+[sub_resource type="BoxMesh" id="BoxMesh_2t2el"]
+material = SubResource("StandardMaterial3D_13cl5")
+flip_faces = true
+size = Vector3(2.1, 2.1, 0.2)
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_cvuvx"]
 resource_local_to_scene = true
@@ -20,31 +33,42 @@ process_mode = 1
 script = ExtResource("1_2herq")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=532998981]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
+mesh = SubResource("BoxMesh_kady0")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=528414810]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
 mesh = SubResource("BoxMesh_2t2el")
 
 [node name="AreaPick" type="Area3D" parent="." unique_id=454085466]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
 collision_layer = 2
 collision_mask = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="AreaPick" unique_id=1065754188]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 shape = SubResource("ConcavePolygonShape3D_cvuvx")
 
 [node name="AreaPlace" type="Area3D" parent="." unique_id=905824360]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
 collision_layer = 4
 collision_mask = 4
 input_ray_pickable = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="AreaPlace" unique_id=344069513]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 shape = SubResource("BoxShape3D_2herq")
 
-[node name="StaticBody3D" type="Area3D" parent="." unique_id=334138472]
+[node name="Ray" type="Area3D" parent="." unique_id=334138472]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
+visible = false
 collision_layer = 512
 collision_mask = 0
 
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="StaticBody3D" unique_id=1504728840]
-transform = Transform3D(-2, 0, -1.7484555e-07, 0, 2, 0, 1.7484555e-07, 0, -2, -8.742276e-09, 0, 0)
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Ray" unique_id=1504728840]
+transform = Transform3D(-2, 0, -1.7484555e-07, 0, 2, 0, 1.7484555e-07, 0, -2, 0, 0, 0)
 shape = SubResource("BoxShape3D_pcfeg")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="." unique_id=109233368]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D2" unique_id=968427871]
+shape = SubResource("BoxShape3D_2herq")

@@ -2,18 +2,49 @@
 
 [ext_resource type="Script" uid="uid://bn1yffmklidmw" path="res://source/objects/audio_catcher/audio_catcher.gd" id="1_s2xgv"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xr0gu"]
+shading_mode = 0
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_owets"]
+material = SubResource("StandardMaterial3D_xr0gu")
+flip_faces = true
+radius = 0.1
+height = 0.2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_s2xgv"]
+shading_mode = 0
+albedo_color = Color(0, 0, 0, 1)
+
 [sub_resource type="SphereMesh" id="SphereMesh_qlq3c"]
+material = SubResource("StandardMaterial3D_s2xgv")
+flip_faces = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1x50r"]
+shading_mode = 0
+
+[sub_resource type="SphereMesh" id="SphereMesh_xr0gu"]
+material = SubResource("StandardMaterial3D_1x50r")
+flip_faces = true
+radius = 0.55
+height = 1.1
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_1x50r"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_s2xgv"]
 
-[node name="Node3D" type="Node3D" unique_id=1790659427]
+[node name="Catcher" type="Node3D" unique_id=1790659427]
 process_mode = 1
 script = ExtResource("1_s2xgv")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=478972662]
+[node name="ActivationSphere" type="MeshInstance3D" parent="." unique_id=826558834]
+mesh = SubResource("SphereMesh_owets")
+
+[node name="InnerSphere" type="MeshInstance3D" parent="." unique_id=478972662]
 mesh = SubResource("SphereMesh_qlq3c")
+
+[node name="OuterSphere" type="MeshInstance3D" parent="." unique_id=483294581]
+mesh = SubResource("SphereMesh_xr0gu")
 
 [node name="AreaPick" type="Area3D" parent="." unique_id=720603982]
 process_mode = 1

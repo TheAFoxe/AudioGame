@@ -15,16 +15,17 @@ func _ready() -> void:
 
 func _process_chord() -> Chord:
 	var output := _input_chord.duplicate()
+	var notes: Array[AudioStream] = output.notes
+	for i in _chord_mask.size():
+		if not _chord_mask[i]:
+			output.set("s%d" % (Chord.MAX_NOTES - i), Chord.Fret.NONE)
+	print(output.notes)
 	return output
 	
 
 
 func _set_chord_mask(input_mask: Array[bool]) -> void:
-	for i in Chord.MAX_NOTES:
-		if input_mask[i]:
-			_chord_mask[i] = true
-			continue
-		_chord_mask[i]
+	_chord_mask = input_mask
 	if is_active: 
 		_update_chord()
 

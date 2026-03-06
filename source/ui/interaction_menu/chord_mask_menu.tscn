@@ -103,6 +103,7 @@ text = "S3"
 
 [node name="Button" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer3" unique_id=384919875]
 layout_mode = 2
+toggle_mode = true
 text = "Activate"
 
 [node name="Panel" type="Panel" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer3" unique_id=14484316]
@@ -118,6 +119,7 @@ text = "S6"
 
 [node name="Button" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=420903276]
 layout_mode = 2
+toggle_mode = true
 text = "Activate"
 
 [node name="Panel" type="Panel" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=2009062794]
@@ -133,6 +135,7 @@ text = "S6"
 
 [node name="Button" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer1" unique_id=169390376]
 layout_mode = 2
+toggle_mode = true
 text = "Activate"
 
 [node name="Panel" type="Panel" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer1" unique_id=1104558595]
@@ -142,3 +145,6 @@ size_flags_horizontal = 3
 [connection signal="toggled" from="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer6/Button" to="." method="_on_s6_toggled"]
 [connection signal="toggled" from="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer5/Button" to="." method="_on_s5_toggled"]
 [connection signal="toggled" from="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer4/Button" to="." method="_on_s4_toggled"]
+[connection signal="toggled" from="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer3/Button" to="." method="_on_s3_toggled"]
+[connection signal="toggled" from="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer2/Button" to="." method="_on_s2_toggled"]
+[connection signal="toggled" from="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer1/Button" to="." method="_on_s1_toggled"]

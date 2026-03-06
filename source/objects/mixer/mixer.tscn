@@ -15,12 +15,14 @@
 script = ExtResource("1_7e8dg")
 
 [node name="RayCast" type="Node3D" parent="." unique_id=1168944672]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 script = ExtResource("2_h7tn6")
 ray_length = 20.0
 metadata/_custom_type_script = "uid://bv838lp8l7g7q"
 
 [node name="AreaPick" type="Area3D" parent="." unique_id=1254027617]
 process_mode = 1
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 collision_layer = 2
 collision_mask = 2
 
@@ -29,6 +31,7 @@ shape = SubResource("BoxShape3D_rrjso")
 
 [node name="AreaPlace" type="Area3D" parent="." unique_id=1025682618]
 process_mode = 1
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 collision_layer = 4
 collision_mask = 4
 
@@ -36,6 +39,7 @@ collision_mask = 4
 shape = SubResource("BoxShape3D_7e8dg")
 
 [node name="StaticBody3D" type="Area3D" parent="." unique_id=602421758]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 collision_layer = 512
 collision_mask = 512
 
@@ -43,4 +47,5 @@ collision_mask = 512
 shape = SubResource("BoxShape3D_h7tn6")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=262508144]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 mesh = SubResource("PrismMesh_s5oof")

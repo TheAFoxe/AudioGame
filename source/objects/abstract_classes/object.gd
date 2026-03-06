@@ -28,8 +28,12 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	if not _is_picked: return
-	self.global_position = self.global_position.lerp(_origin.global_position, LERP_SPEED)
+	self.global_position = self.global_position.lerp(_origin_xz(), LERP_SPEED)
 	self.global_rotation.y = lerp_angle(self.global_rotation.y, _origin.global_rotation.y, LERP_ANGLE_SPEED)
+
+
+func _origin_xz() -> Vector3:
+	return Vector3(_origin.global_position.x, self.global_position.y, _origin.global_position.z)
 
 
 func pick() -> bool:

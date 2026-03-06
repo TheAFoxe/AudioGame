@@ -2,6 +2,16 @@
 
 [ext_resource type="Script" uid="uid://bpa43qel75l73" path="res://source/ui/main_menu.gd" id="1_717wo"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_717wo"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+
+[sub_resource type="Theme" id="Theme_234kq"]
+Button/styles/normal = SubResource("StyleBoxFlat_717wo")
+
 [node name="MainMenu" type="Control" unique_id=1519179571]
 layout_mode = 3
 anchors_preset = 15
@@ -16,6 +26,11 @@ layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 1.0
+theme = SubResource("Theme_234kq")
+
+[node name="ColorRect" type="ColorRect" parent="PanelContainer" unique_id=266267378]
+layout_mode = 2
+color = Color(0, 0, 0, 1)
 
 [node name="MarginContainer" type="MarginContainer" parent="PanelContainer" unique_id=1246264298]
 layout_mode = 2

@@ -13,6 +13,7 @@ const MAX_NOTES: int = 6
 @export var s2: Fret
 @export var s1: Fret
 
+
 var notes: Array[AudioStream]:
 	get:
 		var strings: Array[Fret] = [s6, s5, s4, s3, s2, s1]
@@ -33,6 +34,4 @@ func get_audio_stream(guitar_string: int, guitar_fret: int) -> AudioStream:
 		push_error("No audio available on path: %s" % path)
 		return
 	var audio_stream: AudioStream = load(path)
-	#audio_stream.loop = true
-	#audio_stream.loop_offset = 0.0
 	return audio_stream

@@ -9,7 +9,29 @@
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_n0ndt"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hvsqt"]
+shading_mode = 0
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="TorusMesh" id="TorusMesh_rdnhm"]
+flip_faces = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mavjk"]
+shading_mode = 0
+
+[sub_resource type="TorusMesh" id="TorusMesh_n0ndt"]
+material = SubResource("StandardMaterial3D_mavjk")
+flip_faces = true
+inner_radius = 0.45
+outer_radius = 1.05
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_c80s0"]
+shading_mode = 0
+vertex_color_use_as_albedo = true
+
 [sub_resource type="TorusMesh" id="TorusMesh_c80s0"]
+inner_radius = 0.7
+outer_radius = 0.8
 
 [node name="Retranslator" type="Node3D" unique_id=1009846341]
 script = ExtResource("1_opbb2")
@@ -42,6 +64,16 @@ collision_mask = 512
 [node name="CollisionShape3D" type="CollisionShape3D" parent="AreaRay" unique_id=998734395]
 shape = SubResource("BoxShape3D_n0ndt")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=559820501]
+[node name="Inner" type="MeshInstance3D" parent="." unique_id=559820501]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_hvsqt")
+mesh = SubResource("TorusMesh_rdnhm")
+
+[node name="Outer" type="MeshInstance3D" parent="." unique_id=1872275810]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
+mesh = SubResource("TorusMesh_n0ndt")
+
+[node name="Activation" type="MeshInstance3D" parent="." unique_id=1229431184]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_c80s0")
 mesh = SubResource("TorusMesh_c80s0")

@@ -164,11 +164,15 @@ func _draw_debug_line(from: Vector3, to: Vector3) -> void:
 
 
 func _create_debug_visualisation() -> void:
+	var mat_sphere := StandardMaterial3D.new()
+	mat_sphere.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	mat_sphere.albedo_color = Color.WHITE
 	for i in max_bounces:
 		var sphere := MeshInstance3D.new()
 		sphere.mesh = SphereMesh.new()
 		sphere.mesh.radius = 0.1
 		sphere.mesh.height = 0.2
+		sphere.mesh.material = mat_sphere
 		add_child(sphere)
 		_audio_debug_spheres.append(sphere)
 	
@@ -218,12 +222,9 @@ func receive_chord(new_chord: Chord) -> void:
 
 
 func deactivate(emitter: RayCast) -> void:
-	#if emitter == self: return
 	for i in _audio_streamers:
 		i.global_position = INACTIVE_AUDIO_PLAYER_POSITION
-	print(_is_active)
 	_is_active = false
-	print("deactivate")
 
 
 func activate(emitter: RayCast) -> void:
