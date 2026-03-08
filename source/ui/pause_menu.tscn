@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://c201kqm66rjry"]
 
 [ext_resource type="Script" uid="uid://cdwyisxkkn5kh" path="res://source/ui/pause_menu.gd" id="1_hdmo1"]
+[ext_resource type="Theme" uid="uid://jd5jbr23680i" path="res://new_theme.tres" id="2_5vpx4"]
 
 [node name="PauseMenu" type="Control" unique_id=1331432830]
 layout_mode = 3
@@ -16,6 +17,7 @@ layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 1.0
+theme = ExtResource("2_5vpx4")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer" unique_id=1296760358]
 layout_mode = 2
