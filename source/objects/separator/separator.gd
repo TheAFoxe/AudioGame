@@ -19,20 +19,10 @@ func _process_chord() -> Chord:
 	for i in _chord_mask.size():
 		if not _chord_mask[i]:
 			output.set("s%d" % (Chord.MAX_NOTES - i), Chord.Fret.NONE)
-	print(output.notes)
 	return output
-	
 
 
 func _set_chord_mask(input_mask: Array[bool]) -> void:
 	_chord_mask = input_mask
 	if is_active: 
 		_update_chord()
-
-
-func activate(emitter: RayCast) -> void:
-	super.activate(emitter)
-
-
-func deactivate(emitter: Node3D) -> void:
-	super.deactivate(emitter)

@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://c8oqf38wn7cvq"]
+
+[ext_resource type="Script" uid="uid://d25vuaptvd3yo" path="res://source/objects/breaker/breaker.gd" id="1_skm2e"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_h2rhs"]
+size = Vector3(0.1, 2, 2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5evex"]
+blend_mode = 1
+shading_mode = 0
+albedo_color = Color(0.47058824, 0.47058824, 0.47058824, 0.5254902)
+
+[sub_resource type="BoxMesh" id="BoxMesh_f3ldq"]
+material = SubResource("StandardMaterial3D_5evex")
+size = Vector3(0.1, 2, 2)
+
+[node name="AudioBreaker" type="StaticBody3D" unique_id=1368947979]
+collision_layer = 513
+collision_mask = 0
+script = ExtResource("1_skm2e")
+metadata/_custom_type_script = "uid://d25vuaptvd3yo"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1354069414]
+shape = SubResource("BoxShape3D_h2rhs")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1643677796]
+mesh = SubResource("BoxMesh_f3ldq")

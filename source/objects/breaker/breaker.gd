@@ -1,0 +1,2 @@
+class_name AudioBreaker
+extends StaticBody3D

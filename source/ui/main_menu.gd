@@ -2,6 +2,7 @@ class_name MainMenu
 extends Control
 
 signal level_pick(level)
+signal settings_open
 
 
 func _on_level_pick_pressed() -> void:
@@ -14,4 +15,4 @@ func _on_exit_button_pressed() -> void:
 
 
 func _on_settings_pressed() -> void:
-	pass # Replace with function body.
+	settings_open.emit()

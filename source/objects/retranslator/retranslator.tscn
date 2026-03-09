@@ -2,36 +2,14 @@
 
 [ext_resource type="Script" uid="uid://hia0jnb4dtvp" path="res://source/objects/retranslator/retranslator.gd" id="1_opbb2"]
 [ext_resource type="Script" uid="uid://bv838lp8l7g7q" path="res://source/objects/tools/raycast.gd" id="2_hvsqt"]
+[ext_resource type="PackedScene" uid="uid://bbcfc3x5d6u2n" path="res://meshes/Kamerton.blend" id="3_rdnhm"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_rdnhm"]
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_hvsqt"]
+height = 0.6
+radius = 1.0
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_mavjk"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_n0ndt"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hvsqt"]
-shading_mode = 0
-albedo_color = Color(0, 0, 0, 1)
-
-[sub_resource type="TorusMesh" id="TorusMesh_rdnhm"]
-flip_faces = true
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mavjk"]
-shading_mode = 0
-
-[sub_resource type="TorusMesh" id="TorusMesh_n0ndt"]
-material = SubResource("StandardMaterial3D_mavjk")
-flip_faces = true
-inner_radius = 0.45
-outer_radius = 1.05
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_c80s0"]
-shading_mode = 0
-vertex_color_use_as_albedo = true
-
-[sub_resource type="TorusMesh" id="TorusMesh_c80s0"]
-inner_radius = 0.7
-outer_radius = 0.8
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_hvsqt"]
+radius = 0.25097656
 
 [node name="Retranslator" type="Node3D" unique_id=1009846341]
 script = ExtResource("1_opbb2")
@@ -47,33 +25,38 @@ collision_layer = 2
 collision_mask = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="AreaPick" unique_id=1672599057]
-shape = SubResource("BoxShape3D_rdnhm")
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
+shape = SubResource("CylinderShape3D_hvsqt")
 
 [node name="AreaPlace" type="Area3D" parent="." unique_id=829736352]
 process_mode = 1
 collision_layer = 4
 collision_mask = 4
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="AreaPlace" unique_id=399235651]
-shape = SubResource("BoxShape3D_mavjk")
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="AreaPlace" unique_id=307654994]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
+shape = SubResource("CylinderShape3D_hvsqt")
 
 [node name="AreaRay" type="Area3D" parent="." unique_id=1066260278]
 collision_layer = 512
 collision_mask = 512
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="AreaRay" unique_id=998734395]
-shape = SubResource("BoxShape3D_n0ndt")
-
-[node name="Inner" type="MeshInstance3D" parent="." unique_id=559820501]
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="AreaRay" unique_id=1885928279]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
-material_override = SubResource("StandardMaterial3D_hvsqt")
-mesh = SubResource("TorusMesh_rdnhm")
+visible = false
+shape = SubResource("CylinderShape3D_hvsqt")
+disabled = true
 
-[node name="Outer" type="MeshInstance3D" parent="." unique_id=1872275810]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
-mesh = SubResource("TorusMesh_n0ndt")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="AreaRay" unique_id=1681580418]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, -0.012207031, -5.335863e-10, 0)
+shape = SubResource("CapsuleShape3D_hvsqt")
 
-[node name="Activation" type="MeshInstance3D" parent="." unique_id=1229431184]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
-material_override = SubResource("StandardMaterial3D_c80s0")
-mesh = SubResource("TorusMesh_c80s0")
+[node name="StaticBody" type="StaticBody3D" parent="." unique_id=552062304]
+visible = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody" unique_id=1939928133]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, -0.012207031, -5.335863e-10, 0)
+shape = SubResource("CapsuleShape3D_hvsqt")
+
+[node name="Kamerton" parent="." unique_id=837719053 instance=ExtResource("3_rdnhm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0)

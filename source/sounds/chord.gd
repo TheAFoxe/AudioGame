@@ -16,7 +16,6 @@ const MAX_NOTES: int = 6
 
 var notes: Array[AudioStream]:
 	get:
-		var strings: Array[Fret] = [s6, s5, s4, s3, s2, s1]
 		var result: Array[AudioStream] = []
 		for string_num in MAX_NOTES:
 			var fret_value = strings[string_num]
@@ -25,6 +24,10 @@ var notes: Array[AudioStream]:
 				continue
 			result.append(get_audio_stream(MAX_NOTES - string_num, fret_value))
 		return result
+
+var strings: Array[Fret]:
+	get:
+		return [s6, s5, s4, s3, s2, s1]
 
 
 func get_audio_stream(guitar_string: int, guitar_fret: int) -> AudioStream:

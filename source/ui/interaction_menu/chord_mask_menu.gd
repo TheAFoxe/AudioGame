@@ -1,4 +1,4 @@
-class_name InteractionMenu
+class_name ChordMaskMenu
 extends Control
 
 signal send_chord_mask(chord_mask: Array[bool])

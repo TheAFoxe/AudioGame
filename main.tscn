@@ -2,12 +2,16 @@
 
 [ext_resource type="Script" uid="uid://b74aq41vgfphe" path="res://main.gd" id="1_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://c201kqm66rjry" path="res://source/ui/pause_menu.tscn" id="2_0xm2m"]
+[ext_resource type="PackedScene" uid="uid://c8sa4mugq1w7m" path="res://source/ui/settings_menu/settigs_menu.tscn" id="4_7mycd"]
 [ext_resource type="PackedScene" uid="uid://i1686kge5k3e" path="res://source/ui/main_menu.tscn" id="5_7mycd"]
 [ext_resource type="PackedScene" uid="uid://ckudr8chj1kgo" path="res://source/player/player.tscn" id="5_272bh"]
 [ext_resource type="Script" uid="uid://b1fayhcx4kdi4" path="res://fps.gd" id="5_lquwl"]
 
 [sub_resource type="Environment" id="Environment_lquwl"]
 background_mode = 1
+background_energy_multiplier = 0.0
+ambient_light_source = 1
+reflected_light_source = 1
 
 [node name="Main" type="Node3D" unique_id=550541121]
 process_mode = 3
@@ -17,6 +21,9 @@ script = ExtResource("1_1bvp3")
 process_mode = 2
 
 [node name="MainMenu" parent="." unique_id=1406229279 instance=ExtResource("5_7mycd")]
+
+[node name="SettigsMenu" parent="." unique_id=930890512 instance=ExtResource("4_7mycd")]
+visible = false
 
 [node name="FPS" type="Label" parent="." unique_id=337238559]
 process_mode = 3
@@ -32,4 +39,6 @@ environment = SubResource("Environment_lquwl")
 
 [connection signal="exit" from="PauseMenu" to="." method="_on_pause_menu_exit"]
 [connection signal="main_menu" from="PauseMenu" to="." method="_on_pause_menu_main_menu"]
+[connection signal="settings" from="PauseMenu" to="." method="_on_settings_open"]
 [connection signal="level_pick" from="MainMenu" to="." method="_on_main_menu_level_pick"]
+[connection signal="settings_open" from="MainMenu" to="." method="_on_settings_open"]

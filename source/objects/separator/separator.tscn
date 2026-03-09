@@ -2,16 +2,64 @@
 
 [ext_resource type="Script" uid="uid://bw5cgjucawdkk" path="res://source/objects/separator/separator.gd" id="1_88oku"]
 [ext_resource type="Script" uid="uid://bv838lp8l7g7q" path="res://source/objects/tools/raycast.gd" id="2_m322p"]
-[ext_resource type="PackedScene" uid="uid://ds8bfht8yrdjf" path="res://source/objects/tools/interaction_object/interaction_object.tscn" id="2_ofs0k"]
-[ext_resource type="PackedScene" uid="uid://x1u4ywn4bl4e" path="res://source/ui/interaction_menu/chord_mask_menu.tscn" id="3_88oku"]
+[ext_resource type="Script" uid="uid://dww1cabukf3qi" path="res://source/objects/tools/interaction_object/interaction_oject.gd" id="3_ofs0k"]
+[ext_resource type="Script" uid="uid://u2amvwg4vhd1" path="res://source/ui/interaction_menu/chord_mask_menu.gd" id="4_88oku"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_rrjso"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_88oku"]
+shading_mode = 0
+albedo_color = Color(0, 0, 0, 1)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_7e8dg"]
+[sub_resource type="TorusMesh" id="TorusMesh_avvhp"]
+flip_faces = true
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_h7tn6"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mavjk"]
+transparency = 1
+shading_mode = 0
 
-[sub_resource type="BoxMesh" id="BoxMesh_avvhp"]
+[sub_resource type="TorusMesh" id="TorusMesh_r41m0"]
+material = SubResource("StandardMaterial3D_mavjk")
+flip_faces = true
+inner_radius = 0.45
+outer_radius = 1.05
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_al0on"]
+shading_mode = 0
+vertex_color_use_as_albedo = true
+
+[sub_resource type="TorusMesh" id="TorusMesh_vgtvw"]
+inner_radius = 0.7
+outer_radius = 0.8
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_88oku"]
+height = 0.6
+radius = 1.0
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_avvhp"]
+radius = 0.25097656
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_mntya"]
+allow_unpress = true
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_mdlcq"]
+allow_unpress = true
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_f8y5m"]
+allow_unpress = true
+
+[sub_resource type="PackedScene" id="PackedScene_avvhp"]
+_bundled = {
+"conn_count": 6,
+"conns": PackedInt32Array(1073741852, 1073741851, 132, 131, 2, 0, 0, 1073741854, 1073741853, 134, 133, 2, 0, 0, 1073741856, 1073741855, 136, 135, 2, 0, 0, 1073741858, 1073741857, 138, 137, 2, 0, 0, 1073741860, 1073741859, 140, 139, 2, 0, 0, 1073741862, 1073741861, 142, 141, 2, 0, 0),
+"editable_instances": [],
+"id_paths": [PackedInt32Array(), PackedInt32Array(), PackedInt32Array(), PackedInt32Array(), PackedInt32Array(), PackedInt32Array(), PackedInt32Array(), PackedInt32Array(), PackedInt32Array(), PackedInt32Array(), PackedInt32Array(), PackedInt32Array(), PackedInt32Array(), PackedInt32Array(), PackedInt32Array(), PackedInt32Array(), PackedInt32Array(), PackedInt32Array(), PackedInt32Array(), PackedInt32Array(), PackedInt32Array(), PackedInt32Array(), PackedInt32Array(), PackedInt32Array(), PackedInt32Array(), PackedInt32Array(), PackedInt32Array(), PackedInt32Array(), PackedInt32Array(), PackedInt32Array(), PackedInt32Array(), PackedInt32Array(), PackedInt32Array(), PackedInt32Array(), PackedInt32Array(), PackedInt32Array(), PackedInt32Array(), PackedInt32Array(), PackedInt32Array()],
+"names": PackedStringArray("InteractionMenu", "Control", "layout_mode", "anchors_preset", "anchor_right", "anchor_bottom", "grow_horizontal", "grow_vertical", "script", "PanelContainer", "PanelContainer", "layout_mode", "anchors_preset", "anchor_right", "anchor_bottom", "offset_left", "offset_top", "offset_right", "offset_bottom", "grow_horizontal", "grow_vertical", "MarginContainer", "MarginContainer", "layout_mode", "theme_override_constants/margin_left", "theme_override_constants/margin_top", "theme_override_constants/margin_right", "theme_override_constants/margin_bottom", "VBoxContainer", "VBoxContainer", "layout_mode", "alignment", "HBoxContainer6", "HBoxContainer", "layout_mode", "Label", "Label", "layout_mode", "text", "Button", "Button", "layout_mode", "toggle_mode", "button_group", "text", "Panel", "Panel", "layout_mode", "size_flags_horizontal", "HBoxContainer5", "HBoxContainer", "layout_mode", "Label", "Label", "layout_mode", "text", "Button", "Button", "layout_mode", "toggle_mode", "button_group", "text", "Panel", "Panel", "layout_mode", "size_flags_horizontal", "HBoxContainer4", "HBoxContainer", "layout_mode", "Label", "Label", "layout_mode", "text", "Button", "Button", "layout_mode", "toggle_mode", "button_group", "text", "Panel", "Panel", "layout_mode", "size_flags_horizontal", "HBoxContainer3", "HBoxContainer", "layout_mode", "Label", "Label", "layout_mode", "text", "Button", "Button", "layout_mode", "toggle_mode", "text", "Panel", "Panel", "layout_mode", "size_flags_horizontal", "HBoxContainer2", "HBoxContainer", "layout_mode", "Label", "Label", "layout_mode", "text", "Button", "Button", "layout_mode", "toggle_mode", "text", "Panel", "Panel", "layout_mode", "size_flags_horizontal", "HBoxContainer1", "HBoxContainer", "layout_mode", "Label", "Label", "layout_mode", "text", "Button", "Button", "layout_mode", "toggle_mode", "text", "Panel", "Panel", "layout_mode", "size_flags_horizontal", "_on_s6_toggled", "toggled", "_on_s5_toggled", "toggled", "_on_s4_toggled", "toggled", "_on_s3_toggled", "toggled", "_on_s2_toggled", "toggled", "_on_s1_toggled", "toggled"),
+"node_count": 28,
+"node_ids": PackedInt32Array(199516953, 1614097798, 524679352, 2093893484, 1235707399, 562187190, 1981580333, 534257558, 236208677, 1419617516, 835415974, 1837878260, 1109008764, 142453398, 1333093950, 886957281, 2142407963, 491416815, 384919875, 14484316, 1989499396, 2057289510, 420903276, 2009062794, 316556754, 1988407177, 169390376, 1104558595),
+"node_paths": [NodePath("."), NodePath("./PanelContainer"), NodePath("./PanelContainer/MarginContainer"), NodePath("./PanelContainer/MarginContainer/VBoxContainer"), NodePath("./PanelContainer/MarginContainer/VBoxContainer/HBoxContainer6"), NodePath("./PanelContainer/MarginContainer/VBoxContainer/HBoxContainer6"), NodePath("./PanelContainer/MarginContainer/VBoxContainer/HBoxContainer6"), NodePath("./PanelContainer/MarginContainer/VBoxContainer"), NodePath("./PanelContainer/MarginContainer/VBoxContainer/HBoxContainer5"), NodePath("./PanelContainer/MarginContainer/VBoxContainer/HBoxContainer5"), NodePath("./PanelContainer/MarginContainer/VBoxContainer/HBoxContainer5"), NodePath("./PanelContainer/MarginContainer/VBoxContainer"), NodePath("./PanelContainer/MarginContainer/VBoxContainer/HBoxContainer4"), NodePath("./PanelContainer/MarginContainer/VBoxContainer/HBoxContainer4"), NodePath("./PanelContainer/MarginContainer/VBoxContainer/HBoxContainer4"), NodePath("./PanelContainer/MarginContainer/VBoxContainer"), NodePath("./PanelContainer/MarginContainer/VBoxContainer/HBoxContainer3"), NodePath("./PanelContainer/MarginContainer/VBoxContainer/HBoxContainer3"), NodePath("./PanelContainer/MarginContainer/VBoxContainer/HBoxContainer3"), NodePath("./PanelContainer/MarginContainer/VBoxContainer"), NodePath("./PanelContainer/MarginContainer/VBoxContainer/HBoxContainer2"), NodePath("./PanelContainer/MarginContainer/VBoxContainer/HBoxContainer2"), NodePath("./PanelContainer/MarginContainer/VBoxContainer/HBoxContainer2"), NodePath("./PanelContainer/MarginContainer/VBoxContainer"), NodePath("./PanelContainer/MarginContainer/VBoxContainer/HBoxContainer1"), NodePath("./PanelContainer/MarginContainer/VBoxContainer/HBoxContainer1"), NodePath("./PanelContainer/MarginContainer/VBoxContainer/HBoxContainer1"), NodePath("."), NodePath("PanelContainer/MarginContainer/VBoxContainer/HBoxContainer6/Button"), NodePath("."), NodePath("PanelContainer/MarginContainer/VBoxContainer/HBoxContainer5/Button"), NodePath("."), NodePath("PanelContainer/MarginContainer/VBoxContainer/HBoxContainer4/Button"), NodePath("."), NodePath("PanelContainer/MarginContainer/VBoxContainer/HBoxContainer3/Button"), NodePath("."), NodePath("PanelContainer/MarginContainer/VBoxContainer/HBoxContainer2/Button"), NodePath("."), NodePath("PanelContainer/MarginContainer/VBoxContainer/HBoxContainer1/Button")],
+"nodes": PackedInt32Array(-1, -1, 1, 0, -1, 7, 2, 0, 3, 1, 4, 2, 5, 3, 6, 4, 7, 5, 8, 6, 0, 1073741824, 0, 10, 9, -1, 10, 11, 7, 12, 8, 13, 9, 14, 10, 15, 11, 16, 12, 17, 13, 18, 14, 19, 15, 20, 16, 0, 1073741825, 0, 22, 21, -1, 5, 23, 17, 24, 18, 25, 19, 26, 20, 27, 21, 0, 1073741826, 0, 29, 28, -1, 2, 30, 22, 31, 23, 0, 1073741827, 0, 33, 32, -1, 1, 34, 24, 0, 1073741828, 0, 36, 35, -1, 2, 37, 25, 38, 26, 0, 1073741829, 0, 40, 39, -1, 4, 41, 27, 42, 28, 43, 29, 44, 30, 0, 1073741830, 0, 46, 45, -1, 2, 47, 31, 48, 32, 0, 1073741831, 0, 50, 49, -1, 1, 51, 33, 0, 1073741832, 0, 53, 52, -1, 2, 54, 34, 55, 35, 0, 1073741833, 0, 57, 56, -1, 4, 58, 36, 59, 37, 60, 38, 61, 39, 0, 1073741834, 0, 63, 62, -1, 2, 64, 40, 65, 41, 0, 1073741835, 0, 67, 66, -1, 1, 68, 42, 0, 1073741836, 0, 70, 69, -1, 2, 71, 43, 72, 44, 0, 1073741837, 0, 74, 73, -1, 4, 75, 45, 76, 46, 77, 47, 78, 48, 0, 1073741838, 0, 80, 79, -1, 2, 81, 49, 82, 50, 0, 1073741839, 0, 84, 83, -1, 1, 85, 51, 0, 1073741840, 0, 87, 86, -1, 2, 88, 52, 89, 53, 0, 1073741841, 0, 91, 90, -1, 3, 92, 54, 93, 55, 94, 56, 0, 1073741842, 0, 96, 95, -1, 2, 97, 57, 98, 58, 0, 1073741843, 0, 100, 99, -1, 1, 101, 59, 0, 1073741844, 0, 103, 102, -1, 2, 104, 60, 105, 61, 0, 1073741845, 0, 107, 106, -1, 3, 108, 62, 109, 63, 110, 64, 0, 1073741846, 0, 112, 111, -1, 2, 113, 65, 114, 66, 0, 1073741847, 0, 116, 115, -1, 1, 117, 67, 0, 1073741848, 0, 119, 118, -1, 2, 120, 68, 121, 69, 0, 1073741849, 0, 123, 122, -1, 3, 124, 70, 125, 71, 126, 72, 0, 1073741850, 0, 128, 127, -1, 2, 129, 73, 130, 74, 0),
+"variants": [3, 15, 1.0, 1.0, 2, 2, ExtResource("4_88oku"), 1, -1, 1.0, 1.0, 300.0, 200.0, -300.0, -200.0, 2, 2, 2, 20, 15, 20, 15, 2, 1, 2, 2, "S6", 2, true, SubResource("ButtonGroup_mntya"), "Activate", 2, 3, 2, 2, "S5", 2, true, SubResource("ButtonGroup_mdlcq"), "Activate", 2, 3, 2, 2, "S4", 2, true, SubResource("ButtonGroup_f8y5m"), "Activate", 2, 3, 2, 2, "S3", 2, true, "Activate", 2, 3, 2, 2, "S6", 2, true, "Activate", 2, 3, 2, 2, "S6", 2, true, "Activate", 2, 3],
+"version": 3
+}
 
 [node name="AudioSeparator" type="Node3D" unique_id=584171169]
 script = ExtResource("1_88oku")
@@ -22,36 +70,68 @@ script = ExtResource("2_m322p")
 ray_length = 20.0
 metadata/_custom_type_script = "uid://bv838lp8l7g7q"
 
-[node name="AreaPick" type="Area3D" parent="." unique_id=1254027617]
+[node name="InnerMesh" type="MeshInstance3D" parent="." unique_id=72689562]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 1, 0)
+material_override = SubResource("StandardMaterial3D_88oku")
+mesh = SubResource("TorusMesh_avvhp")
+
+[node name="OuterMesh" type="MeshInstance3D" parent="." unique_id=1578786268]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 1, 0)
+mesh = SubResource("TorusMesh_r41m0")
+
+[node name="ActivationMesh" type="MeshInstance3D" parent="." unique_id=351028475]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 1, 0)
+material_override = SubResource("StandardMaterial3D_al0on")
+mesh = SubResource("TorusMesh_vgtvw")
+
+[node name="AreaPick" type="Area3D" parent="." unique_id=198420334]
 process_mode = 1
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+visible = false
 collision_layer = 2
 collision_mask = 2
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="AreaPick" unique_id=1200633899]
-shape = SubResource("BoxShape3D_rrjso")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="AreaPick" unique_id=2048490692]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
+shape = SubResource("CylinderShape3D_88oku")
 
-[node name="AreaPlace" type="Area3D" parent="." unique_id=1025682618]
+[node name="AreaPlace" type="Area3D" parent="." unique_id=1096129975]
 process_mode = 1
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+visible = false
 collision_layer = 4
 collision_mask = 4
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="AreaPlace" unique_id=1512692881]
-shape = SubResource("BoxShape3D_7e8dg")
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="AreaPlace" unique_id=188096641]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
+shape = SubResource("CylinderShape3D_88oku")
 
-[node name="AreaRay" type="Area3D" parent="." unique_id=602421758]
+[node name="AreaRay" type="Area3D" parent="." unique_id=1930854247]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+visible = false
 collision_layer = 512
 collision_mask = 512
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="AreaRay" unique_id=543916265]
-shape = SubResource("BoxShape3D_h7tn6")
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="AreaRay" unique_id=433546001]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
+shape = SubResource("CylinderShape3D_88oku")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=262508144]
-transform = Transform3D(0.22476417, 0, 0, 0, 0.22476417, 0, 0, 0, 1, 0, 1, 0)
-mesh = SubResource("BoxMesh_avvhp")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="AreaRay" unique_id=1387497746]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, -0.012207031, -5.335863e-10, 0)
+visible = false
+shape = SubResource("CapsuleShape3D_avvhp")
+disabled = true
 
-[node name="InteractionObject" parent="." unique_id=1235640479 instance=ExtResource("2_ofs0k")]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0.6, 0.6)
-interaction_menu_scene = ExtResource("3_88oku")
+[node name="InteractionObject" type="Node3D" parent="." unique_id=1687528639]
+script = ExtResource("3_ofs0k")
+interaction_menu_scene = SubResource("PackedScene_avvhp")
+
+[node name="AreaInteract" type="Area3D" parent="InteractionObject" unique_id=1902159324]
+process_mode = 1
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+collision_layer = 8
+collision_mask = 8
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="InteractionObject/AreaInteract" unique_id=884218482]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
+shape = SubResource("CylinderShape3D_88oku")

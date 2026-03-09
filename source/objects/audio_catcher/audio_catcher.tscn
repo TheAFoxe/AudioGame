@@ -1,10 +1,17 @@
 [gd_scene format=3 uid="uid://coesjdeuspnqt"]
 
 [ext_resource type="Script" uid="uid://bn1yffmklidmw" path="res://source/objects/audio_catcher/audio_catcher.gd" id="1_s2xgv"]
+[ext_resource type="Script" uid="uid://c1fbx2o5kwwbv" path="res://source/sounds/chord.gd" id="2_1x50r"]
+
+[sub_resource type="Resource" id="Resource_xr0gu"]
+script = ExtResource("2_1x50r")
+s6 = 1
+s5 = 1
+s4 = 3
+metadata/_custom_type_script = "uid://c1fbx2o5kwwbv"
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xr0gu"]
 shading_mode = 0
-albedo_color = Color(0, 0, 0, 1)
 
 [sub_resource type="SphereMesh" id="SphereMesh_owets"]
 material = SubResource("StandardMaterial3D_xr0gu")
@@ -21,6 +28,7 @@ material = SubResource("StandardMaterial3D_s2xgv")
 flip_faces = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1x50r"]
+transparency = 1
 shading_mode = 0
 
 [sub_resource type="SphereMesh" id="SphereMesh_xr0gu"]
@@ -33,21 +41,25 @@ height = 1.1
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_s2xgv"]
 
-[node name="Catcher" type="Node3D" unique_id=1790659427]
+[sub_resource type="SphereShape3D" id="SphereShape3D_xr0gu"]
+
+[node name="AudioCatcher" type="Node3D" unique_id=1790659427]
 process_mode = 1
 script = ExtResource("1_s2xgv")
+_chord = SubResource("Resource_xr0gu")
 
-[node name="ActivationSphere" type="MeshInstance3D" parent="." unique_id=826558834]
+[node name="ActivationMesh" type="MeshInstance3D" parent="." unique_id=826558834]
 mesh = SubResource("SphereMesh_owets")
 
-[node name="InnerSphere" type="MeshInstance3D" parent="." unique_id=478972662]
+[node name="InnerMesh" type="MeshInstance3D" parent="." unique_id=478972662]
 mesh = SubResource("SphereMesh_qlq3c")
 
-[node name="OuterSphere" type="MeshInstance3D" parent="." unique_id=483294581]
+[node name="OuterMesh" type="MeshInstance3D" parent="." unique_id=483294581]
 mesh = SubResource("SphereMesh_xr0gu")
 
 [node name="AreaPick" type="Area3D" parent="." unique_id=720603982]
 process_mode = 1
+visible = false
 collision_layer = 2
 collision_mask = 2
 
@@ -56,15 +68,23 @@ shape = SubResource("SphereShape3D_1x50r")
 
 [node name="AreaPlace" type="Area3D" parent="." unique_id=1369781563]
 process_mode = 1
+visible = false
 collision_layer = 4
 collision_mask = 4
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="AreaPlace" unique_id=826263511]
 shape = SubResource("SphereShape3D_1x50r")
 
-[node name="StaticBody3D" type="Area3D" parent="." unique_id=2144488261]
+[node name="AreaRay" type="Area3D" parent="." unique_id=2144488261]
+visible = false
 collision_layer = 512
 collision_mask = 512
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=357046536]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="AreaRay" unique_id=357046536]
 shape = SubResource("SphereShape3D_s2xgv")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=1373031240]
+visible = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=2089444736]
+shape = SubResource("SphereShape3D_xr0gu")

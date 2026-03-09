@@ -1,21 +1,25 @@
 extends Node3D
 
-enum GameStatus {MAIN_MENU, PAUSE_MENU, RUNNING}
+enum GameStatus { MAIN_MENU, PAUSE_MENU, SETTINGS_MENU, RUNNING }
 
 @export var max_fps: int = 60
 
 var game_status: GameStatus
+var previous_game_status: GameStatus
 
 var _current_level: Level
 
-@onready var _player: Player = $Player
-@onready var _main_menu: MainMenu = $MainMenu
-@onready var _pause_menu: PauseMenu = $PauseMenu
+var _player: Player
+var _main_menu: MainMenu
+var _pause_menu: PauseMenu
+var _settings_menu: Control
 
 
 func _ready():
-	_pause_menu = $PauseMenu
-	_main_menu = $MainMenu
+	_player = get_node("Player")
+	_main_menu = get_node("MainMenu")
+	_pause_menu = get_node("PauseMenu")
+	_settings_menu = get_node("SettigsMenu")
 	
 	_pause_menu.hide()
 	_main_menu.show()
@@ -35,6 +39,8 @@ func _input(event: InputEvent) -> void:
 			GameStatus.PAUSE_MENU:
 				_pause_menu.hide()
 				_unpause()
+			GameStatus.SETTINGS_MENU:
+				_on_settings_close()
 		for i in get_tree().get_nodes_in_group("menu"):
 			i.leave()
 
@@ -83,3 +89,14 @@ func _reset_player() -> void:
 	_player.rotation = Vector3.ZERO
 	_player.camera_node.rotation = Vector3.ZERO
 	_player.can_move = true
+
+
+func _on_settings_open() -> void:
+	_settings_menu.show()
+	previous_game_status = game_status
+	game_status = GameStatus.SETTINGS_MENU
+
+
+func _on_settings_close() -> void:
+	_settings_menu.hide()
+	game_status = previous_game_status

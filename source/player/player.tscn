@@ -15,7 +15,7 @@ collision_layer = 0
 floor_max_angle = 1.0471976
 script = ExtResource("1_jct2x")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=204069106]
+[node name="CollisionShape" type="CollisionShape3D" parent="." unique_id=204069106]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_sh265")
 debug_color = Color(0, 0.6, 0.69803923, 1)
@@ -24,24 +24,31 @@ debug_fill = false
 [node name="CameraNode" type="Node3D" parent="." unique_id=1198702237]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 
-[node name="Camera3D" type="Camera3D" parent="CameraNode" unique_id=1462419342]
-
-[node name="RayCast3D" type="RayCast3D" parent="CameraNode/Camera3D" unique_id=1510481392]
+[node name="RayPick" type="RayCast3D" parent="CameraNode" unique_id=1510481392]
+visible = false
 target_position = Vector3(0, 0, -3)
-collision_mask = 10
+collision_mask = 2
 collide_with_areas = true
 collide_with_bodies = false
 
-[node name="AudioListener3D" type="AudioListener3D" parent="CameraNode/Camera3D" unique_id=1750177216]
+[node name="RayInteract" type="RayCast3D" parent="CameraNode" unique_id=659235700]
+target_position = Vector3(0, 0, -3)
+collision_mask = 8
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="AudioListener3D" type="AudioListener3D" parent="CameraNode" unique_id=1750177216]
 current = true
 
-[node name="AudioArea" type="Area3D" parent="." unique_id=1077168685]
+[node name="Camera3D" type="Camera3D" parent="CameraNode" unique_id=1462419342]
+
+[node name="AreaAudio" type="Area3D" parent="." unique_id=1077168685]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 collision_layer = 512
 collision_mask = 0
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="AudioArea" unique_id=1710724015]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="AreaAudio" unique_id=1710724015]
 shape = SubResource("CylinderShape3D_cnuiu")
 
-[node name="Origin" type="Node3D" parent="." unique_id=240127353]
+[node name="PickOrigin" type="Node3D" parent="." unique_id=240127353]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.5)

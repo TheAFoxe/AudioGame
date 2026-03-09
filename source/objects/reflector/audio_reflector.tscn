@@ -8,9 +8,11 @@ albedo_color = Color(0, 0, 0, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_kady0"]
 material = SubResource("StandardMaterial3D_1irve")
+flip_faces = true
 size = Vector3(2, 2, 0.1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_13cl5"]
+transparency = 1
 shading_mode = 0
 
 [sub_resource type="BoxMesh" id="BoxMesh_2t2el"]
@@ -25,23 +27,26 @@ data = PackedVector3Array(-1, 1, 0.049999997, 1, 1, 0.049999997, -1, -1, 0.04999
 [sub_resource type="BoxShape3D" id="BoxShape3D_2herq"]
 size = Vector3(2, 2, 0.1)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_pcfeg"]
-size = Vector3(1, 1, 0.1)
+[sub_resource type="HeightMapShape3D" id="HeightMapShape3D_1irve"]
+map_width = 3
+map_depth = 3
+map_data = PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0)
 
 [node name="AudioReflector" type="Node3D" unique_id=1189587396]
 process_mode = 1
 script = ExtResource("1_2herq")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=532998981]
+[node name="InnerMesh" type="MeshInstance3D" parent="." unique_id=532998981]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
 mesh = SubResource("BoxMesh_kady0")
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=528414810]
+[node name="OuterMesh" type="MeshInstance3D" parent="." unique_id=528414810]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
 mesh = SubResource("BoxMesh_2t2el")
 
 [node name="AreaPick" type="Area3D" parent="." unique_id=454085466]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
+visible = false
 collision_layer = 2
 collision_mask = 2
 
@@ -50,6 +55,7 @@ shape = SubResource("ConcavePolygonShape3D_cvuvx")
 
 [node name="AreaPlace" type="Area3D" parent="." unique_id=905824360]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
+visible = false
 collision_layer = 4
 collision_mask = 4
 input_ray_pickable = false
@@ -57,18 +63,23 @@ input_ray_pickable = false
 [node name="CollisionShape3D" type="CollisionShape3D" parent="AreaPlace" unique_id=344069513]
 shape = SubResource("BoxShape3D_2herq")
 
-[node name="Ray" type="Area3D" parent="." unique_id=334138472]
+[node name="AreaRay" type="Area3D" parent="." unique_id=334138472]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
 visible = false
 collision_layer = 512
 collision_mask = 0
 
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="Ray" unique_id=1504728840]
-transform = Transform3D(-2, 0, -1.7484555e-07, 0, 2, 0, 1.7484555e-07, 0, -2, 0, 0, 0)
-shape = SubResource("BoxShape3D_pcfeg")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="AreaRay" unique_id=486318704]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0.05)
+shape = SubResource("HeightMapShape3D_1irve")
 
-[node name="StaticBody3D2" type="StaticBody3D" parent="." unique_id=109233368]
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="AreaRay" unique_id=745126956]
+transform = Transform3D(-1, 8.742278e-08, 0, 3.821371e-15, 4.371139e-08, -1, -8.742278e-08, -1, -4.371139e-08, 0, 0, -0.05)
+shape = SubResource("HeightMapShape3D_1irve")
+
+[node name="StaticBody" type="StaticBody3D" parent="." unique_id=109233368]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
+visible = false
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D2" unique_id=968427871]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody" unique_id=968427871]
 shape = SubResource("BoxShape3D_2herq")

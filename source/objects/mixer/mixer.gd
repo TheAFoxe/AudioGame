@@ -29,23 +29,23 @@ func _ready() -> void:
 
 func _process_chord() -> Chord:
 	return
-
-
-func receive_chord(new_chord: Chord, emitter: RayCast) -> void:
-	if emitter == _ray_cast: return
-	for i in _sources:
-		if emitter == i.source:
-			return
-	_sources.append()
-
-
-func activate(emitter: RayCast) -> void:
-	#if not _check_chord_collision(chord):
-		#push_error("Collision in chord detected")
-		#return
-	#_append_notes_to_chord(chord)
-	super.activate(emitter)
-
-
-func deactivate(emitter: Node3D) -> void:
-	super.deactivate(emitter)
+#
+#
+#func receive_chord(new_chord: Chord, emitter: RayCast) -> void:
+	#if emitter == _ray_cast: return
+	#for i in _sources:
+		#if emitter == i.source:
+			#return
+	#_sources.append()
+#
+#
+#func activate(emitter: RayCast) -> void:
+	##if not _check_chord_collision(chord):
+		##push_error("Collision in chord detected")
+		##return
+	##_append_notes_to_chord(chord)
+	#super.activate(emitter)
+#
+#
+#func deactivate(emitter: Node3D) -> void:
+	#super.deactivate(emitter)
