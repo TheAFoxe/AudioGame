@@ -2,6 +2,18 @@
 
 [ext_resource type="Script" uid="uid://dlfwfvers8mgy" path="res://source/objects/reflector/audio_reflector.gd" id="1_2herq"]
 
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_cvuvx"]
+resource_local_to_scene = true
+data = PackedVector3Array(-1, 1, 0.049999997, 1, 1, 0.049999997, -1, -1, 0.049999997, 1, 1, 0.049999997, 1, -1, 0.049999997, -1, -1, 0.049999997, 1, 1, -0.049999997, -1, 1, -0.049999997, 1, -1, -0.049999997, -1, 1, -0.049999997, -1, -1, -0.049999997, 1, -1, -0.049999997, 1, 1, 0.049999997, 1, 1, -0.049999997, 1, -1, 0.049999997, 1, 1, -0.049999997, 1, -1, -0.049999997, 1, -1, 0.049999997, -1, 1, -0.049999997, -1, 1, 0.049999997, -1, -1, -0.049999997, -1, 1, 0.049999997, -1, -1, 0.049999997, -1, -1, -0.049999997, 1, 1, 0.049999997, -1, 1, 0.049999997, 1, 1, -0.049999997, -1, 1, 0.049999997, -1, 1, -0.049999997, 1, 1, -0.049999997, -1, -1, 0.049999997, 1, -1, 0.049999997, -1, -1, -0.049999997, 1, -1, 0.049999997, 1, -1, -0.049999997, -1, -1, -0.049999997)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2herq"]
+size = Vector3(2, 2, 0.1)
+
+[sub_resource type="HeightMapShape3D" id="HeightMapShape3D_1irve"]
+map_width = 3
+map_depth = 3
+map_data = PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0)
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1irve"]
 shading_mode = 0
 albedo_color = Color(0, 0, 0, 1)
@@ -20,29 +32,9 @@ material = SubResource("StandardMaterial3D_13cl5")
 flip_faces = true
 size = Vector3(2.1, 2.1, 0.2)
 
-[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_cvuvx"]
-resource_local_to_scene = true
-data = PackedVector3Array(-1, 1, 0.049999997, 1, 1, 0.049999997, -1, -1, 0.049999997, 1, 1, 0.049999997, 1, -1, 0.049999997, -1, -1, 0.049999997, 1, 1, -0.049999997, -1, 1, -0.049999997, 1, -1, -0.049999997, -1, 1, -0.049999997, -1, -1, -0.049999997, 1, -1, -0.049999997, 1, 1, 0.049999997, 1, 1, -0.049999997, 1, -1, 0.049999997, 1, 1, -0.049999997, 1, -1, -0.049999997, 1, -1, 0.049999997, -1, 1, -0.049999997, -1, 1, 0.049999997, -1, -1, -0.049999997, -1, 1, 0.049999997, -1, -1, 0.049999997, -1, -1, -0.049999997, 1, 1, 0.049999997, -1, 1, 0.049999997, 1, 1, -0.049999997, -1, 1, 0.049999997, -1, 1, -0.049999997, 1, 1, -0.049999997, -1, -1, 0.049999997, 1, -1, 0.049999997, -1, -1, -0.049999997, 1, -1, 0.049999997, 1, -1, -0.049999997, -1, -1, -0.049999997)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_2herq"]
-size = Vector3(2, 2, 0.1)
-
-[sub_resource type="HeightMapShape3D" id="HeightMapShape3D_1irve"]
-map_width = 3
-map_depth = 3
-map_data = PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0)
-
 [node name="AudioReflector" type="Node3D" unique_id=1189587396]
 process_mode = 1
 script = ExtResource("1_2herq")
-
-[node name="InnerMesh" type="MeshInstance3D" parent="." unique_id=532998981]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
-mesh = SubResource("BoxMesh_kady0")
-
-[node name="OuterMesh" type="MeshInstance3D" parent="." unique_id=528414810]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
-mesh = SubResource("BoxMesh_2t2el")
 
 [node name="AreaPick" type="Area3D" parent="." unique_id=454085466]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
@@ -83,3 +75,15 @@ visible = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody" unique_id=968427871]
 shape = SubResource("BoxShape3D_2herq")
+
+[node name="Mesh" type="Node3D" parent="." unique_id=1993553796]
+
+[node name="InnerMesh" type="MeshInstance3D" parent="Mesh" unique_id=532998981]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
+mesh = SubResource("BoxMesh_kady0")
+skeleton = NodePath("../..")
+
+[node name="OutterMesh" type="MeshInstance3D" parent="Mesh" unique_id=528414810]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
+mesh = SubResource("BoxMesh_2t2el")
+skeleton = NodePath("../..")

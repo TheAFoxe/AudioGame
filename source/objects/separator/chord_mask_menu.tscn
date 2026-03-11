@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://x1u4ywn4bl4e"]
 
 [ext_resource type="Script" uid="uid://u2amvwg4vhd1" path="res://source/objects/separator/chord_mask_menu.gd" id="1_lvkwv"]
+[ext_resource type="Theme" uid="uid://jd5jbr23680i" path="res://source/ui/new_theme.tres" id="1_n3uou"]
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_mntya"]
 allow_unpress = true
@@ -18,17 +19,20 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_n3uou")
 script = ExtResource("1_lvkwv")
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=1614097798]
 layout_mode = 1
-anchors_preset = -1
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 300.0
-offset_top = 200.0
-offset_right = -300.0
-offset_bottom = -200.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -81.0
+offset_top = -118.0
+offset_right = 81.0
+offset_bottom = 118.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -51,14 +55,11 @@ layout_mode = 2
 text = "S6"
 
 [node name="Button" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer6" unique_id=1981580333]
+custom_minimum_size = Vector2(100, 32)
 layout_mode = 2
 toggle_mode = true
 button_group = SubResource("ButtonGroup_mntya")
 text = "Activate"
-
-[node name="Panel" type="Panel" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer6" unique_id=534257558]
-layout_mode = 2
-size_flags_horizontal = 3
 
 [node name="HBoxContainer5" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=236208677]
 layout_mode = 2
@@ -68,14 +69,11 @@ layout_mode = 2
 text = "S5"
 
 [node name="Button" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer5" unique_id=835415974]
+custom_minimum_size = Vector2(100, 32)
 layout_mode = 2
 toggle_mode = true
 button_group = SubResource("ButtonGroup_mdlcq")
 text = "Activate"
-
-[node name="Panel" type="Panel" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer5" unique_id=1837878260]
-layout_mode = 2
-size_flags_horizontal = 3
 
 [node name="HBoxContainer4" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=1109008764]
 layout_mode = 2
@@ -85,14 +83,11 @@ layout_mode = 2
 text = "S4"
 
 [node name="Button" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer4" unique_id=1333093950]
+custom_minimum_size = Vector2(100, 32)
 layout_mode = 2
 toggle_mode = true
 button_group = SubResource("ButtonGroup_f8y5m")
 text = "Activate"
-
-[node name="Panel" type="Panel" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer4" unique_id=886957281]
-layout_mode = 2
-size_flags_horizontal = 3
 
 [node name="HBoxContainer3" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=2142407963]
 layout_mode = 2
@@ -102,45 +97,36 @@ layout_mode = 2
 text = "S3"
 
 [node name="Button" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer3" unique_id=384919875]
+custom_minimum_size = Vector2(100, 32)
 layout_mode = 2
 toggle_mode = true
 text = "Activate"
-
-[node name="Panel" type="Panel" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer3" unique_id=14484316]
-layout_mode = 2
-size_flags_horizontal = 3
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=1989499396]
 layout_mode = 2
 
 [node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=2057289510]
 layout_mode = 2
-text = "S6"
+text = "S2"
 
 [node name="Button" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=420903276]
+custom_minimum_size = Vector2(100, 32)
 layout_mode = 2
 toggle_mode = true
 text = "Activate"
-
-[node name="Panel" type="Panel" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=2009062794]
-layout_mode = 2
-size_flags_horizontal = 3
 
 [node name="HBoxContainer1" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=316556754]
 layout_mode = 2
 
 [node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer1" unique_id=1988407177]
 layout_mode = 2
-text = "S6"
+text = "S1"
 
 [node name="Button" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer1" unique_id=169390376]
+custom_minimum_size = Vector2(100, 32)
 layout_mode = 2
 toggle_mode = true
 text = "Activate"
-
-[node name="Panel" type="Panel" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer1" unique_id=1104558595]
-layout_mode = 2
-size_flags_horizontal = 3
 
 [connection signal="toggled" from="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer6/Button" to="." method="_on_s6_toggled"]
 [connection signal="toggled" from="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer5/Button" to="." method="_on_s5_toggled"]

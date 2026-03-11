@@ -34,14 +34,14 @@ layout_mode = 2
 text = "RESUME
 "
 
-[node name="MainMenu" type="Button" parent="PanelContainer/VBoxContainer" unique_id=61682513]
-layout_mode = 2
-text = "MAIN MENU
-"
-
 [node name="Settings" type="Button" parent="PanelContainer/VBoxContainer" unique_id=12121428]
 layout_mode = 2
 text = "SETTINGS
+"
+
+[node name="MainMenu" type="Button" parent="PanelContainer/VBoxContainer" unique_id=61682513]
+layout_mode = 2
+text = "MAIN MENU
 "
 
 [node name="Exit" type="Button" parent="PanelContainer/VBoxContainer" unique_id=514606415]
@@ -50,6 +50,6 @@ text = "EXIT
 "
 
 [connection signal="pressed" from="PanelContainer/VBoxContainer/Resume" to="." method="_on_resume_pressed"]
-[connection signal="pressed" from="PanelContainer/VBoxContainer/MainMenu" to="." method="_on_main_menu_pressed"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/Settings" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="PanelContainer/VBoxContainer/MainMenu" to="." method="_on_main_menu_pressed"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/Exit" to="." method="_on_exit_pressed"]

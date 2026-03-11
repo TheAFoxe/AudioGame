@@ -11,6 +11,7 @@ var _catchers: Array[AudioCatcher] = []
 var _exit_door: CompletionExit
 var _is_door_open: bool
 
+
 func _ready() -> void:
 	spawn_point = get_node("SpawnPoint")
 	_exit_door = get_node("CompletionExit")
@@ -26,7 +27,6 @@ func _find_catchers() -> Array[AudioCatcher]:
 	for node in get_tree().get_nodes_in_group("audio_catcher"):
 		if node is AudioCatcher:
 			result.append(node)
-	print(result)
 	return result
 
 ## Opens door when all catchers active, closes it if any deactivate

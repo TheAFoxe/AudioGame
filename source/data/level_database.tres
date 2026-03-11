@@ -1,23 +1,44 @@
 [gd_resource type="Resource" script_class="LevelDatabase" format=3 uid="uid://bsidkx8j26bx6"]
 
 [ext_resource type="Script" uid="uid://hdgj7odut7ac" path="res://source/data/level_data.gd" id="1_1mwt0"]
-[ext_resource type="PackedScene" uid="uid://cyuvbun204jb8" path="res://source/levels/level_testing/level_testing.tscn" id="2_cy0up"]
 [ext_resource type="Script" uid="uid://d8loddcsk4ky" path="res://source/data/level_database.gd" id="2_jkjog"]
-[ext_resource type="PackedScene" uid="uid://cnfp5qrk5md8g" path="res://source/levels/level_testing_2/level_testing_2.tscn" id="3_cy0up"]
+[ext_resource type="PackedScene" uid="uid://48g6nldgh2dd" path="res://source/levels/level_2/level_2.tscn" id="3_cy0up"]
+[ext_resource type="PackedScene" uid="uid://b6dc6kdfckjn5" path="res://source/levels/level_1/level_1.tscn" id="4_xsv52"]
+[ext_resource type="PackedScene" uid="uid://dj2mhly3qxhxa" path="res://source/levels/level_3/level_3.tscn" id="4_yq0d4"]
+[ext_resource type="PackedScene" uid="uid://cn5b5pws7ptbi" path="res://source/levels/level_4/level_4.tscn" id="5_yq0d4"]
+[ext_resource type="PackedScene" uid="uid://b8d1ubj6ajq55" path="res://source/levels/level_5/level_5.tscn" id="6_5gpeb"]
 
-[sub_resource type="Resource" id="Resource_jkjog"]
+[sub_resource type="Resource" id="Resource_yq0d4"]
 script = ExtResource("1_1mwt0")
-title = "Testing"
-scene = ExtResource("2_cy0up")
+title = "Level 1"
+scene = ExtResource("4_xsv52")
 metadata/_custom_type_script = "uid://hdgj7odut7ac"
 
 [sub_resource type="Resource" id="Resource_xsv52"]
 script = ExtResource("1_1mwt0")
-title = "Testing 2"
+title = "Level 2"
 scene = ExtResource("3_cy0up")
+metadata/_custom_type_script = "uid://hdgj7odut7ac"
+
+[sub_resource type="Resource" id="Resource_5gpeb"]
+script = ExtResource("1_1mwt0")
+title = "Level 3"
+scene = ExtResource("4_yq0d4")
+metadata/_custom_type_script = "uid://hdgj7odut7ac"
+
+[sub_resource type="Resource" id="Resource_xkbcq"]
+script = ExtResource("1_1mwt0")
+title = "Level 4"
+scene = ExtResource("5_yq0d4")
+metadata/_custom_type_script = "uid://hdgj7odut7ac"
+
+[sub_resource type="Resource" id="Resource_he5pd"]
+script = ExtResource("1_1mwt0")
+title = "Level 5"
+scene = ExtResource("6_5gpeb")
 metadata/_custom_type_script = "uid://hdgj7odut7ac"
 
 [resource]
 script = ExtResource("2_jkjog")
-levels = Array[ExtResource("1_1mwt0")]([SubResource("Resource_jkjog"), SubResource("Resource_xsv52")])
+levels = Array[ExtResource("1_1mwt0")]([SubResource("Resource_yq0d4"), SubResource("Resource_xsv52"), SubResource("Resource_5gpeb"), SubResource("Resource_xkbcq"), SubResource("Resource_he5pd")])
 metadata/_custom_type_script = "uid://d8loddcsk4ky"

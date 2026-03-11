@@ -1,0 +1,160 @@
+[gd_scene format=3 uid="uid://b8d1ubj6ajq55"]
+
+[ext_resource type="Script" uid="uid://bdipn1mlcxkx3" path="res://source/levels/level_5/level_5.gd" id="1_aiteo"]
+[ext_resource type="PackedScene" uid="uid://bn7yn1dsic15a" path="res://source/objects/speaker/speaker.tscn" id="2_y83em"]
+[ext_resource type="Script" uid="uid://c1fbx2o5kwwbv" path="res://source/sounds/chord.gd" id="3_m7ge4"]
+[ext_resource type="PackedScene" uid="uid://coesjdeuspnqt" path="res://source/objects/audio_catcher/audio_catcher.tscn" id="4_0auvc"]
+[ext_resource type="PackedScene" uid="uid://bklfsmxg36xem" path="res://source/objects/completion_exit/completion_exit.tscn" id="5_ukl0x"]
+[ext_resource type="PackedScene" uid="uid://c51p6istrw0ec" path="res://source/objects/reflector/audio_reflector.tscn" id="6_8el24"]
+[ext_resource type="PackedScene" uid="uid://c8oqf38wn7cvq" path="res://source/objects/breaker/breaker.tscn" id="7_b6ufn"]
+[ext_resource type="PackedScene" uid="uid://dd80pnicl00d2" path="res://source/objects/retranslator/retranslator.tscn" id="9_5v5yy"]
+[ext_resource type="PackedScene" uid="uid://1hvvndjnrwab" path="res://source/objects/separator/separator.tscn" id="9_um3vb"]
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_tft5a"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_fhyct"]
+size = Vector3(9.2, 10, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fnbba"]
+shading_mode = 0
+
+[sub_resource type="BoxMesh" id="BoxMesh_lht4l"]
+material = SubResource("StandardMaterial3D_fnbba")
+size = Vector3(0.1, 0.05, 20)
+
+[sub_resource type="Resource" id="Resource_xoar7"]
+script = ExtResource("3_m7ge4")
+s6 = 5
+s5 = 3
+s4 = 2
+s3 = 3
+s2 = 1
+metadata/_custom_type_script = "uid://c1fbx2o5kwwbv"
+
+[sub_resource type="Resource" id="Resource_ru5to"]
+script = ExtResource("3_m7ge4")
+s6 = 5
+s5 = 3
+s4 = 5
+s3 = 3
+s2 = 5
+s1 = 5
+metadata/_custom_type_script = "uid://c1fbx2o5kwwbv"
+
+[node name="Level5" type="Node3D" unique_id=1507674625]
+script = ExtResource("1_aiteo")
+
+[node name="WorldBoundaries" type="Node3D" parent="." unique_id=424775119]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.2351742e-08, 0)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="WorldBoundaries" unique_id=1533846608]
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="WorldBoundaries/StaticBody3D" unique_id=1160973029]
+transform = Transform3D(-4.371139e-08, 1, 4.371139e-08, 0, -4.371139e-08, 1, 1, 4.371139e-08, 1.9106855e-15, -10, 0, 0)
+shape = SubResource("WorldBoundaryShape3D_tft5a")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="WorldBoundaries/StaticBody3D" unique_id=1278962206]
+transform = Transform3D(-1, 8.742278e-08, 3.821371e-15, 0, -4.371139e-08, 1, 8.742278e-08, 1, 4.371139e-08, 0, 0, -10)
+shape = SubResource("WorldBoundaryShape3D_tft5a")
+
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="WorldBoundaries/StaticBody3D" unique_id=1143213083]
+transform = Transform3D(-4.371139e-08, -1, -4.371139e-08, 0, -4.371139e-08, 1, -1, 4.371139e-08, 1.9106855e-15, 10, 0, 0)
+shape = SubResource("WorldBoundaryShape3D_tft5a")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WorldBoundaries/StaticBody3D" unique_id=758768857]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.4, 5, 10.5)
+shape = SubResource("BoxShape3D_fhyct")
+
+[node name="CollisionShape3D5" type="CollisionShape3D" parent="WorldBoundaries/StaticBody3D" unique_id=1335495345]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.4, 5, 10.5)
+shape = SubResource("BoxShape3D_fhyct")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1632780258]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, -2.2351742e-08, 0)
+mesh = SubResource("BoxMesh_lht4l")
+skeleton = NodePath("../../AudioReflector")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=1393394560]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, -2.2351742e-08, -10)
+mesh = SubResource("BoxMesh_lht4l")
+skeleton = NodePath("../../AudioReflector")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="." unique_id=2075794367]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -10, -2.2351742e-08, 0)
+mesh = SubResource("BoxMesh_lht4l")
+skeleton = NodePath("../../AudioReflector")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="." unique_id=1329679316]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, -2.2351742e-08, 10)
+mesh = SubResource("BoxMesh_lht4l")
+skeleton = NodePath("../../AudioReflector")
+
+[node name="Speaker2" parent="." unique_id=150968234 instance=ExtResource("2_y83em")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 1.9999992, 1, -8.999999)
+_chord_source = SubResource("Resource_xoar7")
+
+[node name="Node3D" parent="." unique_id=1790659427 instance=ExtResource("4_0auvc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 1, 9.953)
+_chord = SubResource("Resource_ru5to")
+
+[node name="CompletionExit" parent="." unique_id=1620778632 instance=ExtResource("5_ukl0x")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 1, 10.25)
+
+[node name="SpawnPoint" type="Marker3D" parent="." unique_id=1260801018]
+transform = Transform3D(-1, 0, -1.4901161e-07, 0, 1, 0, 1.4901161e-07, 0, -1, -0.005144477, 0, -3.1364074)
+
+[node name="AudioReflector" parent="." unique_id=1189587396 instance=ExtResource("6_8el24")]
+transform = Transform3D(0.9999998, 0, 1.4901161e-07, 0, 1, 0, -1.4901161e-07, 0, 0.9999998, 1.9999993, 0, 7.1525574e-07)
+
+[node name="AudioBreaker" parent="." unique_id=1368947979 instance=ExtResource("7_b6ufn")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 1.9999996, 0, -5)
+
+[node name="Retranslator" parent="." unique_id=1009846341 instance=ExtResource("9_5v5yy")]
+transform = Transform3D(0.7071067, 0, -0.7071068, 0, 1, 0, 0.7071068, 0, 0.7071067, 7, 1, -3.6999998)
+
+[node name="AudioBreaker2" parent="." unique_id=1395101739 instance=ExtResource("7_b6ufn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 9)
+
+[node name="Speaker3" parent="." unique_id=497922576 instance=ExtResource("2_y83em")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -2.000001, 1, -8.999999)
+_chord_source = SubResource("Resource_xoar7")
+
+[node name="Node3D2" parent="." unique_id=188373639 instance=ExtResource("4_0auvc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1, 9.953)
+_chord = SubResource("Resource_ru5to")
+
+[node name="AudioBreaker3" parent="." unique_id=1478954681 instance=ExtResource("7_b6ufn")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0.9999996, 0, -6)
+
+[node name="AudioReflector2" parent="." unique_id=1944045131 instance=ExtResource("6_8el24")]
+transform = Transform3D(-0.49999982, 0, -0.86602527, 0, 1, 0, 0.86602527, 0, -0.49999982, 5.999999, 0, 6.000001)
+
+[node name="AudioBreaker4" parent="." unique_id=139856319 instance=ExtResource("7_b6ufn")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -3.1000004, 0, -6)
+
+[node name="AudioBreaker5" parent="." unique_id=2033992918 instance=ExtResource("7_b6ufn")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -3.1000004, 0, -4)
+
+[node name="AudioBreaker6" parent="." unique_id=811643655 instance=ExtResource("7_b6ufn")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -3.1000004, 0, -2)
+
+[node name="AudioBreaker7" parent="." unique_id=1397196454 instance=ExtResource("7_b6ufn")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -3.1000004, 0, 2)
+
+[node name="AudioBreaker8" parent="." unique_id=1188268591 instance=ExtResource("7_b6ufn")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -3.1000004, 0, 4)
+
+[node name="AudioBreaker9" parent="." unique_id=834018261 instance=ExtResource("7_b6ufn")]
+transform = Transform3D(1.3113416e-07, 0, -1, 0, 1, 0, 1, 0, 1.3113416e-07, -2.0000005, 0, 6)
+
+[node name="Retranslator2" parent="." unique_id=966993586 instance=ExtResource("9_5v5yy")]
+transform = Transform3D(0.8660253, 0, 0.49999997, 0, 1, 0, -0.49999997, 0, 0.8660253, 0.6999998, 1, -2.7999997)
+
+[node name="AudioBreaker10" parent="." unique_id=285431109 instance=ExtResource("7_b6ufn")]
+transform = Transform3D(1.3113416e-07, 0, -1, 0, 1, 0, 1, 0, 1.3113416e-07, -2.0000005, 0, -2)
+
+[node name="AudioBreaker11" parent="." unique_id=1642085137 instance=ExtResource("7_b6ufn")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -3.1000004, 0, -8)
+
+[node name="AudioSeparator" parent="." unique_id=584171169 instance=ExtResource("9_um3vb")]
+transform = Transform3D(-0.50000006, 0, 0.8660254, 0, 1, 0, -0.8660254, 0, -0.50000006, -8, 0, 4)

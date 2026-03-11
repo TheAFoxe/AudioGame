@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://dsab32w0vj6pt"]
+
+[ext_resource type="Texture2D" uid="uid://te3du35dqk8o" path="res://logo3-new.png" id="1_fb6kp"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u60pe"]
+transparency = 1
+shading_mode = 0
+albedo_texture = ExtResource("1_fb6kp")
+billboard_mode = 2
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_rfqwx"]
+material = SubResource("StandardMaterial3D_u60pe")
+size = Vector2(0.25, 0.25)
+orientation = 2
+
+[node name="ActiveParticle" type="CPUParticles3D" unique_id=2138583298]
+amount = 6
+lifetime = 2.5
+fixed_fps = 30
+mesh = SubResource("PlaneMesh_rfqwx")
+direction = Vector3(0, 0, -1)
+spread = 8.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 0.35
+initial_velocity_max = 0.4

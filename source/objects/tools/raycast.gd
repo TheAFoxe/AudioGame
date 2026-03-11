@@ -78,6 +78,7 @@ func _physics_process(delta: float) -> void:
 	for i in _audio_streamers:
 		if i not in _active_audio_streams:
 			i.global_position = INACTIVE_AUDIO_PLAYER_POSITION
+			i.hide()
 
 ## Clears debug. Deactivate activated RayCast. Stops _physics_process.
 func _clear() -> void:
@@ -205,6 +206,7 @@ func _create_debug_visualisation() -> void:
 		sphere.mesh.height = 0.2
 		sphere.mesh.material = mat_sphere
 		add_child(sphere)
+		sphere.hide()
 		_audio_debug_spheres.append(sphere)
 	
 	var mat := StandardMaterial3D.new()
@@ -220,7 +222,6 @@ func _create_debug_visualisation() -> void:
 
 func _create_audio_players() -> void:
 	for i in max_bounces:
-
 		var audio_stream = AudioPlayer.new()
 		add_child(audio_stream)
 		_audio_streamers.append(audio_stream)

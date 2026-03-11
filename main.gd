@@ -14,6 +14,7 @@ var _level_db: LevelDatabase
 var _current_level_id: int
 var _player: Player
 var _main_ui: MainUI
+var _fps: Label
 
 
 func _ready() -> void:
@@ -23,6 +24,7 @@ func _ready() -> void:
 
 	_player = get_node("Player")
 	_main_ui = get_node("MainUI")
+	_fps = get_node("FPS")
 
 	_main_ui.level_load_requested.connect(_on_level_load)
 	_main_ui.main_menu_requested.connect(_on_go_to_main_menu)
@@ -31,7 +33,8 @@ func _ready() -> void:
 	
 	_debug = false
 	GlobalSignals.debug_mode_switch.emit(_debug)
-
+	_fps.hide()
+	
 	_set_main_menu()
 
 
@@ -43,8 +46,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			GameStatus.PAUSE_MENU:
 				_on_resume()
 	if event.is_action_pressed("change_debug_mode"):
-		_debug = not _debug
-		GlobalSignals.debug_mode_switch.emit(_debug)
+		_debug_switch()
 
 
 # -- State transitions --
@@ -80,6 +82,15 @@ func _set_completion_menu() -> void:
 	_main_ui.show_completion_menu()
 
 
+func _debug_switch() -> void:
+	_debug = not _debug
+	GlobalSignals.debug_mode_switch.emit(_debug)
+	if _debug:
+		_fps.show()
+	else:
+		_fps.hide()
+
+
 # -- Signal handlers --
 
 ## Unloads current level, loads level by id, resets player state
@@ -104,7 +115,7 @@ func _on_level_load(id: int) -> void:
 
 	_player.global_position = _current_level.spawn_point.global_position
 	_player.velocity = Vector3.ZERO
-	_player.rotation = Vector3.ZERO
+	_player.rotation = _current_level.spawn_point.global_rotation
 	_player.camera_node.rotation = Vector3.ZERO
 
 	_set_running()

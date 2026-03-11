@@ -58,5 +58,5 @@ func build_chord_display() -> String:
 			fret_name = "X"
 		else:
 			fret_name = str(fret)
-		lines.append("s%d: %s" % [i, fret_name])
+		lines.append("s%d: %s" % [i + 1, fret_name])
 	return "\n".join(lines)

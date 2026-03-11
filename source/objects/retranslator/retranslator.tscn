@@ -2,17 +2,18 @@
 
 [ext_resource type="Script" uid="uid://hia0jnb4dtvp" path="res://source/objects/retranslator/retranslator.gd" id="1_opbb2"]
 [ext_resource type="Script" uid="uid://bv838lp8l7g7q" path="res://source/objects/tools/raycast.gd" id="2_hvsqt"]
+[ext_resource type="PackedScene" uid="uid://dsab32w0vj6pt" path="res://source/objects/tools/active_particle.tscn" id="2_mavjk"]
 [ext_resource type="PackedScene" uid="uid://bbcfc3x5d6u2n" path="res://meshes/Kamerton.blend" id="3_rdnhm"]
 
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_hvsqt"]
-height = 0.6
-radius = 1.0
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_rdnhm"]
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_hvsqt"]
-radius = 0.25097656
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_mavjk"]
+radius = 0.35
 
 [node name="Retranslator" type="Node3D" unique_id=1009846341]
 script = ExtResource("1_opbb2")
+
+[node name="ActiveParticle" parent="." unique_id=1862027939 instance=ExtResource("2_mavjk")]
 
 [node name="RayCast" type="Node3D" parent="." unique_id=367283664]
 script = ExtResource("2_hvsqt")
@@ -24,9 +25,8 @@ process_mode = 1
 collision_layer = 2
 collision_mask = 2
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="AreaPick" unique_id=1672599057]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
-shape = SubResource("CylinderShape3D_hvsqt")
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="AreaPick" unique_id=522881323]
+shape = SubResource("CylinderShape3D_rdnhm")
 
 [node name="AreaPlace" type="Area3D" parent="." unique_id=829736352]
 process_mode = 1
@@ -34,29 +34,20 @@ collision_layer = 4
 collision_mask = 4
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="AreaPlace" unique_id=307654994]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
-shape = SubResource("CylinderShape3D_hvsqt")
+shape = SubResource("CylinderShape3D_rdnhm")
 
 [node name="AreaRay" type="Area3D" parent="." unique_id=1066260278]
 collision_layer = 512
 collision_mask = 512
 
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="AreaRay" unique_id=1885928279]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
-visible = false
-shape = SubResource("CylinderShape3D_hvsqt")
-disabled = true
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="AreaRay" unique_id=1681580418]
-transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, -0.012207031, -5.335863e-10, 0)
-shape = SubResource("CapsuleShape3D_hvsqt")
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="AreaRay" unique_id=910881140]
+shape = SubResource("CylinderShape3D_rdnhm")
 
 [node name="StaticBody" type="StaticBody3D" parent="." unique_id=552062304]
-visible = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody" unique_id=1939928133]
-transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, -0.012207031, -5.335863e-10, 0)
-shape = SubResource("CapsuleShape3D_hvsqt")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.012207031, -5.335863e-10, 0)
+shape = SubResource("CylinderShape3D_mavjk")
 
-[node name="Kamerton" parent="." unique_id=1469535165 instance=ExtResource("3_rdnhm")]
+[node name="Mesh" parent="." unique_id=885819612 instance=ExtResource("3_rdnhm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0)

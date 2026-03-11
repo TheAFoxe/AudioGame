@@ -1,0 +1,111 @@
+[gd_scene format=3 uid="uid://dj2mhly3qxhxa"]
+
+[ext_resource type="Script" uid="uid://d3gw5wyecaqpc" path="res://source/levels/level_3/level_3.gd" id="1_3pf36"]
+[ext_resource type="PackedScene" uid="uid://bn7yn1dsic15a" path="res://source/objects/speaker/speaker.tscn" id="2_hidmf"]
+[ext_resource type="Script" uid="uid://c1fbx2o5kwwbv" path="res://source/sounds/chord.gd" id="3_efc0k"]
+[ext_resource type="Script" uid="uid://de2gtav7keun5" path="res://source/objects/tools/tutorial_label.gd" id="4_54hb1"]
+[ext_resource type="PackedScene" uid="uid://coesjdeuspnqt" path="res://source/objects/audio_catcher/audio_catcher.tscn" id="5_4522u"]
+[ext_resource type="PackedScene" uid="uid://c51p6istrw0ec" path="res://source/objects/reflector/audio_reflector.tscn" id="6_6hs2i"]
+[ext_resource type="PackedScene" uid="uid://bklfsmxg36xem" path="res://source/objects/completion_exit/completion_exit.tscn" id="6_atfaf"]
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_tft5a"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_fhyct"]
+size = Vector3(9.2, 10, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fnbba"]
+shading_mode = 0
+
+[sub_resource type="BoxMesh" id="BoxMesh_lht4l"]
+material = SubResource("StandardMaterial3D_fnbba")
+size = Vector3(0.1, 0.05, 20)
+
+[sub_resource type="Resource" id="Resource_xoar7"]
+script = ExtResource("3_efc0k")
+s6 = 5
+s5 = 3
+s4 = 2
+s2 = 1
+metadata/_custom_type_script = "uid://c1fbx2o5kwwbv"
+
+[sub_resource type="Resource" id="Resource_ru5to"]
+script = ExtResource("3_efc0k")
+s6 = 5
+s5 = 3
+s4 = 2
+s2 = 1
+metadata/_custom_type_script = "uid://c1fbx2o5kwwbv"
+
+[node name="Level3" type="Node3D" unique_id=1507674625]
+script = ExtResource("1_3pf36")
+
+[node name="WorldBoundaries" type="Node3D" parent="." unique_id=424775119]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.2351742e-08, 0)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="WorldBoundaries" unique_id=1533846608]
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="WorldBoundaries/StaticBody3D" unique_id=1160973029]
+transform = Transform3D(-4.371139e-08, 1, 4.371139e-08, 0, -4.371139e-08, 1, 1, 4.371139e-08, 1.9106855e-15, -10, 0, 0)
+shape = SubResource("WorldBoundaryShape3D_tft5a")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="WorldBoundaries/StaticBody3D" unique_id=1278962206]
+transform = Transform3D(-1, 8.742278e-08, 3.821371e-15, 0, -4.371139e-08, 1, 8.742278e-08, 1, 4.371139e-08, 0, 0, -10)
+shape = SubResource("WorldBoundaryShape3D_tft5a")
+
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="WorldBoundaries/StaticBody3D" unique_id=1143213083]
+transform = Transform3D(-4.371139e-08, -1, -4.371139e-08, 0, -4.371139e-08, 1, -1, 4.371139e-08, 1.9106855e-15, 10, 0, 0)
+shape = SubResource("WorldBoundaryShape3D_tft5a")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WorldBoundaries/StaticBody3D" unique_id=758768857]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.4, 5, 10.5)
+shape = SubResource("BoxShape3D_fhyct")
+
+[node name="CollisionShape3D5" type="CollisionShape3D" parent="WorldBoundaries/StaticBody3D" unique_id=1335495345]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.4, 5, 10.5)
+shape = SubResource("BoxShape3D_fhyct")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1632780258]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, -2.2351742e-08, 0)
+mesh = SubResource("BoxMesh_lht4l")
+skeleton = NodePath("../../AudioReflector")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=1393394560]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, -2.2351742e-08, -10)
+mesh = SubResource("BoxMesh_lht4l")
+skeleton = NodePath("../../AudioReflector")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="." unique_id=2075794367]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -10, -2.2351742e-08, 0)
+mesh = SubResource("BoxMesh_lht4l")
+skeleton = NodePath("../../AudioReflector")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="." unique_id=1329679316]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, -2.2351742e-08, 10)
+mesh = SubResource("BoxMesh_lht4l")
+skeleton = NodePath("../../AudioReflector")
+
+[node name="Speaker2" parent="." unique_id=150968234 instance=ExtResource("2_hidmf")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 10, 1, 3)
+_chord_source = SubResource("Resource_xoar7")
+
+[node name="Node3D" parent="." unique_id=1790659427 instance=ExtResource("5_4522u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 1, 9.953)
+_chord = SubResource("Resource_ru5to")
+
+[node name="CompletionExit" parent="." unique_id=1620778632 instance=ExtResource("6_atfaf")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 1, 10.25)
+
+[node name="SpawnPoint" type="Marker3D" parent="." unique_id=1260801018]
+transform = Transform3D(-1, 0, -1.4901161e-07, 0, 1, 0, 1.4901161e-07, 0, -1, -0.005144477, 0, -3.1364074)
+
+[node name="AudioReflector" parent="." unique_id=1189587396 instance=ExtResource("6_6hs2i")]
+transform = Transform3D(-0.70710677, 0, 0.7071066, 0, 1, 0, -0.7071066, 0, -0.70710677, -2, 0, 3.0000005)
+
+[node name="TutorialLabel" type="Label3D" parent="AudioReflector" unique_id=1451250004]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.6000001, 0)
+billboard = 2
+text = "Reflector
+- Is sound a wave?
+- Try reflect it then"
+script = ExtResource("4_54hb1")
+metadata/_custom_type_script = "uid://de2gtav7keun5"

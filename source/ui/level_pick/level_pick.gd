@@ -9,7 +9,6 @@ signal level_load_request(index: int)
 
 func _ready() -> void:
 	level_database = load("res://source/data/level_database.tres")
-	print(level_database.levels)
 	_populate()
 
 func _populate() -> void:

@@ -5,14 +5,30 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_h2rhs"]
 size = Vector3(0.1, 2, 2)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5evex"]
-blend_mode = 1
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_skm2e"]
 shading_mode = 0
-albedo_color = Color(0.47058824, 0.47058824, 0.47058824, 0.5254902)
+albedo_color = Color(0, 0, 0, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_f3ldq"]
-material = SubResource("StandardMaterial3D_5evex")
+material = SubResource("StandardMaterial3D_skm2e")
+flip_faces = true
 size = Vector3(0.1, 2, 2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_h2rhs"]
+shading_mode = 0
+albedo_color = Color(0.5019608, 0, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_5evex"]
+material = SubResource("StandardMaterial3D_h2rhs")
+size = Vector3(0.05, 1.95, 1.95)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5evex"]
+shading_mode = 0
+
+[sub_resource type="BoxMesh" id="BoxMesh_covqr"]
+material = SubResource("StandardMaterial3D_5evex")
+flip_faces = true
+size = Vector3(0.15, 2.05, 2.05)
 
 [node name="AudioBreaker" type="StaticBody3D" unique_id=1368947979]
 collision_layer = 513
@@ -21,7 +37,17 @@ script = ExtResource("1_skm2e")
 metadata/_custom_type_script = "uid://d25vuaptvd3yo"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1354069414]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("BoxShape3D_h2rhs")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1643677796]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 mesh = SubResource("BoxMesh_f3ldq")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=2027190426]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("BoxMesh_5evex")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="." unique_id=1895535841]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("BoxMesh_covqr")

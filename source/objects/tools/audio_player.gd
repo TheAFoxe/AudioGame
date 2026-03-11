@@ -29,7 +29,6 @@ func play_chord(chord: Chord) -> void:
 
 ## Plays chord on AudioConductor.loop_reset
 func _play() -> void:
-	print("playing")
 	if not _chord: return
 	self.stop()
 	self.play()

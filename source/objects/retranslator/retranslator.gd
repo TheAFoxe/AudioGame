@@ -10,14 +10,17 @@ var is_active: bool
 var activated_by: RayCast
 ## Mesh appeard on activation.
 var _activation_mesh: MeshInstance3D
+## Emits particles on activation
+var _particles: CPUParticles3D
 
 
 func _ready() -> void:
 	_ray_cast = get_node("RayCast")
 	_ray_cast.self_area_ray = get_node("AreaRay").get_rid()
-	_activation_mesh = get_node("ActivationMesh")
-	if _activation_mesh:
-		_activation_mesh.hide()
+	_activation_mesh = get_node("Mesh/ActivationMesh")
+	_particles = get_node("ActiveParticle")
+	_activation_mesh.hide()
+	deactivate(null)
 	super()
 
 
@@ -28,8 +31,8 @@ func activate(emitter: RayCast) -> bool:
 	activated_by = emitter
 	is_active = true
 	_ray_cast.activate()
-	if _activation_mesh:
-		_activation_mesh.show()
+	_activation_mesh.show()
+	_particles.emitting = true
 	return true
 
 
@@ -42,6 +45,7 @@ func deactivate(emitter: RayCast) -> void:
 	_ray_cast.deactivate()
 	if _activation_mesh:
 		_activation_mesh.hide()
+	_particles.emitting = false
 
 
 ## Receive new chord for casting.

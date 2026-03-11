@@ -22,8 +22,10 @@ var _outter_mesh: MeshInstance3D
 
 func _ready() -> void:
 	# Setting nodes as corresponding variables values
-	_inner_mesh = get_node("InnerMesh")
-	_outter_mesh = get_node("OuterMesh")
+	_inner_mesh = get_node("Mesh/InnerMesh")
+	_outter_mesh = get_node("Mesh/OutterMesh")
+	for i in _outter_mesh.mesh.get_surface_count():
+		_outter_mesh.mesh.surface_get_material(i).transparency = BaseMaterial3D.Transparency.TRANSPARENCY_ALPHA
 	_area_place = get_node("AreaPlace")
 	_player = get_tree().get_first_node_in_group("player")
 	_origin = _player.origin
@@ -52,7 +54,7 @@ func _origin_xz() -> Vector3:
 func pick() -> bool:
 	_is_picked = true
 	_inner_mesh.hide()
-	_outter_mesh.mesh.material.albedo_color.a = 0.2
+	_outter_mesh.mesh.surface_get_material(0).albedo_color.a = 0.2
 	return true
 
 
@@ -62,5 +64,5 @@ func place() -> bool:
 	if _area_place.get_overlapping_areas(): return false
 	_is_picked = false
 	_inner_mesh.show()
-	_outter_mesh.mesh.material.albedo_color.a = 1
+	_outter_mesh.mesh.surface_get_material(0).albedo_color.a = 1
 	return true

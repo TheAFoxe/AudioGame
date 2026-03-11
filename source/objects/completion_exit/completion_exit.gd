@@ -29,4 +29,3 @@ func _on_exit_entered(body: Node3D) -> void:
 	if not body is Player: return
 	if not _door_collision.disabled: return # door closed
 	level_complete.emit()
-	print("enter")

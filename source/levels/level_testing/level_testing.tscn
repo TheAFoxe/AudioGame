@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://cyuvbun204jb8"]
 
+[ext_resource type="Script" uid="uid://chdujrkcnvqnu" path="res://source/levels/level_testing/level_testing.gd" id="1_i36jk"]
 [ext_resource type="PackedScene" uid="uid://c51p6istrw0ec" path="res://source/objects/reflector/audio_reflector.tscn" id="3_kksmv"]
 [ext_resource type="Script" uid="uid://c1fbx2o5kwwbv" path="res://source/sounds/chord.gd" id="4_rkgcr"]
 [ext_resource type="PackedScene" uid="uid://bn7yn1dsic15a" path="res://source/objects/speaker/speaker.tscn" id="5_kksmv"]
@@ -7,11 +8,6 @@
 [ext_resource type="PackedScene" uid="uid://coesjdeuspnqt" path="res://source/objects/audio_catcher/audio_catcher.tscn" id="8_2xmcw"]
 [ext_resource type="PackedScene" uid="uid://bklfsmxg36xem" path="res://source/objects/completion_exit/completion_exit.tscn" id="8_d8lce"]
 [ext_resource type="PackedScene" uid="uid://dd80pnicl00d2" path="res://source/objects/retranslator/retranslator.tscn" id="10_f00rj"]
-
-[sub_resource type="GDScript" id="GDScript_fnbba"]
-script/source = "class_name LevelTesting
-extends Level
-"
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rkgcr"]
 shading_mode = 0
@@ -60,7 +56,7 @@ size = Vector3(9.2, 10, 1)
 
 [node name="LevelTesting" type="Node3D" unique_id=221977538]
 process_mode = 1
-script = SubResource("GDScript_fnbba")
+script = ExtResource("1_i36jk")
 
 [node name="Floor" type="MeshInstance3D" parent="." unique_id=583233978]
 visible = false

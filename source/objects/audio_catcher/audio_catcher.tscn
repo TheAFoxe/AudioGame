@@ -45,6 +45,7 @@ height = 1.1
 
 [sub_resource type="SystemFont" id="SystemFont_1x50r"]
 font_names = PackedStringArray("monospace")
+subpixel_positioning = 0
 
 [sub_resource type="FontVariation" id="FontVariation_xr0gu"]
 base_font = SubResource("SystemFont_1x50r")

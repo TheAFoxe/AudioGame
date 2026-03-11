@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cd24y73ibwc47" path="res://source/objects/speaker/speaker.gd" id="1_lx1a8"]
 [ext_resource type="PackedScene" uid="uid://xfr2qedv6flg" path="res://meshes/SpeakerBlock.blend" id="2_01hlo"]
+[ext_resource type="PackedScene" uid="uid://dsab32w0vj6pt" path="res://source/objects/tools/active_particle.tscn" id="3_dtcp6"]
 
 [node name="Speaker" type="Node3D" unique_id=150968234]
 process_mode = 1
@@ -10,3 +11,5 @@ ray_length = 20.0
 max_bounces = 7
 
 [node name="Mesh" parent="." unique_id=2055909578 instance=ExtResource("2_01hlo")]
+
+[node name="ActiveParticle" parent="." unique_id=2138583298 instance=ExtResource("3_dtcp6")]
