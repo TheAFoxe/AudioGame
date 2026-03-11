@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" uid="uid://bw5cgjucawdkk" path="res://source/objects/separator/separator.gd" id="1_88oku"]
 [ext_resource type="Script" uid="uid://bv838lp8l7g7q" path="res://source/objects/tools/raycast.gd" id="2_m322p"]
-[ext_resource type="Script" uid="uid://dww1cabukf3qi" path="res://source/objects/tools/interaction_object/interaction_oject.gd" id="3_ofs0k"]
-[ext_resource type="Script" uid="uid://u2amvwg4vhd1" path="res://source/ui/interaction_menu/chord_mask_menu.gd" id="4_88oku"]
+[ext_resource type="Script" uid="uid://dww1cabukf3qi" path="res://source/objects/tools/interaction_object.gd" id="3_ofs0k"]
+[ext_resource type="Script" uid="uid://u2amvwg4vhd1" path="res://source/objects/separator/chord_mask_menu.gd" id="4_88oku"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_88oku"]
 shading_mode = 0

@@ -1,7 +1,8 @@
+## Separating notes from _input_chord. Sends new chord.
 class_name AudioSeparator
 extends AudioProcessor
 
-
+## Controls which part of chord will be transmitted.
 var _chord_mask: Array[bool]
 
 
@@ -13,6 +14,7 @@ func _ready() -> void:
 		_chord_mask.append(false)
 
 
+## Return new processed Chord based on _chord_mask.
 func _process_chord() -> Chord:
 	var output := _input_chord.duplicate()
 	var notes: Array[AudioStream] = output.notes
@@ -22,6 +24,7 @@ func _process_chord() -> Chord:
 	return output
 
 
+## Receive _chord_mask from interactive UI.
 func _set_chord_mask(input_mask: Array[bool]) -> void:
 	_chord_mask = input_mask
 	if is_active: 

@@ -1,0 +1,78 @@
+[gd_scene format=3 uid="uid://dkarbnbk677jp"]
+
+[ext_resource type="Script" uid="uid://sgocrsvln04k" path="res://source/ui/completion_menu/completion_menu.gd" id="1_ubhir"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xrkbs"]
+bg_color = Color(1, 1, 1, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_717wo"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+
+[sub_resource type="Theme" id="Theme_ubhir"]
+Button/colors/font_hover_color = Color(0, 0, 0, 1)
+Button/styles/hover = SubResource("StyleBoxFlat_xrkbs")
+Button/styles/normal = SubResource("StyleBoxFlat_717wo")
+
+[node name="CompletionMenu" type="Control" unique_id=968712838]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ubhir")
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=829262686]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = SubResource("Theme_ubhir")
+
+[node name="ColorRect" type="ColorRect" parent="PanelContainer" unique_id=1139176053]
+layout_mode = 2
+color = Color(0, 0, 0, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer" unique_id=362342776]
+layout_mode = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer" unique_id=606334219]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=746965072]
+layout_mode = 2
+text = "LEVEL COMPLETED"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="NextLevel" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=794811260]
+layout_mode = 2
+text = "NEXT LEVEL"
+
+[node name="MainMenu" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=291376232]
+layout_mode = 2
+text = "MAIN MENU"
+
+[node name="Exit" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=826463951]
+layout_mode = 2
+text = "EXIT
+"
+
+[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/NextLevel" to="." method="_on_next_level_pressed"]
+[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/MainMenu" to="." method="_on_main_menu_pressed"]
+[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/Exit" to="." method="_on_exit_pressed"]

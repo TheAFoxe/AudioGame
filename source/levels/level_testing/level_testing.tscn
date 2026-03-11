@@ -1,0 +1,145 @@
+[gd_scene format=3 uid="uid://cyuvbun204jb8"]
+
+[ext_resource type="PackedScene" uid="uid://c51p6istrw0ec" path="res://source/objects/reflector/audio_reflector.tscn" id="3_kksmv"]
+[ext_resource type="Script" uid="uid://c1fbx2o5kwwbv" path="res://source/sounds/chord.gd" id="4_rkgcr"]
+[ext_resource type="PackedScene" uid="uid://bn7yn1dsic15a" path="res://source/objects/speaker/speaker.tscn" id="5_kksmv"]
+[ext_resource type="PackedScene" uid="uid://1hvvndjnrwab" path="res://source/objects/separator/separator.tscn" id="7_rkgcr"]
+[ext_resource type="PackedScene" uid="uid://coesjdeuspnqt" path="res://source/objects/audio_catcher/audio_catcher.tscn" id="8_2xmcw"]
+[ext_resource type="PackedScene" uid="uid://bklfsmxg36xem" path="res://source/objects/completion_exit/completion_exit.tscn" id="8_d8lce"]
+[ext_resource type="PackedScene" uid="uid://dd80pnicl00d2" path="res://source/objects/retranslator/retranslator.tscn" id="10_f00rj"]
+
+[sub_resource type="GDScript" id="GDScript_fnbba"]
+script/source = "class_name LevelTesting
+extends Level
+"
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rkgcr"]
+shading_mode = 0
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_26u8l"]
+size = Vector2(128, 128)
+
+[sub_resource type="Resource" id="Resource_rkgcr"]
+script = ExtResource("4_rkgcr")
+s5 = 2
+s4 = 5
+s3 = 5
+s2 = 5
+s1 = 5
+metadata/_custom_type_script = "uid://c1fbx2o5kwwbv"
+
+[sub_resource type="Resource" id="Resource_2xmcw"]
+script = ExtResource("4_rkgcr")
+s5 = 2
+s4 = 2
+s3 = 2
+s2 = 1
+metadata/_custom_type_script = "uid://c1fbx2o5kwwbv"
+
+[sub_resource type="Resource" id="Resource_d8lce"]
+script = ExtResource("4_rkgcr")
+s5 = 2
+s4 = 5
+s3 = 5
+s2 = 5
+s1 = 5
+metadata/_custom_type_script = "uid://c1fbx2o5kwwbv"
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fnbba"]
+shading_mode = 0
+
+[sub_resource type="BoxMesh" id="BoxMesh_rkgcr"]
+material = SubResource("StandardMaterial3D_fnbba")
+size = Vector3(0.1, 0.05, 20)
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_rkgcr"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2xmcw"]
+size = Vector3(9.2, 10, 1)
+
+[node name="LevelTesting" type="Node3D" unique_id=221977538]
+process_mode = 1
+script = SubResource("GDScript_fnbba")
+
+[node name="Floor" type="MeshInstance3D" parent="." unique_id=583233978]
+visible = false
+material_override = SubResource("StandardMaterial3D_rkgcr")
+mesh = SubResource("PlaneMesh_26u8l")
+
+[node name="SpawnPoint" type="Marker3D" parent="." unique_id=750997873]
+
+[node name="Speaker" parent="." unique_id=150968234 instance=ExtResource("5_kksmv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 1, 9)
+_chord_source = SubResource("Resource_rkgcr")
+
+[node name="Speaker2" parent="." unique_id=1228669652 instance=ExtResource("5_kksmv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.7585683, 1, 9)
+_chord_source = SubResource("Resource_2xmcw")
+
+[node name="AudioReflector" parent="." unique_id=1189587396 instance=ExtResource("3_kksmv")]
+transform = Transform3D(0.8660254, 0, -0.5, 0, 1, 0, 0.5, 0, 0.8660254, 7.554451, 0, -4)
+
+[node name="AudioReflector2" parent="." unique_id=2056518066 instance=ExtResource("3_kksmv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, -4)
+
+[node name="Retranslator" parent="." unique_id=1009846341 instance=ExtResource("10_f00rj")]
+transform = Transform3D(0.9659258, 0, -0.25881904, 0, 1, 0, 0.25881904, 0, 0.9659258, -6.8010178, 1, 5)
+
+[node name="Separator" parent="." unique_id=1592551397 instance=ExtResource("7_rkgcr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -2)
+
+[node name="Separator2" parent="." unique_id=1806596551 instance=ExtResource("7_rkgcr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0)
+
+[node name="Node3D" parent="." unique_id=1790659427 instance=ExtResource("8_2xmcw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.6464496, 1, 4.55296)
+_chord = SubResource("Resource_d8lce")
+
+[node name="WorldBoundaries" type="Node3D" parent="." unique_id=1607608001]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.2351742e-08, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="WorldBoundaries" unique_id=646628472]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 0)
+mesh = SubResource("BoxMesh_rkgcr")
+skeleton = NodePath("../../AudioReflector")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="WorldBoundaries" unique_id=1185196581]
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="WorldBoundaries/StaticBody3D" unique_id=531859870]
+transform = Transform3D(-4.371139e-08, 1, 4.371139e-08, 0, -4.371139e-08, 1, 1, 4.371139e-08, 1.9106855e-15, -10, 0, 0)
+shape = SubResource("WorldBoundaryShape3D_rkgcr")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="WorldBoundaries/StaticBody3D" unique_id=1687733956]
+transform = Transform3D(-1, 8.742278e-08, 3.821371e-15, 0, -4.371139e-08, 1, 8.742278e-08, 1, 4.371139e-08, 0, 0, -10)
+shape = SubResource("WorldBoundaryShape3D_rkgcr")
+
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="WorldBoundaries/StaticBody3D" unique_id=527901177]
+transform = Transform3D(-4.371139e-08, -1, -4.371139e-08, 0, -4.371139e-08, 1, -1, 4.371139e-08, 1.9106855e-15, 10, 0, 0)
+shape = SubResource("WorldBoundaryShape3D_rkgcr")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WorldBoundaries/StaticBody3D" unique_id=1276447941]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.4, 5, 10.5)
+shape = SubResource("BoxShape3D_2xmcw")
+
+[node name="CollisionShape3D5" type="CollisionShape3D" parent="WorldBoundaries/StaticBody3D" unique_id=1002892362]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.4, 5, 10.5)
+shape = SubResource("BoxShape3D_2xmcw")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="WorldBoundaries" unique_id=420108774]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, -10)
+mesh = SubResource("BoxMesh_rkgcr")
+skeleton = NodePath("../../AudioReflector")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="WorldBoundaries" unique_id=855566753]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -10, 0, 0)
+mesh = SubResource("BoxMesh_rkgcr")
+skeleton = NodePath("../../AudioReflector")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="WorldBoundaries" unique_id=1725568319]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 10)
+mesh = SubResource("BoxMesh_rkgcr")
+skeleton = NodePath("../../AudioReflector")
+
+[node name="CompletionExit" parent="." unique_id=1620778632 instance=ExtResource("8_d8lce")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 1, 10.25)

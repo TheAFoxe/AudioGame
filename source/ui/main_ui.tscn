@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://cy04s6jw8bf34"]
+
+[ext_resource type="Script" uid="uid://db1hm3u2rf2ux" path="res://source/ui/main_ui.gd" id="1_nqan2"]
+[ext_resource type="PackedScene" uid="uid://dkarbnbk677jp" path="res://source/ui/completion_menu/completion_menu.tscn" id="2_2607a"]
+[ext_resource type="PackedScene" uid="uid://ck4ejwyt5ljup" path="res://source/ui/level_pick/level_pick.tscn" id="3_l24nb"]
+[ext_resource type="PackedScene" uid="uid://i1686kge5k3e" path="res://source/ui/main_menu/main_menu.tscn" id="4_246n8"]
+[ext_resource type="PackedScene" uid="uid://c8sa4mugq1w7m" path="res://source/ui/settings_menu/settings_menu.tscn" id="5_va4gk"]
+[ext_resource type="PackedScene" uid="uid://c201kqm66rjry" path="res://source/ui/pause_menu/pause_menu.tscn" id="6_bd5dw"]
+
+[node name="MainUi" type="Control" unique_id=293262719]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_nqan2")
+
+[node name="CompletionMenu" parent="." unique_id=968712838 instance=ExtResource("2_2607a")]
+layout_mode = 1
+
+[node name="LevelPickMenu" parent="." unique_id=222874572 instance=ExtResource("3_l24nb")]
+layout_mode = 1
+
+[node name="MainMenu" parent="." unique_id=1519179571 instance=ExtResource("4_246n8")]
+layout_mode = 1
+
+[node name="SettingsMenu" parent="." unique_id=930890512 instance=ExtResource("5_va4gk")]
+layout_mode = 1
+
+[node name="PauseMenu" parent="." unique_id=1331432830 instance=ExtResource("6_bd5dw")]
+layout_mode = 1

@@ -11,11 +11,10 @@ radius = 3.5
 
 [node name="Player" type="CharacterBody3D" unique_id=1225566035 groups=["player"]]
 process_mode = 1
-collision_layer = 0
 floor_max_angle = 1.0471976
 script = ExtResource("1_jct2x")
 
-[node name="CollisionShape" type="CollisionShape3D" parent="." unique_id=204069106]
+[node name="Collision" type="CollisionShape3D" parent="." unique_id=204069106]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_sh265")
 debug_color = Color(0, 0.6, 0.69803923, 1)

@@ -1,3 +1,4 @@
+## Self activated RayCast. Can't be modified, moved nor deactivated.
 class_name Speaker
 extends RayCast
 
@@ -5,5 +6,5 @@ extends RayCast
 
 func _ready() -> void:
 	super()
-	activate(null)
+	activate()
 	receive_chord(_chord_source)

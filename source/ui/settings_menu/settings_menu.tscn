@@ -1,0 +1,130 @@
+[gd_scene format=3 uid="uid://c8sa4mugq1w7m"]
+
+[ext_resource type="Script" uid="uid://cbmqqcg7lvjwn" path="res://source/ui/settings_menu/settings_menu.gd" id="1_qnvxf"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xrkbs"]
+bg_color = Color(1, 1, 1, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_717wo"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+
+[sub_resource type="Theme" id="Theme_mm5nx"]
+Button/colors/font_hover_color = Color(0, 0, 0, 1)
+Button/styles/hover = SubResource("StyleBoxFlat_xrkbs")
+Button/styles/normal = SubResource("StyleBoxFlat_717wo")
+
+[node name="SettingsMenu" type="Control" unique_id=930890512]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_qnvxf")
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1425030565]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = SubResource("Theme_mm5nx")
+
+[node name="ColorRect" type="ColorRect" parent="PanelContainer" unique_id=1664491266]
+layout_mode = 2
+color = Color(0, 0, 0, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer" unique_id=1718872650]
+layout_mode = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer" unique_id=1062729156]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Volume" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=469385051]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/Volume" unique_id=1445375719]
+layout_mode = 2
+text = "Volume: "
+
+[node name="HSlider" type="HSlider" parent="PanelContainer/MarginContainer/VBoxContainer/Volume" unique_id=569221945]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+
+[node name="VolumeLable" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/Volume/HSlider" unique_id=57584288]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Resolution" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=1515636139]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/Resolution" unique_id=1308021126]
+layout_mode = 2
+text = "Resolition: "
+
+[node name="OptionButton" type="OptionButton" parent="PanelContainer/MarginContainer/VBoxContainer/Resolution" unique_id=168547723]
+layout_mode = 2
+selected = 2
+item_count = 3
+popup/item_0/text = "1280x720"
+popup/item_0/id = 0
+popup/item_1/text = "1920x1080"
+popup/item_1/id = 1
+popup/item_2/text = "2560x1440"
+popup/item_2/id = 2
+
+[node name="AA" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=1921633138]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/AA" unique_id=595892690]
+layout_mode = 2
+text = "MSAA: "
+
+[node name="OptionButton" type="OptionButton" parent="PanelContainer/MarginContainer/VBoxContainer/AA" unique_id=122409323]
+layout_mode = 2
+size_flags_horizontal = 3
+selected = 0
+item_count = 4
+popup/item_0/text = "Disabled"
+popup/item_0/id = 0
+popup/item_1/text = "2x"
+popup/item_1/id = 1
+popup/item_2/text = "4x"
+popup/item_2/id = 2
+popup/item_3/text = "8x"
+popup/item_3/id = 3
+
+[node name="Close" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=987654321]
+layout_mode = 2
+text = "BACK"
+
+[connection signal="drag_started" from="PanelContainer/MarginContainer/VBoxContainer/Volume/HSlider" to="." method="_on_volume_drag_started"]
+[connection signal="value_changed" from="PanelContainer/MarginContainer/VBoxContainer/Volume/HSlider" to="." method="_on_volume_change"]
+[connection signal="item_selected" from="PanelContainer/MarginContainer/VBoxContainer/Resolution/OptionButton" to="." method="_on_option_button_item_selected"]
+[connection signal="item_selected" from="PanelContainer/MarginContainer/VBoxContainer/AA/OptionButton" to="." method="_on_antialiasing_set"]
+[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/Close" to="." method="_on_close_pressed"]

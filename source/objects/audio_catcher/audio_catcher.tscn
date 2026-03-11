@@ -43,7 +43,13 @@ height = 1.1
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_xr0gu"]
 
-[node name="AudioCatcher" type="Node3D" unique_id=1790659427]
+[sub_resource type="SystemFont" id="SystemFont_1x50r"]
+font_names = PackedStringArray("monospace")
+
+[sub_resource type="FontVariation" id="FontVariation_xr0gu"]
+base_font = SubResource("SystemFont_1x50r")
+
+[node name="AudioCatcher" type="Node3D" unique_id=1790659427 groups=["audio_catcher"]]
 process_mode = 1
 script = ExtResource("1_s2xgv")
 _chord = SubResource("Resource_xr0gu")
@@ -88,3 +94,20 @@ visible = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=2089444736]
 shape = SubResource("SphereShape3D_xr0gu")
+
+[node name="Label3D" type="Label3D" parent="." unique_id=201519296]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2142539, 0)
+pixel_size = 0.0025
+billboard = 2
+double_sided = false
+modulate = Color(0, 0, 0, 1)
+outline_modulate = Color(1, 1, 1, 1)
+text = "S1 x
+S2 x
+S3 x
+S4 x
+S5 x
+S6 x"
+font = SubResource("FontVariation_xr0gu")
+font_size = 64
+uppercase = true

@@ -1,0 +1,2 @@
+class_name LevelTesting2
+extends Level

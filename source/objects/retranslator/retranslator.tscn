@@ -58,5 +58,5 @@ visible = false
 transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, -0.012207031, -5.335863e-10, 0)
 shape = SubResource("CapsuleShape3D_hvsqt")
 
-[node name="Kamerton" parent="." unique_id=837719053 instance=ExtResource("3_rdnhm")]
+[node name="Kamerton" parent="." unique_id=1469535165 instance=ExtResource("3_rdnhm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0)

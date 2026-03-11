@@ -1,9 +1,8 @@
-[gd_scene format=3 uid="uid://mgp02mkor0at"]
+[gd_scene format=3 uid="uid://caiuxflmcd37c"]
 
 [ext_resource type="Script" uid="uid://b74aq41vgfphe" path="res://main.gd" id="1_1bvp3"]
-[ext_resource type="PackedScene" uid="uid://c201kqm66rjry" path="res://source/ui/pause_menu.tscn" id="2_0xm2m"]
-[ext_resource type="PackedScene" uid="uid://c8sa4mugq1w7m" path="res://source/ui/settings_menu/settigs_menu.tscn" id="4_7mycd"]
-[ext_resource type="PackedScene" uid="uid://i1686kge5k3e" path="res://source/ui/main_menu.tscn" id="5_7mycd"]
+[ext_resource type="PackedScene" uid="uid://cy04s6jw8bf34" path="res://source/ui/main_ui.tscn" id="2_mainui"]
+[ext_resource type="PackedScene" uid="uid://cusq3k5okqllb" path="res://source/objects/conductor/conductor.tscn" id="5_7mycd"]
 [ext_resource type="PackedScene" uid="uid://ckudr8chj1kgo" path="res://source/player/player.tscn" id="5_272bh"]
 [ext_resource type="Script" uid="uid://b1fayhcx4kdi4" path="res://fps.gd" id="5_lquwl"]
 
@@ -17,13 +16,7 @@ reflected_light_source = 1
 process_mode = 3
 script = ExtResource("1_1bvp3")
 
-[node name="PauseMenu" parent="." unique_id=1385119730 instance=ExtResource("2_0xm2m")]
-process_mode = 2
-
-[node name="MainMenu" parent="." unique_id=1406229279 instance=ExtResource("5_7mycd")]
-
-[node name="SettigsMenu" parent="." unique_id=930890512 instance=ExtResource("4_7mycd")]
-visible = false
+[node name="MainUI" parent="." unique_id=999999999 instance=ExtResource("2_mainui")]
 
 [node name="FPS" type="Label" parent="." unique_id=337238559]
 process_mode = 3
@@ -37,8 +30,5 @@ environment = SubResource("Environment_lquwl")
 
 [node name="Player" parent="." unique_id=1225566035 instance=ExtResource("5_272bh")]
 
-[connection signal="exit" from="PauseMenu" to="." method="_on_pause_menu_exit"]
-[connection signal="main_menu" from="PauseMenu" to="." method="_on_pause_menu_main_menu"]
-[connection signal="settings" from="PauseMenu" to="." method="_on_settings_open"]
-[connection signal="level_pick" from="MainMenu" to="." method="_on_main_menu_level_pick"]
-[connection signal="settings_open" from="MainMenu" to="." method="_on_settings_open"]
+[node name="Conductor" parent="." unique_id=1715937138 instance=ExtResource("5_7mycd")]
+process_mode = 1

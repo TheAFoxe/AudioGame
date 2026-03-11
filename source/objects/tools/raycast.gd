@@ -1,48 +1,61 @@
+## Casts ray which can be catched, reflected or blocked by other objects.
+## Carries chord value between AudioRetranslator''s.
+## Control (de)activate logic on hitted AudioRetranslator''s.
 class_name RayCast
 extends Node3D
 
-enum RaycastStatus { BREAK, SKIP }
-
+## Safety offset for RayCast to prevent hitting same object.
 const RAY_OFFSET_FROM_SURFACE: float = 0.005
+## Offset of AudioPlayer from player to source of ray.
 const AUDIO_PLAYER_OFFSET_FROM_PLAYER: float = 1.0
+## Safe position for inactive AudioPlayer''s, where it's not hearable.
 const INACTIVE_AUDIO_PLAYER_POSITION: Vector3 = Vector3(0, 50, 0)
 
 # Exported values
-@export var debug: bool = true
-
-@export_category("AudioStream")
-@export var audio_max_distance: float
-@export var audio_volume: float
-@export var audio_max_volume: float
-@export var audio_attenuation_model: AudioStreamPlayer3D.AttenuationModel
 
 @export_category("RayQuery")
+## Max ray length on each bounce
 @export var ray_length: float = 50
+## Max amount of bouncing ray.
 @export var max_bounces: int = 10
+## Masking collision layers of ray.
 @export_flags_3d_physics var collision_mask: int = 512
 
 # Public variables
+## RID of self AreaRay. Prevents breaking on self hit.
 var self_area_ray: RID
 
 # Private variables
+## Show debug ray and AudioPlayer position.
+var _debug: bool
+## Inner active state. Controls last frame _physics_process to reset and clear
+## values.
 var _is_active: bool = false
+## Inner active state on previous frame. Used for clear all debug nodes once.
 var _is_active_last_frame: bool = false
-
+## Debug ray mesh.
 var _debug_line_mesh: ImmediateMesh
 var _debug_mesh_instance: MeshInstance3D
-
+## Array of all debug spheres for AudioPlayer.
 var _audio_debug_spheres: Array[MeshInstance3D] = []
-var _audio_streamers: Array[AudioStreamPlayer3D] = []
-var _active_audio_streams: Array[AudioStreamPlayer3D] = []
+## Array of all AudioPlayers.
+var _audio_streamers: Array[AudioPlayer] = []
+## Array of active only AudioPlayers.
+var _active_audio_streams: Array[AudioPlayer] = []
+## Inner chord state.
 var _chord: Chord
+## Pending chord, will get in inner chord state on AudioConductor.loop_reset
 var _pending_chord: Chord
+## Controls recalculating activation if _chord was changed.
 var _reactivate: bool
-
+## Ray instance.
 var _ray_query: PhysicsRayQueryParameters3D
+## Last activated node. Used for deactivating node, if ray left it.
 var _previous_activation: Node3D
 
 func _ready() -> void:
-	ConductorLoopReset._loop_reset.connect(_on_conductor_loop_reset)
+	GlobalSignals.conductor_loop_reset.connect(_on_conductor_loop_reset)
+	GlobalSignals.debug_mode_switch.connect(func(value): _debug = value)
 	_create_ray_query()
 	_create_audio_players()
 	_create_debug_visualisation()
@@ -50,11 +63,8 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	if not _is_active:
-		#if not _is_active_last_frame: return
 		_clear()
 		return
-	if not _is_active_last_frame:
-		_is_active_last_frame = true
 	
 	_debug_line_mesh.clear_surfaces()
 	_active_audio_streams.fill(null)
@@ -63,19 +73,22 @@ func _physics_process(delta: float) -> void:
 		i.hide()
 	
 	_cast_ray()
+	
+	# Moves AudioPlayer''s to safe location.
 	for i in _audio_streamers:
 		if i not in _active_audio_streams:
 			i.global_position = INACTIVE_AUDIO_PLAYER_POSITION
 
-
+## Clears debug. Deactivate activated RayCast. Stops _physics_process.
 func _clear() -> void:
-	_is_active_last_frame = false
 	_debug_line_mesh.clear_surfaces()
 	if _previous_activation:
 		_previous_activation.deactivate(self)
 		_previous_activation = null
+	set_physics_process(false)
 
 
+## Cast ray. Manages (de)activation of ray hits.
 func _cast_ray() -> void:
 	var space_state: PhysicsDirectSpaceState3D = get_world_3d().direct_space_state
 	var direction: Vector3 = -global_transform.basis.z
@@ -84,7 +97,7 @@ func _cast_ray() -> void:
 	
 	_ray_query.exclude = [self_area_ray]
 	 
-	if debug: _debug_line_mesh.surface_begin(Mesh.PRIMITIVE_LINES)
+	if _debug: _debug_line_mesh.surface_begin(Mesh.PRIMITIVE_LINES)
 	
 	for bounce_id in max_bounces:
 		_ray_query.from = current_start
@@ -113,18 +126,17 @@ func _cast_ray() -> void:
 			_previous_activation.deactivate(self)
 		if new_activation:
 			if _on_ray_hit(new_activation):
-				print(true)
 				_previous_activation = new_activation
 			else:
 				_previous_activation = null
 		else:
 			_previous_activation = null
-		#_previous_activation = new_activation
 		_reactivate = false
 	
-	if debug: _debug_line_mesh.surface_end()
+	if _debug: _debug_line_mesh.surface_end()
 
 
+## Manages activation of ray hit.
 func _on_ray_hit(current_hit: Node3D) -> bool:
 	var chord_to_send: Chord
 	if _pending_chord: chord_to_send = _pending_chord
@@ -139,6 +151,8 @@ func _on_ray_hit(current_hit: Node3D) -> bool:
 	return false
 
 
+## Gets ray intersection ignoring player. On player hit -> recast and call
+## _on_player_hit()
 func _raycast_ignoring_player(bounce_id: int, space_state: PhysicsDirectSpaceState3D, direction: Vector3) -> Dictionary:
 	var result := space_state.intersect_ray(_ray_query)
 	if result and _get_hit_owner(result) is Player:
@@ -149,10 +163,12 @@ func _raycast_ignoring_player(bounce_id: int, space_state: PhysicsDirectSpaceSta
 	return result
 
 
+## Return owner node of ray collider.
 func _get_hit_owner(result: Dictionary) -> Node3D:
 	return result.collider.owner if result.collider.owner else result.collider
 
 
+## Gets AudioPlayer near player.
 func _on_player_hit(player_pos: Vector3, bounce_id: int, result: Dictionary, direction: Vector3) -> void:
 	if bounce_id >= _audio_streamers.size():
 		push_warning("Max_bounces is greater then available of _audio_streamers")
@@ -166,13 +182,14 @@ func _on_player_hit(player_pos: Vector3, bounce_id: int, result: Dictionary, dir
 	audio_stream.global_position = closest_position
 	
 	_active_audio_streams[bounce_id] = audio_stream
-	if debug:
+	if _debug:
 		_audio_debug_spheres[bounce_id].global_position = closest_position
 		_audio_debug_spheres[bounce_id].show()
 
 
+## Draw debug line FROM -> TO.
 func _draw_debug_line(from: Vector3, to: Vector3) -> void:
-	if not debug: return
+	if not _debug: return
 	_debug_line_mesh.surface_add_vertex(to_local(from))
 	_debug_line_mesh.surface_add_vertex(to_local(to))
 
@@ -222,6 +239,8 @@ func _create_ray_query() -> void:
 	_ray_query.hit_from_inside = true
 
 
+## Move _pending_chord to _chord. Sets _reactivate. Sends new chord to 
+## AudioPlayer''s
 func _on_conductor_loop_reset() -> void:
 	if not _pending_chord:
 		return
@@ -232,17 +251,21 @@ func _on_conductor_loop_reset() -> void:
 	_reactivate = true
 
 
+## Gets new_chord and sends it to _pending_chord
 func receive_chord(new_chord: Chord) -> void:
 	_pending_chord = new_chord.duplicate()
 	_reactivate = true
 
 
-func deactivate(emitter: RayCast) -> void:
+## Deactivates RayCast
+func deactivate() -> void:
 	for i in _audio_streamers:
 		i.global_position = INACTIVE_AUDIO_PLAYER_POSITION
 	_is_active = false
 
 
-func activate(emitter: RayCast) -> void:
+## Activates RayCast
+func activate() -> void:
 	_is_active = true
 	_is_active_last_frame = true
+	set_physics_process(true)
