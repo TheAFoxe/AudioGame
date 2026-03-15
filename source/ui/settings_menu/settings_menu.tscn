@@ -1,26 +1,7 @@
 [gd_scene format=3 uid="uid://c8sa4mugq1w7m"]
 
+[ext_resource type="Theme" uid="uid://jd5jbr23680i" path="res://source/ui/ui_theme.tres" id="1_a8x0d"]
 [ext_resource type="Script" uid="uid://cbmqqcg7lvjwn" path="res://source/ui/settings_menu/settings_menu.gd" id="1_qnvxf"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xrkbs"]
-bg_color = Color(1, 1, 1, 1)
-border_width_left = 3
-border_width_top = 3
-border_width_right = 3
-border_width_bottom = 3
-border_color = Color(0, 0, 0, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_717wo"]
-bg_color = Color(0, 0, 0, 1)
-border_width_left = 3
-border_width_top = 3
-border_width_right = 3
-border_width_bottom = 3
-
-[sub_resource type="Theme" id="Theme_mm5nx"]
-Button/colors/font_hover_color = Color(0, 0, 0, 1)
-Button/styles/hover = SubResource("StyleBoxFlat_xrkbs")
-Button/styles/normal = SubResource("StyleBoxFlat_717wo")
 
 [node name="SettingsMenu" type="Control" unique_id=930890512]
 layout_mode = 3
@@ -29,6 +10,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_a8x0d")
 script = ExtResource("1_qnvxf")
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=1425030565]
@@ -36,11 +18,10 @@ layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 1.0
-theme = SubResource("Theme_mm5nx")
 
 [node name="ColorRect" type="ColorRect" parent="PanelContainer" unique_id=1664491266]
 layout_mode = 2
-color = Color(0, 0, 0, 1)
+color = Color(0.8603691, 0.86036927, 0.86036885, 1)
 
 [node name="MarginContainer" type="MarginContainer" parent="PanelContainer" unique_id=1718872650]
 layout_mode = 2
@@ -61,12 +42,20 @@ layout_mode = 2
 layout_mode = 2
 text = "Volume: "
 
-[node name="HSlider" type="HSlider" parent="PanelContainer/MarginContainer/VBoxContainer/Volume" unique_id=569221945]
+[node name="ColorRect" type="ColorRect" parent="PanelContainer/MarginContainer/VBoxContainer/Volume" unique_id=82026060]
 layout_mode = 2
+size_flags_horizontal = 3
+color = Color(0, 0, 0, 1)
+
+[node name="HSlider" type="HSlider" parent="PanelContainer/MarginContainer/VBoxContainer/Volume/ColorRect" unique_id=569221945]
+layout_mode = 0
+offset_left = 4.0
+offset_right = 75.0
+offset_bottom = 23.0
 size_flags_horizontal = 3
 size_flags_vertical = 1
 
-[node name="VolumeLable" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/Volume/HSlider" unique_id=57584288]
+[node name="VolumeLable" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/Volume/ColorRect/HSlider" unique_id=57584288]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -79,6 +68,11 @@ offset_right = 20.0
 offset_bottom = 11.5
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+text = "12"
+horizontal_alignment = 1
 
 [node name="AA" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=1921633138]
 layout_mode = 2
@@ -88,8 +82,10 @@ layout_mode = 2
 text = "MSAA: "
 
 [node name="OptionButton" type="OptionButton" parent="PanelContainer/MarginContainer/VBoxContainer/AA" unique_id=122409323]
+custom_minimum_size = Vector2(95, 0)
 layout_mode = 2
-size_flags_horizontal = 3
+size_flags_horizontal = 6
+size_flags_vertical = 4
 selected = 0
 item_count = 4
 popup/item_0/text = "Disabled"
@@ -109,8 +105,8 @@ text = "SAVE"
 layout_mode = 2
 text = "BACK"
 
-[connection signal="drag_started" from="PanelContainer/MarginContainer/VBoxContainer/Volume/HSlider" to="." method="_on_volume_drag_started"]
-[connection signal="value_changed" from="PanelContainer/MarginContainer/VBoxContainer/Volume/HSlider" to="." method="_on_volume_change"]
+[connection signal="drag_started" from="PanelContainer/MarginContainer/VBoxContainer/Volume/ColorRect/HSlider" to="." method="_on_volume_drag_started"]
+[connection signal="value_changed" from="PanelContainer/MarginContainer/VBoxContainer/Volume/ColorRect/HSlider" to="." method="_on_volume_change"]
 [connection signal="item_selected" from="PanelContainer/MarginContainer/VBoxContainer/AA/OptionButton" to="." method="_on_antialiasing_set"]
 [connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/Save" to="." method="_on_save_settings"]
 [connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/Back" to="." method="_on_close_pressed"]

@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://x1u4ywn4bl4e"]
 
 [ext_resource type="Script" uid="uid://u2amvwg4vhd1" path="res://source/objects/separator/chord_mask_menu.gd" id="1_lvkwv"]
-[ext_resource type="Theme" uid="uid://jd5jbr23680i" path="res://source/ui/new_theme.tres" id="1_n3uou"]
+[ext_resource type="Theme" uid="uid://jd5jbr23680i" path="res://source/ui/ui_theme.tres" id="1_n3uou"]
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_mntya"]
 allow_unpress = true

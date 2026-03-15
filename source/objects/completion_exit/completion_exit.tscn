@@ -10,6 +10,7 @@ size = Vector3(1.6, 2, 0.255)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jxl4l"]
 shading_mode = 0
+albedo_color = Color(0, 0, 0, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_m0va8"]
 material = SubResource("StandardMaterial3D_jxl4l")
@@ -18,7 +19,6 @@ size = Vector3(1.5, 2, 0.5)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_h2wfm"]
 shading_mode = 0
-albedo_color = Color(0, 0, 0, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_jgu28"]
 material = SubResource("StandardMaterial3D_h2wfm")

@@ -21,7 +21,7 @@ var _billboard: Label3D
 
 
 func _ready() -> void:
-	_activation_mesh = get_node("ActivationMesh")
+	_activation_mesh = get_node("Mesh/ActivationMesh")
 	_activation_mesh.hide()
 	_billboard = get_node("Label3D")
 	_billboard.text = build_chord_display()

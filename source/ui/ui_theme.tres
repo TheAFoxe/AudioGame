@@ -1,0 +1,68 @@
+[gd_resource type="Theme" format=3 uid="uid://jd5jbr23680i"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4014q"]
+bg_color = Color(1, 0.54901963, 0, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_45fsr"]
+bg_color = Color(0.911268, 0.23234218, 3.85046e-07, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_717wo"]
+bg_color = Color(0.95686275, 0.95686275, 0.95686275, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_evxuv"]
+color = Color(1, 1, 1, 1)
+grow_end = -2.0
+thickness = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j2q5q"]
+bg_color = Color(0.4, 0.4, 0.4, 0.8)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0s74n"]
+bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sugg8"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_45fsr"]
+color = Color(1, 1, 1, 1)
+
+[resource]
+Button/colors/font_color = Color(0, 0, 0, 1)
+Button/colors/font_hover_color = Color(0.95686275, 0.95686275, 0.95686275, 1)
+Button/colors/font_pressed_color = Color(0, 0, 0, 1)
+Button/styles/hover = SubResource("StyleBoxFlat_4014q")
+Button/styles/hover_pressed = SubResource("StyleBoxFlat_45fsr")
+Button/styles/normal = SubResource("StyleBoxFlat_717wo")
+Button/styles/pressed = SubResource("StyleBoxFlat_4014q")
+HSlider/styles/slider = SubResource("StyleBoxLine_evxuv")
+Label/colors/font_color = Color(0, 0, 0, 1)
+Label/colors/font_outline_color = Color(1, 1, 1, 1)
+Label/constants/outline_size = 2
+OptionButton/colors/font_pressed_color = Color(1, 1, 1, 1)
+OptionButton/styles/hover_pressed = SubResource("StyleBoxFlat_45fsr")
+PanelContainer/styles/panel = SubResource("StyleBoxFlat_j2q5q")
+PopupMenu/colors/font_color = Color(1, 1, 1, 1)
+PopupMenu/colors/font_hover_color = Color(0, 0, 0, 1)
+PopupMenu/styles/hover = SubResource("StyleBoxFlat_0s74n")
+PopupMenu/styles/panel = SubResource("StyleBoxFlat_sugg8")
+PopupMenu/styles/separator = SubResource("StyleBoxLine_45fsr")

@@ -16,28 +16,31 @@ radius = 0.25097656
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_r41m0"]
 radius = 0.3
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_88oku"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_avvhp"]
 shading_mode = 0
-albedo_color = Color(0, 0, 0, 1)
 
-[sub_resource type="TorusMesh" id="TorusMesh_avvhp"]
+[sub_resource type="TorusMesh" id="TorusMesh_al0on"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_avvhp")
 flip_faces = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mavjk"]
 transparency = 1
 shading_mode = 0
+albedo_color = Color(0, 0, 0, 1)
 
 [sub_resource type="TorusMesh" id="TorusMesh_r41m0"]
 material = SubResource("StandardMaterial3D_mavjk")
 flip_faces = true
-inner_radius = 0.45
-outer_radius = 1.05
+inner_radius = 0.48
+outer_radius = 1.02
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_al0on"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r41m0"]
 shading_mode = 0
-vertex_color_use_as_albedo = true
+albedo_color = Color(1, 0.54901963, 0, 1)
 
 [sub_resource type="TorusMesh" id="TorusMesh_vgtvw"]
+material = SubResource("StandardMaterial3D_r41m0")
 inner_radius = 0.7
 outer_radius = 0.8
 
@@ -116,8 +119,7 @@ shape = SubResource("CapsuleShape3D_r41m0")
 
 [node name="InnerMesh" type="MeshInstance3D" parent="Mesh" unique_id=72689562]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 1, 0)
-material_override = SubResource("StandardMaterial3D_88oku")
-mesh = SubResource("TorusMesh_avvhp")
+mesh = SubResource("TorusMesh_al0on")
 skeleton = NodePath("../..")
 
 [node name="OutterMesh" type="MeshInstance3D" parent="Mesh" unique_id=1578786268]
@@ -127,6 +129,5 @@ skeleton = NodePath("../..")
 
 [node name="ActivationMesh" type="MeshInstance3D" parent="Mesh" unique_id=351028475]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 1, 0)
-material_override = SubResource("StandardMaterial3D_al0on")
 mesh = SubResource("TorusMesh_vgtvw")
 skeleton = NodePath("../..")

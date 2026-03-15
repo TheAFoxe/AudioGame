@@ -7,8 +7,8 @@ func _ready() -> void:
 	visibility_range_end_margin = 2.0
 	visibility_range_end = 3.0
 	visibility_range_fade_mode = GeometryInstance3D.VISIBILITY_RANGE_FADE_SELF
-	modulate = Color("BLACK")
-	outline_modulate = Color("WHITE")
+	modulate = Color("WHITE")
+	outline_modulate = Color("BLACK")
 	font_size = 64
 	pixel_size = 0.0025
-	outline_size = 8
+	#outline_size = 8

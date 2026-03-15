@@ -15,10 +15,10 @@ var _anti_aliasing_option_button: OptionButton
 
 func _ready() -> void:
 	_volume_label = get_node(
-		"PanelContainer/MarginContainer/VBoxContainer/Volume/HSlider/VolumeLable"
+		"PanelContainer/MarginContainer/VBoxContainer/Volume/ColorRect/HSlider/VolumeLable"
 	)
 	_volume_slider = get_node(
-		"PanelContainer/MarginContainer/VBoxContainer/Volume/HSlider"
+		"PanelContainer/MarginContainer/VBoxContainer/Volume/ColorRect/HSlider"
 	)
 	_resolution_option_button = get_node(
 		"PanelContainer/MarginContainer/VBoxContainer/Resolution/OptionButton"

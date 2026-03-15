@@ -10,33 +10,6 @@ s5 = 1
 s4 = 3
 metadata/_custom_type_script = "uid://c1fbx2o5kwwbv"
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xr0gu"]
-shading_mode = 0
-
-[sub_resource type="SphereMesh" id="SphereMesh_owets"]
-material = SubResource("StandardMaterial3D_xr0gu")
-flip_faces = true
-radius = 0.1
-height = 0.2
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_s2xgv"]
-shading_mode = 0
-albedo_color = Color(0, 0, 0, 1)
-
-[sub_resource type="SphereMesh" id="SphereMesh_qlq3c"]
-material = SubResource("StandardMaterial3D_s2xgv")
-flip_faces = true
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1x50r"]
-transparency = 1
-shading_mode = 0
-
-[sub_resource type="SphereMesh" id="SphereMesh_xr0gu"]
-material = SubResource("StandardMaterial3D_1x50r")
-flip_faces = true
-radius = 0.55
-height = 1.1
-
 [sub_resource type="SphereShape3D" id="SphereShape3D_1x50r"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_s2xgv"]
@@ -50,19 +23,38 @@ subpixel_positioning = 0
 [sub_resource type="FontVariation" id="FontVariation_xr0gu"]
 base_font = SubResource("SystemFont_1x50r")
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xr0gu"]
+shading_mode = 0
+albedo_color = Color(1, 0.54901963, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_owets"]
+material = SubResource("StandardMaterial3D_xr0gu")
+flip_faces = true
+radius = 0.1
+height = 0.2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_s2xgv"]
+shading_mode = 0
+
+[sub_resource type="SphereMesh" id="SphereMesh_qlq3c"]
+material = SubResource("StandardMaterial3D_s2xgv")
+flip_faces = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1x50r"]
+transparency = 1
+shading_mode = 0
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_xr0gu"]
+material = SubResource("StandardMaterial3D_1x50r")
+flip_faces = true
+radius = 0.55
+height = 1.1
+
 [node name="AudioCatcher" type="Node3D" unique_id=1790659427 groups=["audio_catcher"]]
 process_mode = 1
 script = ExtResource("1_s2xgv")
 _chord = SubResource("Resource_xr0gu")
-
-[node name="ActivationMesh" type="MeshInstance3D" parent="." unique_id=826558834]
-mesh = SubResource("SphereMesh_owets")
-
-[node name="InnerMesh" type="MeshInstance3D" parent="." unique_id=478972662]
-mesh = SubResource("SphereMesh_qlq3c")
-
-[node name="OuterMesh" type="MeshInstance3D" parent="." unique_id=483294581]
-mesh = SubResource("SphereMesh_xr0gu")
 
 [node name="AreaPick" type="Area3D" parent="." unique_id=720603982]
 process_mode = 1
@@ -101,8 +93,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2142539, 0)
 pixel_size = 0.0025
 billboard = 2
 double_sided = false
-modulate = Color(0, 0, 0, 1)
-outline_modulate = Color(1, 1, 1, 1)
 text = "S1 x
 S2 x
 S3 x
@@ -112,3 +102,17 @@ S6 x"
 font = SubResource("FontVariation_xr0gu")
 font_size = 64
 uppercase = true
+
+[node name="Mesh" type="Node3D" parent="." unique_id=1420746845]
+
+[node name="ActivationMesh" type="MeshInstance3D" parent="Mesh" unique_id=826558834]
+mesh = SubResource("SphereMesh_owets")
+skeleton = NodePath("../..")
+
+[node name="InnerMesh" type="MeshInstance3D" parent="Mesh" unique_id=478972662]
+mesh = SubResource("SphereMesh_qlq3c")
+skeleton = NodePath("../..")
+
+[node name="OuterMesh" type="MeshInstance3D" parent="Mesh" unique_id=483294581]
+mesh = SubResource("SphereMesh_xr0gu")
+skeleton = NodePath("../..")

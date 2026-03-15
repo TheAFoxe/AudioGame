@@ -3,11 +3,11 @@
 class_name Chord
 extends Resource
 
-## Available Fret values.
-enum Fret {OPEN, FIRST, SECOND, THIRD, FOURTH, NONE}
-
 ## Max available notes in single chord.
 const MAX_NOTES: int = 6
+
+## Available Fret values.
+enum Fret {OPEN, FIRST, SECOND, THIRD, FOURTH, NONE}
 
 @export_category("Chord")
 @export var s6: Fret

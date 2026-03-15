@@ -8,7 +8,7 @@
 
 [sub_resource type="Environment" id="Environment_lquwl"]
 background_mode = 1
-background_energy_multiplier = 0.0
+background_color = Color(0.85882354, 0.85882354, 0.85882354, 1)
 ambient_light_source = 1
 reflected_light_source = 1
 
@@ -16,13 +16,13 @@ reflected_light_source = 1
 process_mode = 3
 script = ExtResource("1_1bvp3")
 
-[node name="MainUI" parent="." unique_id=999999999 instance=ExtResource("2_mainui")]
-
 [node name="FPS" type="Label" parent="." unique_id=337238559]
 process_mode = 3
 offset_right = 40.0
 offset_bottom = 23.0
 script = ExtResource("5_lquwl")
+
+[node name="MainUI" parent="." unique_id=999999999 instance=ExtResource("2_mainui")]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1477084236]
 process_mode = 1

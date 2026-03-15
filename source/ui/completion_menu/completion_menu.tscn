@@ -1,26 +1,7 @@
 [gd_scene format=3 uid="uid://dkarbnbk677jp"]
 
+[ext_resource type="Theme" uid="uid://jd5jbr23680i" path="res://source/ui/ui_theme.tres" id="1_3lb07"]
 [ext_resource type="Script" uid="uid://sgocrsvln04k" path="res://source/ui/completion_menu/completion_menu.gd" id="1_ubhir"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xrkbs"]
-bg_color = Color(1, 1, 1, 1)
-border_width_left = 3
-border_width_top = 3
-border_width_right = 3
-border_width_bottom = 3
-border_color = Color(0, 0, 0, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_717wo"]
-bg_color = Color(0, 0, 0, 1)
-border_width_left = 3
-border_width_top = 3
-border_width_right = 3
-border_width_bottom = 3
-
-[sub_resource type="Theme" id="Theme_ubhir"]
-Button/colors/font_hover_color = Color(0, 0, 0, 1)
-Button/styles/hover = SubResource("StyleBoxFlat_xrkbs")
-Button/styles/normal = SubResource("StyleBoxFlat_717wo")
 
 [node name="CompletionMenu" type="Control" unique_id=968712838]
 layout_mode = 3
@@ -29,6 +10,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_3lb07")
 script = ExtResource("1_ubhir")
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=829262686]
@@ -36,11 +18,10 @@ layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 1.0
-theme = SubResource("Theme_ubhir")
 
 [node name="ColorRect" type="ColorRect" parent="PanelContainer" unique_id=1139176053]
 layout_mode = 2
-color = Color(0, 0, 0, 1)
+color = Color(0.85882354, 0.85882354, 0.85882354, 1)
 
 [node name="MarginContainer" type="MarginContainer" parent="PanelContainer" unique_id=362342776]
 layout_mode = 2

@@ -4,10 +4,10 @@
 
 [resource]
 script = ExtResource("1_s7sbr")
-s6 = null
-s5 = null
-s4 = null
-s3 = null
-s2 = null
-s1 = null
+s6 = 5
+s5 = 5
+s4 = 5
+s3 = 5
+s2 = 5
+s1 = 5
 metadata/_custom_type_script = "uid://c1fbx2o5kwwbv"
