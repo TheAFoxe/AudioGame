@@ -23,23 +23,32 @@ albedo_color = Color(0, 0, 0, 1)
 material = SubResource("StandardMaterial3D_fnbba")
 size = Vector3(0.1, 0.05, 20)
 
-[sub_resource type="Resource" id="Resource_xoar7"]
+[sub_resource type="Resource" id="Resource_ky74k"]
 script = ExtResource("3_m7ge4")
 s6 = 5
 s5 = 3
 s4 = 2
-s3 = 3
 s2 = 1
 metadata/_custom_type_script = "uid://c1fbx2o5kwwbv"
 
-[sub_resource type="Resource" id="Resource_ru5to"]
+[sub_resource type="Resource" id="Resource_um3vb"]
 script = ExtResource("3_m7ge4")
 s6 = 5
 s5 = 3
 s4 = 5
-s3 = 3
+s3 = 2
 s2 = 5
 s1 = 5
+metadata/_custom_type_script = "uid://c1fbx2o5kwwbv"
+
+[sub_resource type="Resource" id="Resource_m8o0g"]
+script = ExtResource("3_m7ge4")
+s6 = 1
+s5 = 3
+s4 = 3
+s3 = 2
+s2 = 1
+s1 = 1
 metadata/_custom_type_script = "uid://c1fbx2o5kwwbv"
 
 [node name="Level5" type="Node3D" unique_id=1507674625]
@@ -92,11 +101,11 @@ skeleton = NodePath("../../AudioReflector")
 
 [node name="Speaker2" parent="." unique_id=150968234 instance=ExtResource("2_y83em")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 1.9999992, 1, -8.999999)
-_chord_source = SubResource("Resource_xoar7")
+_chord_source = SubResource("Resource_ky74k")
 
 [node name="Node3D" parent="." unique_id=1790659427 instance=ExtResource("4_0auvc")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 1, 9.953)
-_chord = SubResource("Resource_ru5to")
+_chord = SubResource("Resource_um3vb")
 
 [node name="CompletionExit" parent="." unique_id=1620778632 instance=ExtResource("5_ukl0x")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 1, 10.25)
@@ -118,11 +127,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 9)
 
 [node name="Speaker3" parent="." unique_id=497922576 instance=ExtResource("2_y83em")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -2.000001, 1, -8.999999)
-_chord_source = SubResource("Resource_xoar7")
+_chord_source = SubResource("Resource_m8o0g")
 
 [node name="Node3D2" parent="." unique_id=188373639 instance=ExtResource("4_0auvc")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1, 9.953)
-_chord = SubResource("Resource_ru5to")
+_chord = SubResource("Resource_ky74k")
 
 [node name="AudioBreaker3" parent="." unique_id=1478954681 instance=ExtResource("7_b6ufn")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0.9999996, 0, -6)

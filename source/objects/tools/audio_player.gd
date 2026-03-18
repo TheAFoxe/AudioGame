@@ -38,4 +38,4 @@ func _play() -> void:
 	for sound in _chord.notes:
 		if sound:
 			playback.play_stream(sound)
-		await get_tree().create_timer(0.1).timeout
+		await get_tree().create_timer(0.12).timeout
